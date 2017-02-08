@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Start"
+                android:text="@string/start_btn_title"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"/>
 
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:background="@color/failRed"
-                    android:text="Stop"
+                    android:text="@string/stop_btn_title"
                     android:textColor="@android:color/white"/>
 
                 <Button
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/currentGrey"
-                    android:text="Clear"
+                    android:text="@string/clear_btn_title"
                     android:textColor="@android:color/white"/>
             </LinearLayout>
         </LinearLayout>
@@ -77,7 +77,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:background="@color/darkGrey"
-            android:text="Export"
+            android:text="@string/export_btn_title"
             android:textColor="@android:color/white"/>
 
     </RelativeLayout>
