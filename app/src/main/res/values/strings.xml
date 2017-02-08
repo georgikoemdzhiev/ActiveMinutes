@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Active Minutes</string>
+    <string name="data_collection_screen">Data Collection</string>
 </resources>
