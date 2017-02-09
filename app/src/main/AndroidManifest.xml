@@ -3,15 +3,16 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
+        android:name=".application.ActiveMinutesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".main_activity.view.ActiveMinutesActivity">
-
         </activity>
-        <activity android:name=".data_collection.view.DataCollectionActivity"
+        <activity
+            android:name=".data_collection.view.DataCollectionActivity"
             android:label="@string/data_collection_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".services.DataCollectionService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>
