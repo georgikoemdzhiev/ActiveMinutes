@@ -32,5 +32,8 @@ dependencies {
     // Dagger 2
     compile 'com.google.dagger:dagger:2.9'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    // Weka library for ML
     compile files('libs/wekaSTRIPPED.jar')
+    // JTransform library for calculating FFT coefficients
+    compile 'com.github.wendykierp:JTransforms:3.1'
 }
