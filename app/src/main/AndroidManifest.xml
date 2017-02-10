@@ -13,7 +13,8 @@
         </activity>
         <activity
             android:name=".data_collection.view.DataCollectionActivity"
-            android:label="@string/data_collection_screen">
+            android:label="@string/data_collection_screen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

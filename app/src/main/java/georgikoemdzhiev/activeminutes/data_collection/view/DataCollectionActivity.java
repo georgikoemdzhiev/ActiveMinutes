@@ -3,9 +3,11 @@ package georgikoemdzhiev.activeminutes.data_collection.view;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import georgikoemdzhiev.activeminutes.R;
@@ -14,6 +16,11 @@ import georgikoemdzhiev.activeminutes.data_collection.dagger.DataCollectionModul
 import georgikoemdzhiev.activeminutes.data_collection.presenter.IDataCollectionPresenter;
 
 public class DataCollectionActivity extends AppCompatActivity implements IDataCollectionView {
+    @BindView(R.id.activityLabel)
+    TextView mActivityLabel;
+    @BindView(R.id.recordedInstances)
+    TextView mNumRecInstances;
+
     @Inject
     IDataCollectionPresenter mPresenter;
 
@@ -47,6 +54,11 @@ public class DataCollectionActivity extends AppCompatActivity implements IDataCo
         mPresenter.clearData();
     }
 
+    @OnClick(R.id.changeActLabelBtn)
+    public void onChangeLabelButton(Button button) {
+        // show dialog
+        System.out.println("Showing change activity label dialog...");
+    }
 
     @Override
     protected void onDestroy() {

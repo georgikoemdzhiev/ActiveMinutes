@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     android:id="@+id/activity_data_collection"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,6 +14,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -81,6 +83,83 @@
             android:textColor="@android:color/white"/>
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/controlsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_centerHorizontal="true"
+        android:text="@string/controls_text_label"
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:id="@+id/activity_type_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/controlsLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="@color/dirtyWhite"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/activityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:text="@string/set_type_of_activity"
+            android:textSize="15sp"
+            tools:text="walking"/>
+
+        <Button
+            android:id="@+id/changeActLabelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/lightGreen"
+            android:text="@string/change_button_text"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/activityTypeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/activity_type_container"
+        android:layout_centerInParent="true"
+        android:text="@string/activity_type_label_text"
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:id="@+id/num_instances_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/activityTypeLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/numRecInstancesLebel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/number_of_recorded_instances_textview_text"/>
+
+        <TextView
+            android:id="@+id/recordedInstances"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:textSize="40sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
 
 </RelativeLayout>
