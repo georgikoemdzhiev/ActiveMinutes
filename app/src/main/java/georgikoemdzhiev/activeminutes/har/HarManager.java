@@ -18,7 +18,7 @@ public class HarManager implements IHarManager {
     private static final long WINDOW_LENGTH = 3000;
     private long windowBegTime = -1;
 
-    private TimeSeries accXSeries, accYSeries, accZSeries;
+    private TimeSeries accXSeries, accYSeries, accZSeries, accMSeries;
     private TimeWindow window;
     private String activityLabel;
 
@@ -27,16 +27,17 @@ public class HarManager implements IHarManager {
         this.accXSeries = new TimeSeries(activityLabel, "accX_");
         this.accYSeries = new TimeSeries(activityLabel, "accY_");
         this.accZSeries = new TimeSeries(activityLabel, "accZ_");
-//        this.accMSeries = new TimeSeries(activityLabel, "accM_");
+        this.accMSeries = new TimeSeries(activityLabel, "accM_");
         this.window = new TimeWindow(activityLabel);
     }
 
     @Override
     public void feedData(float[] xyz, long timestamp) {
-        double[] xyzProcessed = removeGravityForce(xyz);
-        accXSeries.addPoint(new Point(timestamp, xyz[0]));
-        accYSeries.addPoint(new Point(timestamp, xyz[1]));
-        accZSeries.addPoint(new Point(timestamp, xyz[2]));
+        double[] xyzNoGr = removeGravityForce(xyz);
+        accXSeries.addPoint(new Point(timestamp, xyzNoGr[0]));
+        accYSeries.addPoint(new Point(timestamp, xyzNoGr[1]));
+        accZSeries.addPoint(new Point(timestamp, xyzNoGr[2]));
+        accMSeries.addPoint(new Point(timestamp, calcMagnitude(xyzNoGr[0], xyzNoGr[1], xyzNoGr[2])));
 
         if (System.currentTimeMillis() - windowBegTime > WINDOW_LENGTH) {
             if (windowBegTime > 0) {
@@ -44,7 +45,7 @@ public class HarManager implements IHarManager {
                 window.addTimeSeries(accXSeries);
                 window.addTimeSeries(accYSeries);
                 window.addTimeSeries(accZSeries);
-//                window.addTimeSeries(accMSeries);
+                window.addTimeSeries(accMSeries);
 
                 System.out.println("Time Window Issued!");
                 issueTimeWindow();
@@ -59,7 +60,7 @@ public class HarManager implements IHarManager {
         this.accXSeries.clear();
         this.accYSeries.clear();
         this.accZSeries.clear();
-//        this.accMSeries.clear();
+        this.accMSeries.clear();
         this.window.clear();
     }
 
@@ -67,6 +68,7 @@ public class HarManager implements IHarManager {
         // alpha is calculated as t / (t + dT),
         // where t is the low-pass filter's time-constant and
         // dT is the event delivery rate.
+
         final float alpha = 0.8f;
         final double[] gravity = new double[3];
         final double[] linear_acc = new double[3];
@@ -88,7 +90,6 @@ public class HarManager implements IHarManager {
         // extract features, convert the featureSet to weka instance object and add it to a list
         //Create a FeatureSet instance and use its toInstance method to create weka instance
         // use the classifier to classify the instance (TODO)
-
         FeatureSet featureSet = null;
         try {
             featureSet = new FeatureSet(window);
@@ -107,5 +108,9 @@ public class HarManager implements IHarManager {
 
     public void resetWindowBegTime() {
         windowBegTime = -1;
+    }
+
+    private double calcMagnitude(double x, double y, double z) {
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
     }
 }
