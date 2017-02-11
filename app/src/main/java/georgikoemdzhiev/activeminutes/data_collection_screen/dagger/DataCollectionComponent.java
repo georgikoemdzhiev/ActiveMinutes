@@ -1,7 +1,7 @@
 package georgikoemdzhiev.activeminutes.data_collection_screen.dagger;
 
 import dagger.Subcomponent;
-import georgikoemdzhiev.activeminutes.application.dagger.ActivityScope;
+import georgikoemdzhiev.activeminutes.application.dagger.scopes.ActivityScope;
 import georgikoemdzhiev.activeminutes.data_collection_screen.view.DataCollectionActivity;
 
 /**

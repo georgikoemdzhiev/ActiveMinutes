@@ -20,28 +20,27 @@ public class HarManager implements IHarManager {
 
     private TimeSeries accXSeries, accYSeries, accZSeries, accMSeries;
     private TimeWindow window;
+
     private String activityLabel;
 
-    public HarManager(String activityLabel) {
-        this.activityLabel = activityLabel;
-        this.accXSeries = new TimeSeries(activityLabel, "accX_");
-        this.accYSeries = new TimeSeries(activityLabel, "accY_");
-        this.accZSeries = new TimeSeries(activityLabel, "accZ_");
-        this.accMSeries = new TimeSeries(activityLabel, "accM_");
-        this.window = new TimeWindow(activityLabel);
+    public HarManager() {
+        this.accXSeries = new TimeSeries("accX_");
+        this.accYSeries = new TimeSeries("accY_");
+        this.accZSeries = new TimeSeries("accZ_");
+        this.accMSeries = new TimeSeries("accM_");
+        this.window = new TimeWindow();
     }
 
     @Override
     public void feedData(float[] xyz, long timestamp) {
-        double[] xyzNoGr = removeGravityForce(xyz);
-        accXSeries.addPoint(new Point(timestamp, xyzNoGr[0]));
-        accYSeries.addPoint(new Point(timestamp, xyzNoGr[1]));
-        accZSeries.addPoint(new Point(timestamp, xyzNoGr[2]));
-        accMSeries.addPoint(new Point(timestamp, calcMagnitude(xyzNoGr[0], xyzNoGr[1], xyzNoGr[2])));
+        double[] xyzNoGf = removeGravityForce(xyz);
+        accXSeries.addPoint(new Point(timestamp, xyzNoGf[0]));
+        accYSeries.addPoint(new Point(timestamp, xyzNoGf[1]));
+        accZSeries.addPoint(new Point(timestamp, xyzNoGf[2]));
+        accMSeries.addPoint(new Point(timestamp, calcMagnitude(xyzNoGf[0], xyzNoGf[1], xyzNoGf[2])));
 
         if (System.currentTimeMillis() - windowBegTime > WINDOW_LENGTH) {
             if (windowBegTime > 0) {
-                // Feed data to HARManager here
                 window.addTimeSeries(accXSeries);
                 window.addTimeSeries(accYSeries);
                 window.addTimeSeries(accZSeries);
@@ -93,10 +92,11 @@ public class HarManager implements IHarManager {
         FeatureSet featureSet = null;
         try {
             featureSet = new FeatureSet(window);
+            featureSet.setActivityLabel(activityLabel);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        featureSet.setActivityLabel(activityLabel);
+
         Log.d(TAG, "FeatureSet.toString: " + featureSet.toString());
 //        Log.d(TAG, "FeatureSet.toInstance: " + featureSet.toInstance(this.instanceHeader));
 
@@ -112,5 +112,9 @@ public class HarManager implements IHarManager {
 
     private double calcMagnitude(double x, double y, double z) {
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+    }
+
+    public void setActivityLabel(String activityLabel) {
+        this.activityLabel = activityLabel;
     }
 }

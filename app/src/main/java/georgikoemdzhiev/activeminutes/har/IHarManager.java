@@ -11,4 +11,6 @@ public interface IHarManager {
     void issueTimeWindow();
 
     void resetWindowBegTime();
+
+    void setActivityLabel(String activityLabel);
 }

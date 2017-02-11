@@ -10,18 +10,10 @@ import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
 
 public class TimeWindow extends Hashtable<String, TimeSeries> {
 
-    /**
-     * The activity label associated with this time window
-     */
-    private String label;
-
-    /**
-     * The activity label associated with this time window
-     */
     private FeatureSet featureSet;
 
-    public TimeWindow(String label) {
-        this.label = label;
+    public TimeWindow() {
+
     }
 
     public void addTimeSeries(TimeSeries series) {
@@ -48,11 +40,4 @@ public class TimeWindow extends Hashtable<String, TimeSeries> {
         this.featureSet = featureSet;
     }
 
-    public String getLabel() {
-        return this.label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
 }

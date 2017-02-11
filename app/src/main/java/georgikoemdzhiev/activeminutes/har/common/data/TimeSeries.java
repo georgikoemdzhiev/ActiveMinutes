@@ -8,17 +8,11 @@ import java.util.ArrayList;
 
 public class TimeSeries extends ArrayList<Point> {
     /**
-     * The time series description
-     */
-    private String label;
-
-    /**
      * The time series unique ID
      */
     private String id;
 
-    public TimeSeries(String label, String id) {
-        this.label = label;
+    public TimeSeries(String id) {
         this.id = id;
     }
 
@@ -31,10 +25,6 @@ public class TimeSeries extends ArrayList<Point> {
         } else {
             return false;
         }
-    }
-
-    public String getLabel() {
-        return label;
     }
 
     public String getId() {

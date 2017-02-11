@@ -8,7 +8,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 
-import georgikoemdzhiev.activeminutes.har.HarManager;
+import javax.inject.Inject;
+
+import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.har.IHarManager;
 
 public class DataCollectionService extends Service implements SensorEventListener {
@@ -17,14 +19,13 @@ public class DataCollectionService extends Service implements SensorEventListene
     public static final String STOP_RECORDING = "stop_recording";
     public static final String START_RECORDING = "start_recording";
     public static final String CLEAR_DATA = "clear_collected_data";
+    public static final String SET_LABEL = "set_activity_label";
     public static final String CONTROL_KEY = "export_data_key";
-
-    private String activityLabel = "static"; // TODO change mock data
+    @Inject
+    IHarManager mHarManager;
+    private String activityLabel = "";
     private SensorManager sensorManager;
     private Sensor accSensor;
-
-
-    private IHarManager mHarManager;
 
     public DataCollectionService() {
     }
@@ -34,7 +35,7 @@ public class DataCollectionService extends Service implements SensorEventListene
         super.onCreate();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mHarManager = new HarManager(activityLabel);
+        ((ActiveMinutesApplication) getApplication()).getComponent().inject(this);
     }
 
     @Override

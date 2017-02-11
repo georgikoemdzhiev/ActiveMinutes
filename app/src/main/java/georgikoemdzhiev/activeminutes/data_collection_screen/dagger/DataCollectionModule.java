@@ -4,7 +4,7 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import georgikoemdzhiev.activeminutes.application.dagger.ActivityScope;
+import georgikoemdzhiev.activeminutes.application.dagger.scopes.ActivityScope;
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.DataCollectionController;
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.DataCollectionPresenter;
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.IDataCollectionController;

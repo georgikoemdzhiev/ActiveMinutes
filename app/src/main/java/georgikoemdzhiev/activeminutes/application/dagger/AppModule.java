@@ -2,17 +2,17 @@ package georgikoemdzhiev.activeminutes.application.dagger;
 
 import android.content.Context;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
+import georgikoemdzhiev.activeminutes.har.HarManager;
+import georgikoemdzhiev.activeminutes.har.IHarManager;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
  */
 
-@Singleton
-@Module()
+@Module
 public class AppModule {
     private Context mContext;
 
@@ -21,8 +21,14 @@ public class AppModule {
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     Context provideContext() {
         return this.mContext;
+    }
+
+    @Provides
+    @ApplicationScope
+    IHarManager provideHarManager() {
+        return new HarManager();
     }
 }
