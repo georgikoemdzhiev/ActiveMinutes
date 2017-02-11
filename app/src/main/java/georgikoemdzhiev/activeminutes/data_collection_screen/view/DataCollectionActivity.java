@@ -1,4 +1,4 @@
-package georgikoemdzhiev.activeminutes.data_collection.view;
+package georgikoemdzhiev.activeminutes.data_collection_screen.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +12,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
-import georgikoemdzhiev.activeminutes.data_collection.dagger.DataCollectionModule;
-import georgikoemdzhiev.activeminutes.data_collection.presenter.IDataCollectionPresenter;
+import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
+import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.IDataCollectionPresenter;
 
 public class DataCollectionActivity extends AppCompatActivity implements IDataCollectionView {
     @BindView(R.id.activityLabel)

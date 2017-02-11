@@ -5,8 +5,8 @@ import android.app.Application;
 import georgikoemdzhiev.activeminutes.application.dagger.AppComponent;
 import georgikoemdzhiev.activeminutes.application.dagger.AppModule;
 import georgikoemdzhiev.activeminutes.application.dagger.DaggerAppComponent;
-import georgikoemdzhiev.activeminutes.data_collection.dagger.DataCollectionComponent;
-import georgikoemdzhiev.activeminutes.data_collection.dagger.DataCollectionModule;
+import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionComponent;
+import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
 
 /**
  * Created by koemdzhiev on 09/02/2017.

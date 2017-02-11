@@ -1,6 +1,6 @@
-package georgikoemdzhiev.activeminutes.data_collection.presenter;
+package georgikoemdzhiev.activeminutes.data_collection_screen.presenter;
 
-import georgikoemdzhiev.activeminutes.data_collection.view.IDataCollectionView;
+import georgikoemdzhiev.activeminutes.data_collection_screen.view.IDataCollectionView;
 
 /**
  * Created by koemdzhiev on 09/02/2017.

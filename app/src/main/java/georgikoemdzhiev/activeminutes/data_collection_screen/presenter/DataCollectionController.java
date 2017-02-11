@@ -1,4 +1,4 @@
-package georgikoemdzhiev.activeminutes.data_collection.presenter;
+package georgikoemdzhiev.activeminutes.data_collection_screen.presenter;
 
 import android.app.ActivityManager;
 import android.content.Context;

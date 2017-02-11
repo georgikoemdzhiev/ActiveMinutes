@@ -9,10 +9,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main_activity.view.ActiveMinutesActivity">
+        <activity android:name=".today_screen.view.ActiveMinutesActivity">
         </activity>
         <activity
-            android:name=".data_collection.view.DataCollectionActivity"
+            android:name=".data_collection_screen.view.DataCollectionActivity"
             android:label="@string/data_collection_screen"
             android:screenOrientation="portrait">
             <intent-filter>

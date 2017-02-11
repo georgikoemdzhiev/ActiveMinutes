@@ -1,7 +1,7 @@
-package georgikoemdzhiev.activeminutes.main_activity.view;
+package georgikoemdzhiev.activeminutes.today_screen.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import georgikoemdzhiev.activeminutes.R;
 
