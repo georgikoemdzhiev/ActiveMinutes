@@ -8,6 +8,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 
+import georgikoemdzhiev.activeminutes.har.HarManager;
+import georgikoemdzhiev.activeminutes.har.IHarManager;
+
 public class DataCollectionService extends Service implements SensorEventListener {
     // Class constants
     public static final String EXPORT_DATA = "export_data";
@@ -15,13 +18,13 @@ public class DataCollectionService extends Service implements SensorEventListene
     public static final String START_RECORDING = "start_recording";
     public static final String CLEAR_DATA = "clear_collected_data";
     public static final String CONTROL_KEY = "export_data_key";
-    // 3 Second time window
-    private static final long WINDOW_LENGTH = 3000;
 
-    private String activityLabel = "";
+    private String activityLabel = "static"; // TODO change mock data
     private SensorManager sensorManager;
     private Sensor accSensor;
-    private long windowBegTime = -1;
+
+
+    private IHarManager mHarManager;
 
     public DataCollectionService() {
     }
@@ -31,6 +34,7 @@ public class DataCollectionService extends Service implements SensorEventListene
         super.onCreate();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mHarManager = new HarManager(activityLabel);
     }
 
     @Override
@@ -49,7 +53,7 @@ public class DataCollectionService extends Service implements SensorEventListene
                     System.out.println("Data cleared!");
                     break;
                 case STOP_RECORDING:
-                    windowBegTime = -1;
+                    mHarManager.resetWindowBegTime();
                     sensorManager.unregisterListener(this, accSensor);
                     System.out.println("Recording stopped!");
                     break;
@@ -71,14 +75,7 @@ public class DataCollectionService extends Service implements SensorEventListene
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if (System.currentTimeMillis() - windowBegTime > WINDOW_LENGTH) {
-            if (windowBegTime > 0) {
-                // Feed data to HARManager here
-                System.out.println("Time Window Issued!");
-            }
-
-            windowBegTime = System.currentTimeMillis();
-        }
+        mHarManager.feedData(sensorEvent.values, sensorEvent.timestamp);
     }
 
     @Override

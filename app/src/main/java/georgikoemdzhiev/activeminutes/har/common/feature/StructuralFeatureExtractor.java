@@ -1,5 +1,7 @@
 package georgikoemdzhiev.activeminutes.har.common.feature;
 
+import org.jtransforms.fft.DoubleFFT_1D;
+
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 
 /**
@@ -11,22 +13,22 @@ public class StructuralFeatureExtractor extends FeatureExtractor {
 
     public StructuralFeatureExtractor(TimeSeries series, String activityLabel) {
         super(series, activityLabel);
+        double[] tempArray = series.asArrayOfPointValues();
+
+        DoubleFFT_1D fft = new DoubleFFT_1D(series.size());
+        fft.realForward(tempArray);
+
+        double[] first5 = new double[5];
+
+        for (int i = 0; i < first5.length; i++) {
+            // round to second decimal place... Avoid the first value
+            first5[i] = Math.round(tempArray[i + 1] * 100.0) / 100.0;
+        }
+        first5FFTCoefficients = first5;
     }
 
-    public FeatureSet computeFeatures() throws Exception {
-
-
-//        featureSet.put("fft1_" + series.getId(), mean);
-//        featureSet.put("fft2_" + series.getId(), computeSTDV());
-//        featureSet.put("fft3_" + series.getId(), computeRMS());
-//        featureSet.put("fft4_" + series.getId(), computeMAD());
-//        featureSet.put("fft5_" + series.getId(), computeVariance());
-
-        return featureSet;
-    }
 
     public double[] computeFirst5FFTCoefficients() {
-        // TODO change this MOCK data
-        return new double[]{1, 2, 3, 4, 5};
+        return first5FFTCoefficients;
     }
 }

@@ -6,7 +6,9 @@ package georgikoemdzhiev.activeminutes.har;
 
 public interface IHarManager {
 
-    void feedData(double[] xyz);
+    void feedData(float[] xyz, long timestamp);
 
     void issueTimeWindow();
+
+    void resetWindowBegTime();
 }

@@ -48,4 +48,13 @@ public class TimeSeries extends ArrayList<Point> {
     public void add(int x, Point p) {
         throw new UnsupportedOperationException("This method is not supported. Use addPoints instead.");
     }
+
+    public double[] asArrayOfPointValues() {
+        double[] temp = new double[size()];
+        for (int i = 0; i < size(); i++) {
+            temp[i] = get(i).getValue();
+        }
+
+        return temp;
+    }
 }
