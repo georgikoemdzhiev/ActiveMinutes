@@ -38,6 +38,11 @@ public class DataCollectionActivity extends AppCompatActivity implements IDataCo
         mPresenter.startDataColService();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getNumberOfInstances();
+    }
 
     @OnClick(R.id.startBtn)
     public void onStartButton(Button button) {
@@ -95,5 +100,10 @@ public class DataCollectionActivity extends AppCompatActivity implements IDataCo
     @Override
     public void showChooseActivityMessage() {
         Toast.makeText(this, "Select an Activity first!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void updateNumberOfInstances(String numOfInst) {
+        mNumRecInstances.setText(numOfInst);
     }
 }

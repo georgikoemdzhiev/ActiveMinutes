@@ -84,4 +84,18 @@ public class DataManager implements IDataManager {
     public Classifier deSerialiseClassifierFromFile() {
         return fileManager.deSerialiseClassifier();
     }
+
+    @Override
+    public void getNumOfInstances(NumOfInstResult result) {
+        result.onResult(getAllTrainingData().size() + "");
+    }
+
+
+    private RealmResults<TrainingData> getAllTrainingData() {
+        RealmResults<TrainingData> results;
+        realm.beginTransaction();
+        results = realm.where(TrainingData.class).findAll();
+        realm.commitTransaction();
+        return results;
+    }
 }

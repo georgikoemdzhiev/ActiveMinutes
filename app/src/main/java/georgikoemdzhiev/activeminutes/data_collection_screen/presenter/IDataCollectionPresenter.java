@@ -8,6 +8,8 @@ import georgikoemdzhiev.activeminutes.data_collection_screen.view.IDataCollectio
 
 public interface IDataCollectionPresenter {
 
+    void getNumberOfInstances();
+
     void startRecording(String activityLabel);
 
     void stopRecording();

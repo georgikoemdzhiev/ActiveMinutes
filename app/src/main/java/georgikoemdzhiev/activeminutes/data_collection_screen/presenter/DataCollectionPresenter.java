@@ -1,17 +1,32 @@
 package georgikoemdzhiev.activeminutes.data_collection_screen.presenter;
 
 import georgikoemdzhiev.activeminutes.data_collection_screen.view.IDataCollectionView;
+import georgikoemdzhiev.activeminutes.database.IDataManager;
+import georgikoemdzhiev.activeminutes.database.NumOfInstResult;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
  */
 
 public class DataCollectionPresenter implements IDataCollectionPresenter {
-    private IDataCollectionController mController;
+    private IDataCollectionController controller;
     private IDataCollectionView view;
+    private IDataManager dataManager;
 
-    public DataCollectionPresenter(IDataCollectionController controller) {
-        mController = controller;
+    public DataCollectionPresenter(IDataCollectionController controller, IDataManager dataManager) {
+        this.controller = controller;
+        this.dataManager = dataManager;
+    }
+
+
+    @Override
+    public void getNumberOfInstances() {
+        dataManager.getNumOfInstances(new NumOfInstResult() {
+            @Override
+            public void onResult(String result) {
+                view.updateNumberOfInstances(result);
+            }
+        });
     }
 
     @Override
@@ -19,33 +34,33 @@ public class DataCollectionPresenter implements IDataCollectionPresenter {
         if (activityLabel.isEmpty()) {
             view.showChooseActivityMessage();
         } else {
-            mController.startRecording();
+            controller.startRecording();
         }
     }
 
     @Override
     public void stopRecording() {
-        mController.stopService();
+        controller.stopService();
     }
 
     @Override
     public void exportData() {
-        mController.exportCollectedData();
+        controller.exportCollectedData();
     }
 
     @Override
     public void clearData() {
-        mController.clearCollectedData();
+        controller.clearCollectedData();
     }
 
     @Override
     public void startDataColService() {
-        mController.startService();
+        controller.startService();
     }
 
     @Override
     public void setActivityLabel(String label) {
-        mController.setActivityLabel(label);
+        controller.setActivityLabel(label);
     }
 
     public void setView(IDataCollectionView view) {

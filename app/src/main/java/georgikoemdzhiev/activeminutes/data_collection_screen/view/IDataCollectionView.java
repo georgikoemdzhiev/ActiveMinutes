@@ -7,4 +7,6 @@ package georgikoemdzhiev.activeminutes.data_collection_screen.view;
 public interface IDataCollectionView {
 
     void showChooseActivityMessage();
+
+    void updateNumberOfInstances(String numOfInst);
 }

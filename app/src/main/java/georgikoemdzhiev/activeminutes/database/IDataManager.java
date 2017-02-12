@@ -21,4 +21,7 @@ public interface IDataManager {
     void serialiseClassifierToFile(Classifier iBkClassifier);
 
     Classifier deSerialiseClassifierFromFile();
+
+    void getNumOfInstances(NumOfInstResult result);
+
 }
