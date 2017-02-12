@@ -8,15 +8,19 @@ import georgikoemdzhiev.activeminutes.data_collection_screen.view.IDataCollectio
 
 public class DataCollectionPresenter implements IDataCollectionPresenter {
     private IDataCollectionController mController;
-    private IDataCollectionView mView;
+    private IDataCollectionView view;
 
     public DataCollectionPresenter(IDataCollectionController controller) {
         mController = controller;
     }
 
     @Override
-    public void startRecording() {
-        mController.startService();
+    public void startRecording(String activityLabel) {
+        if (activityLabel.isEmpty()) {
+            view.showChooseActivityMessage();
+        } else {
+            mController.startRecording();
+        }
     }
 
     @Override
@@ -35,16 +39,21 @@ public class DataCollectionPresenter implements IDataCollectionPresenter {
     }
 
     @Override
+    public void startDataColService() {
+        mController.startService();
+    }
+
+    @Override
     public void setActivityLabel(String label) {
         mController.setActivityLabel(label);
     }
 
     public void setView(IDataCollectionView view) {
-        this.mView = view;
+        this.view = view;
     }
 
     public void releaseView() {
-        this.mView = null;
+        this.view = null;
     }
 
 }

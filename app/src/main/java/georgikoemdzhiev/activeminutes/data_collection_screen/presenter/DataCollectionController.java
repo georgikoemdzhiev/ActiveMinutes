@@ -3,9 +3,12 @@ package georgikoemdzhiev.activeminutes.data_collection_screen.presenter;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
 
 import georgikoemdzhiev.activeminutes.services.DataCollectionService;
+import georgikoemdzhiev.activeminutes.services.service_events.ControlMessage;
+import georgikoemdzhiev.activeminutes.services.service_events.DataMessage;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
@@ -14,7 +17,6 @@ import georgikoemdzhiev.activeminutes.services.DataCollectionService;
 public class DataCollectionController implements IDataCollectionController {
     private Context mContext;
 
-
     public DataCollectionController(Context context) {
         mContext = context;
     }
@@ -22,38 +24,32 @@ public class DataCollectionController implements IDataCollectionController {
     @Override
     public void startService() {
         Intent intent = new Intent(mContext, DataCollectionService.class);
-        intent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.START_RECORDING);
         mContext.startService(intent);
-        Toast.makeText(mContext, "Recording!", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void startRecording() {
+        EventBus.getDefault().post(new ControlMessage(DataCollectionService.START_RECORDING));
     }
 
     @Override
     public void stopService() {
-        Intent intent = new Intent(mContext, DataCollectionService.class);
-        intent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.STOP_RECORDING);
-        mContext.startService(intent);
+        EventBus.getDefault().post(new ControlMessage(DataCollectionService.STOP_RECORDING));
     }
 
     @Override
     public void exportCollectedData() {
-        Intent intent = new Intent(mContext, DataCollectionService.class);
-        intent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.EXPORT_DATA);
-        mContext.startService(intent);
+        EventBus.getDefault().post(new ControlMessage(DataCollectionService.EXPORT_DATA));
     }
 
     @Override
     public void clearCollectedData() {
-        Intent intent = new Intent(mContext, DataCollectionService.class);
-        intent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.CLEAR_DATA);
-        mContext.startService(intent);
+        EventBus.getDefault().post(new ControlMessage(DataCollectionService.CLEAR_DATA));
     }
 
     @Override
     public void setActivityLabel(String label) {
-        Intent intent = new Intent(mContext, DataCollectionService.class);
-        intent.putExtra(DataCollectionService.SET_LABEL_KEY, label);
-        mContext.startService(intent);
+        EventBus.getDefault().post(new DataMessage(label));
     }
 
 

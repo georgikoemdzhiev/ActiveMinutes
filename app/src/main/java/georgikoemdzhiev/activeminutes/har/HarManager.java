@@ -27,7 +27,6 @@ public class HarManager implements IHarManager {
 
     private IDataManager mDataManager;
 
-    private Instances dataSet;
     private Classifier iBkClassifier;
 
     public HarManager(IFileManager fileManager, IDataManager dataManager) {
@@ -135,7 +134,7 @@ public class HarManager implements IHarManager {
 
     @Override
     public void trainClassifier() {
-        dataSet = mDataManager.readInstancesFromDB();
+        Instances dataSet = mDataManager.readInstancesFromDB();
         System.out.println("DATASET TO BE USED FOR TRAINING: " + dataSet.toString());
 
         try {

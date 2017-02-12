@@ -8,13 +8,15 @@ import georgikoemdzhiev.activeminutes.data_collection_screen.view.IDataCollectio
 
 public interface IDataCollectionPresenter {
 
-    void startRecording();
+    void startRecording(String activityLabel);
 
     void stopRecording();
 
     void exportData();
 
     void clearData();
+
+    void startDataColService();
 
     void setActivityLabel(String label);
 

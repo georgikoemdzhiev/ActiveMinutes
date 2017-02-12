@@ -110,7 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="2"
-            android:text="@string/set_type_of_activity"
+            android:hint="@string/set_type_of_activity"
+            android:text=""
             android:textSize="15sp"
             tools:text="walking"/>
 

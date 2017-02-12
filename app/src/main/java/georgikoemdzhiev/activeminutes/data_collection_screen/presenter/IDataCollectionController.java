@@ -8,6 +8,8 @@ public interface IDataCollectionController {
 
     void startService();
 
+    void startRecording();
+
     void stopService();
 
     void exportCollectedData();

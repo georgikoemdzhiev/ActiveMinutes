@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -34,12 +35,13 @@ public class DataCollectionActivity extends AppCompatActivity implements IDataCo
         ButterKnife.bind(this);
         satisfyDependencies();
         mPresenter.setView(this);
+        mPresenter.startDataColService();
     }
 
 
     @OnClick(R.id.startBtn)
     public void onStartButton(Button button) {
-        mPresenter.startRecording();
+        mPresenter.startRecording(mActivityLabel.getText().toString());
     }
 
     @OnClick(R.id.stopBtn)
@@ -90,4 +92,8 @@ public class DataCollectionActivity extends AppCompatActivity implements IDataCo
                 .inject(this);
     }
 
+    @Override
+    public void showChooseActivityMessage() {
+        Toast.makeText(this, "Select an Activity first!", Toast.LENGTH_SHORT).show();
+    }
 }
