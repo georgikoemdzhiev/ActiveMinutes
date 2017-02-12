@@ -110,7 +110,8 @@ public class HarManager implements IHarManager {
         Log.d(TAG, "FeatureSet.toString: " + featureSet.toString());
         Log.d(TAG, "FeatureSet.toInstance: " + featureSet.toInstance(this.instanceHeader));
 
-        dataSet.add(featureSet.toInstance(this.instanceHeader));
+        // TODO save the instance in the DataBase instead?
+//        dataSet.add(featureSet.toInstance(this.instanceHeader));
 
         //set the numberOfInstances view to the current dataSet size
 //        mNumberOfInstancesView.setText(dataSet.size() + "");

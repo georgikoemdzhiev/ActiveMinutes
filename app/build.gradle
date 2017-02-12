@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android' // plugin needed to install Realm Database
 
 android {
     compileSdkVersion 25

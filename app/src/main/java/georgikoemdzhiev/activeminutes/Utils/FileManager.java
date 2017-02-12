@@ -33,23 +33,24 @@ public class FileManager implements IFileManager {
 //        String formattedUserName = userName.replace(" ", "_");
         File path = Environment.getExternalStoragePublicDirectory(DIRECTORY_HAR);
         // have the object build the directory structure, if needed.
-        path.mkdirs();
-        File file = new File(path, "/" + "HAR_" + activityLabel + "_" +
-                System.currentTimeMillis() + ".arff");
-
-        BufferedWriter writer = null;
-        try {
-            writer = new BufferedWriter(new FileWriter(file));
-            writer.write(instances.toString());
-            writer.flush();
-            writer.close();
-            Toast.makeText(context, "File Saved!", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show();
+        boolean harDirectoryCreated = path.mkdirs();
+        if (harDirectoryCreated) {
+            File file = new File(path, "/" + "HAR_" + activityLabel + "_" +
+                    System.currentTimeMillis() + ".arff");
+            BufferedWriter writer = null;
+            try {
+                writer = new BufferedWriter(new FileWriter(file));
+                writer.write(instances.toString());
+                writer.flush();
+                writer.close();
+                Toast.makeText(context, "File Saved!", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(context, "Error during saving data to Arff file!", Toast.LENGTH_SHORT).show();
         }
 
-//        Log.d(FileUtils.class.getSimpleName(), "DATA SAVED TO A ARFF file");
     }
 
     @Override
@@ -62,7 +63,7 @@ public class FileManager implements IFileManager {
             instances = arff.getData();
             instances.setClassIndex(instances.numAttributes() - 1);
 
-//            Log.i(FileUtils.class.getSimpleName(), "Schema read successfully ->" + instances.toString());
+            System.out.println("Schema read successfully ->" + instances.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
