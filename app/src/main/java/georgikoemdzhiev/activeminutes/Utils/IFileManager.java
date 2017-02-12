@@ -1,5 +1,6 @@
 package georgikoemdzhiev.activeminutes.Utils;
 
+import weka.classifiers.Classifier;
 import weka.core.Instances;
 
 /**
@@ -10,4 +11,8 @@ public interface IFileManager {
     void saveCurrentDataToArffFile(Instances instances, String activityLabel);
 
     Instances readARFFFileSchema();
+
+    void serialiseAndStoreClassifier(Classifier classifier);
+
+    Classifier deSerialiseClassifier();
 }

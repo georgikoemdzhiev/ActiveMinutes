@@ -4,6 +4,7 @@ import georgikoemdzhiev.activeminutes.Utils.IFileManager;
 import georgikoemdzhiev.activeminutes.database.db.TrainingData;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import weka.classifiers.Classifier;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -72,5 +73,15 @@ public class DataManager implements IDataManager {
     @Override
     public Instances getInstanceHeader() {
         return INSTANCE_HEADER;
+    }
+
+    @Override
+    public void serialiseClassifierToFile(Classifier iBkClassifier) {
+        fileManager.serialiseAndStoreClassifier(iBkClassifier);
+    }
+
+    @Override
+    public Classifier deSerialiseClassifierFromFile() {
+        return fileManager.deSerialiseClassifier();
     }
 }

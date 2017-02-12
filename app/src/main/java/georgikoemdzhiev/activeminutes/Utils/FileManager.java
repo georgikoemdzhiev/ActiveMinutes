@@ -7,10 +7,16 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
+import weka.classifiers.Classifier;
+import weka.classifiers.lazy.IBk;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
 
@@ -24,6 +30,10 @@ public class FileManager implements IFileManager {
 
     private Context context;
 
+    private File path = Environment.getExternalStoragePublicDirectory(DIRECTORY_HAR);
+
+    private File classifierFile = new File(path, "/" + "classifierModel.data");
+
     public FileManager(Context context) {
         this.context = context;
     }
@@ -31,7 +41,7 @@ public class FileManager implements IFileManager {
     @Override
     public void saveCurrentDataToArffFile(Instances instances, String activityLabel) {
 //        String formattedUserName = userName.replace(" ", "_");
-        File path = Environment.getExternalStoragePublicDirectory(DIRECTORY_HAR);
+
         // have the object build the directory structure, if needed.
         boolean harDirectoryCreated = path.mkdirs();
         if (harDirectoryCreated) {
@@ -70,4 +80,42 @@ public class FileManager implements IFileManager {
         }
         return instances;
     }
+
+    @Override
+    public void serialiseAndStoreClassifier(Classifier classifier) {
+        path.mkdirs();
+
+
+        try {
+            FileOutputStream fos = new FileOutputStream(classifierFile);
+            ObjectOutputStream ou = new ObjectOutputStream(fos);
+            ou.writeObject(classifier);
+            ou.close();
+            fos.close();
+            System.out.println("serialise Success");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("serialise error: " + e.toString());
+        }
+    }
+
+    @Override
+    public Classifier deSerialiseClassifier() {
+        IBk classifier = null;
+        try {
+            FileInputStream fi = new FileInputStream(classifierFile);
+            ObjectInputStream oi = new ObjectInputStream(fi);
+            classifier = (IBk) oi.readObject();
+            oi.close();
+            fi.close();
+            System.out.println("deserialize Success");
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return classifier;
+    }
+
+
 }

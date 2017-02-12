@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import georgikoemdzhiev.activeminutes.R;
 
 public class ActiveMinutesActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

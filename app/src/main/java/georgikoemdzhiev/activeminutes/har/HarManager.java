@@ -140,11 +140,11 @@ public class HarManager implements IHarManager {
 
         try {
             iBkClassifier.buildClassifier(dataSet);
+            mDataManager.serialiseClassifierToFile(iBkClassifier);
             System.out.println("Classifier build successfully!");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 

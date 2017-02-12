@@ -1,5 +1,6 @@
 package georgikoemdzhiev.activeminutes.database;
 
+import weka.classifiers.Classifier;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -17,4 +18,7 @@ public interface IDataManager {
 
     Instances getInstanceHeader();
 
+    void serialiseClassifierToFile(Classifier iBkClassifier);
+
+    Classifier deSerialiseClassifierFromFile();
 }
