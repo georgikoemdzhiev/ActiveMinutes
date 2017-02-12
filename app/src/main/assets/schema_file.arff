@@ -1,0 +1,30 @@
+@RELATION HAR
+
+@ATTRIBUTE accX__fft1	REAL
+@ATTRIBUTE accX__fft2	REAL
+@ATTRIBUTE accX__fft3	REAL
+@ATTRIBUTE accX__fft4	REAL
+@ATTRIBUTE accX__fft5	REAL
+@ATTRIBUTE accY__fft1 	REAL
+@ATTRIBUTE accY__fft2 	REAL
+@ATTRIBUTE accY__fft3 	REAL
+@ATTRIBUTE accY__fft4 	REAL
+@ATTRIBUTE accY__fft5 	REAL
+@ATTRIBUTE accZ__fft1 	REAL
+@ATTRIBUTE accZ__fft2 	REAL
+@ATTRIBUTE accZ__fft3 	REAL
+@ATTRIBUTE accZ__fft4 	REAL
+@ATTRIBUTE accZ__fft5 	REAL
+@ATTRIBUTE accM__fft1 	REAL
+@ATTRIBUTE accM__fft2 	REAL
+@ATTRIBUTE accM__fft3 	REAL
+@ATTRIBUTE accM__fft4 	REAL
+@ATTRIBUTE accM__fft5 	REAL
+
+
+
+@ATTRIBUTE class {walking,running,static,cycling}
+
+@DATA
+
+

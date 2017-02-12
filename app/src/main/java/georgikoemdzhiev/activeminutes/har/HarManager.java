@@ -2,10 +2,12 @@ package georgikoemdzhiev.activeminutes.har;
 
 import android.util.Log;
 
+import georgikoemdzhiev.activeminutes.Utils.IFileManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
 import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
+import weka.core.Instances;
 
 import static android.content.ContentValues.TAG;
 
@@ -23,12 +25,20 @@ public class HarManager implements IHarManager {
 
     private String activityLabel;
 
-    public HarManager() {
+    private Instances instanceHeader;
+    private Instances dataSet;
+
+    private IFileManager mFileManager;
+
+    public HarManager(IFileManager fileManager) {
         this.accXSeries = new TimeSeries("accX_");
         this.accYSeries = new TimeSeries("accY_");
         this.accZSeries = new TimeSeries("accZ_");
         this.accMSeries = new TimeSeries("accM_");
         this.window = new TimeWindow();
+        this.mFileManager = fileManager;
+        instanceHeader = mFileManager.readARFFFileSchema();
+        dataSet = instanceHeader;
     }
 
     @Override
@@ -98,9 +108,9 @@ public class HarManager implements IHarManager {
         }
 
         Log.d(TAG, "FeatureSet.toString: " + featureSet.toString());
-//        Log.d(TAG, "FeatureSet.toInstance: " + featureSet.toInstance(this.instanceHeader));
+        Log.d(TAG, "FeatureSet.toInstance: " + featureSet.toInstance(this.instanceHeader));
 
-//        dataSet.add(featureSet.toInstance(this.instanceHeader));
+        dataSet.add(featureSet.toInstance(this.instanceHeader));
 
         //set the numberOfInstances view to the current dataSet size
 //        mNumberOfInstancesView.setText(dataSet.size() + "");
