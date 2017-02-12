@@ -3,7 +3,7 @@
     <string-array name="activity_types">
         <item>walking</item>
         <item>running</item>
-        <item>cycling</item>
         <item>static</item>
+        <item>cycling</item>
     </string-array>
 </resources>

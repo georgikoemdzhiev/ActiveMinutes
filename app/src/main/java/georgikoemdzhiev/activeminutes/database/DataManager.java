@@ -28,21 +28,28 @@ public class DataManager implements IDataManager {
 
     @Override
     public Instances readInstancesFromDB() {
+        realm.beginTransaction();
         RealmResults<TrainingData> realmResults = realm.where(TrainingData.class).findAll();
         System.out.println("RealmResults: " + realmResults.toString());
+
         for (int p = 0; p < realmResults.size(); p++) {
-            DenseInstance denseInstance = new DenseInstance(INSTANCE_HEADER.numAttributes());
             TrainingData currentDBInstance = realmResults.get(p);
+            DenseInstance instance = new DenseInstance(INSTANCE_HEADER.numAttributes());
+            instance.setDataset(INSTANCE_HEADER);
+            instance.setClassValue(currentDBInstance.getValues()[currentDBInstance.getValues().length - 1]);
 
             for (int i = 0; i < INSTANCE_HEADER.numAttributes(); i++) {
-                denseInstance.setValue(i, currentDBInstance.getValues()[i]);
+                instance.setValue(i, currentDBInstance.getValues()[i]);
             }
 
-            dataSet.add(denseInstance);
+            dataSet.add(instance);
+
         }
 
+        realm.commitTransaction();
         return dataSet;
     }
+
 
     @Override
     public void saveInstanceToDB(Instance instance) {

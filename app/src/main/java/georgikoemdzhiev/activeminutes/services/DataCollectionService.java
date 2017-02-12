@@ -46,8 +46,8 @@ public class DataCollectionService extends Service implements SensorEventListene
             Bundle intentBundle = intent.getExtras();
             switch (intentBundle.getString(CONTROL_KEY, "")) {
                 case EXPORT_DATA:
-                    saveCollectedDataToDB();
-                    showToastMessage("SAVING DATA TO DATA BASE...");
+                    mHarManager.trainClassifier();
+                    showToastMessage("Exporting data to sd card...");
                     break;
                 case START_RECORDING:
                     showToastMessage("Recording...");
@@ -77,12 +77,6 @@ public class DataCollectionService extends Service implements SensorEventListene
     @Override
     public IBinder onBind(Intent intent) {
         return null;  // This Service is not a BindService
-    }
-
-
-    public void saveCollectedDataToDB() {
-        //stopSelf();
-        // TODO to be implemented
     }
 
     @Override

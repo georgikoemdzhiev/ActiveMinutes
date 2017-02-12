@@ -6,7 +6,10 @@ import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
 import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
+import weka.classifiers.Classifier;
+import weka.classifiers.lazy.IBk;
 import weka.core.Instance;
+import weka.core.Instances;
 
 /**
  * Created by koemdzhiev on 10/02/2017.
@@ -24,6 +27,9 @@ public class HarManager implements IHarManager {
 
     private IDataManager mDataManager;
 
+    private Instances dataSet;
+    private Classifier iBkClassifier;
+
     public HarManager(IFileManager fileManager, IDataManager dataManager) {
         this.accXSeries = new TimeSeries("accX_");
         this.accYSeries = new TimeSeries("accY_");
@@ -32,6 +38,8 @@ public class HarManager implements IHarManager {
         this.window = new TimeWindow();
 
         this.mDataManager = dataManager;
+
+        iBkClassifier = new IBk(3);
 
     }
 
@@ -97,6 +105,7 @@ public class HarManager implements IHarManager {
         try {
             featureSet = new FeatureSet(window);
             featureSet.setActivityLabel(activityLabel);
+
             instance = featureSet.toInstance(mDataManager.getInstanceHeader());
 
             mDataManager.saveInstanceToDB(instance);
@@ -123,4 +132,21 @@ public class HarManager implements IHarManager {
     public void setActivityLabel(String activityLabel) {
         this.activityLabel = activityLabel;
     }
+
+    @Override
+    public void trainClassifier() {
+        dataSet = mDataManager.readInstancesFromDB();
+        System.out.println("DATASET TO BE USED FOR TRAINING: " + dataSet.toString());
+
+        try {
+            iBkClassifier.buildClassifier(dataSet);
+            System.out.println("Classifier build successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 }

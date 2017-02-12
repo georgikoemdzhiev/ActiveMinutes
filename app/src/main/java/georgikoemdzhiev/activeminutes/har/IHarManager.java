@@ -13,4 +13,6 @@ public interface IHarManager {
     void resetWindowBegTime();
 
     void setActivityLabel(String activityLabel);
+
+    void trainClassifier();
 }

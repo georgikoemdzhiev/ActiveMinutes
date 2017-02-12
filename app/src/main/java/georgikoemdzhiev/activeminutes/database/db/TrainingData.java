@@ -58,7 +58,7 @@ public class TrainingData extends RealmObject {
         values[17] = accM__fft3;
         values[18] = accM__fft4;
         values[19] = accM__fft5;
-        classValue = values[20];
+        values[20] = classValue;
         return values;
     }
 
@@ -86,6 +86,7 @@ public class TrainingData extends RealmObject {
         accM__fft3 = values[17];
         accM__fft4 = values[18];
         accM__fft5 = values[19];
+
         classValue = values[20];
     }
 }

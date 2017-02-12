@@ -22,7 +22,6 @@
 @ATTRIBUTE accM__fft5 	REAL
 
 
-
 @ATTRIBUTE class {walking,running,static,cycling}
 
 @DATA
