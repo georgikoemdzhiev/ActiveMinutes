@@ -5,8 +5,11 @@ import android.app.Application;
 import georgikoemdzhiev.activeminutes.application.dagger.AppComponent;
 import georgikoemdzhiev.activeminutes.application.dagger.AppModule;
 import georgikoemdzhiev.activeminutes.application.dagger.DaggerAppComponent;
+import georgikoemdzhiev.activeminutes.application.dagger.DataModule;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionComponent;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
@@ -21,10 +24,24 @@ public class ActiveMinutesApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // Initial Database setup
+        // The Realm file will be located in Context.getFilesDir() with name "default.realm"
+        setUpRealmDatabase();
+
+        // Initial Dagger setup
         mComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .dataModule(new DataModule())
                 .build();
 
+    }
+
+    private void setUpRealmDatabase() {
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded() // Only during for the development
+                .build();
+        Realm.setDefaultConfiguration(config);
     }
 
     public DataCollectionComponent inject() {

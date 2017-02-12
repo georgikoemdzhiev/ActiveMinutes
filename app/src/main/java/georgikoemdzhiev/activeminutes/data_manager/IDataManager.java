@@ -1,6 +1,7 @@
 package georgikoemdzhiev.activeminutes.data_manager;
 
 import weka.core.Instance;
+import weka.core.Instances;
 
 /**
  * Created by Georgi Koemdzhiev on 12/02/2017.
@@ -8,7 +9,12 @@ import weka.core.Instance;
 
 public interface IDataManager {
 
-    void readInstancesFromDB();
+    Instances readInstancesFromDB();
 
     void saveInstanceToDB(Instance instance);
+
+    void saveInstancesToDB(Instances instances);
+
+    Instances getInstanceHeader();
+
 }

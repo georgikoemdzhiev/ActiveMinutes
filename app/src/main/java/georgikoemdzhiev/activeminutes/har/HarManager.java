@@ -1,15 +1,12 @@
 package georgikoemdzhiev.activeminutes.har;
 
-import android.util.Log;
-
 import georgikoemdzhiev.activeminutes.Utils.IFileManager;
+import georgikoemdzhiev.activeminutes.data_manager.IDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
 import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
-import weka.core.Instances;
-
-import static android.content.ContentValues.TAG;
+import weka.core.Instance;
 
 /**
  * Created by koemdzhiev on 10/02/2017.
@@ -25,20 +22,17 @@ public class HarManager implements IHarManager {
 
     private String activityLabel;
 
-    private Instances instanceHeader;
-    private Instances dataSet;
+    private IDataManager mDataManager;
 
-    private IFileManager mFileManager;
-
-    public HarManager(IFileManager fileManager) {
+    public HarManager(IFileManager fileManager, IDataManager dataManager) {
         this.accXSeries = new TimeSeries("accX_");
         this.accYSeries = new TimeSeries("accY_");
         this.accZSeries = new TimeSeries("accZ_");
         this.accMSeries = new TimeSeries("accM_");
         this.window = new TimeWindow();
-        this.mFileManager = fileManager;
-        instanceHeader = mFileManager.readARFFFileSchema();
-        dataSet = instanceHeader;
+
+        this.mDataManager = dataManager;
+
     }
 
     @Override
@@ -98,23 +92,24 @@ public class HarManager implements IHarManager {
     public void issueTimeWindow() {
         // extract features, convert the featureSet to weka instance object and add it to a list
         //Create a FeatureSet instance and use its toInstance method to create weka instance
-        // use the classifier to classify the instance (TODO)
         FeatureSet featureSet = null;
+        Instance instance = null;
         try {
             featureSet = new FeatureSet(window);
             featureSet.setActivityLabel(activityLabel);
+            instance = featureSet.toInstance(mDataManager.getInstanceHeader());
+
+            mDataManager.saveInstanceToDB(instance);
+            System.out.println("FeatureSet.toString: " + featureSet.toString());
+            System.out.println("FeatureSet.toInstance: " + instance);
+
+            // TODO maybe setup a HarManager classification and classify the instance here...
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Log.d(TAG, "FeatureSet.toString: " + featureSet.toString());
-        Log.d(TAG, "FeatureSet.toInstance: " + featureSet.toInstance(this.instanceHeader));
-
-        // TODO save the instance in the DataBase instead?
-//        dataSet.add(featureSet.toInstance(this.instanceHeader));
-
-        //set the numberOfInstances view to the current dataSet size
-//        mNumberOfInstancesView.setText(dataSet.size() + "");
+//        dataSet.add(featureSet.toInstance(this.INSTANCE_HEADER));
     }
 
     public void resetWindowBegTime() {

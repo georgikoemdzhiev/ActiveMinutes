@@ -77,7 +77,7 @@ public class FeatureSet extends Hashtable<String, Double> {
 
     /**
      * Converts a FeatureSet to WEKA Instance
-     * Parameter instanceHeader is an Instances object containing the attributes that the Instance should have.
+     * Parameter INSTANCE_HEADER is an Instances object containing the attributes that the Instance should have.
      */
 
     public Instance toInstance(Instances instanceHeader) {

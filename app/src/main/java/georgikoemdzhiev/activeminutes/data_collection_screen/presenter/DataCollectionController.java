@@ -13,43 +13,47 @@ import georgikoemdzhiev.activeminutes.services.DataCollectionService;
 
 public class DataCollectionController implements IDataCollectionController {
     private Context mContext;
-    private Intent serviceIntent;
+
 
     public DataCollectionController(Context context) {
         mContext = context;
-        serviceIntent = new Intent(mContext, DataCollectionService.class);
     }
 
     @Override
     public void startService() {
-        serviceIntent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.START_RECORDING);
-        mContext.startService(serviceIntent);
+        Intent intent = new Intent(mContext, DataCollectionService.class);
+        intent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.START_RECORDING);
+        mContext.startService(intent);
         Toast.makeText(mContext, "Recording!", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void stopService() {
-        serviceIntent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.STOP_RECORDING);
-        mContext.startService(serviceIntent);
+        Intent intent = new Intent(mContext, DataCollectionService.class);
+        intent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.STOP_RECORDING);
+        mContext.startService(intent);
     }
 
     @Override
     public void exportCollectedData() {
-        serviceIntent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.EXPORT_DATA);
-        mContext.startService(serviceIntent);
+        Intent intent = new Intent(mContext, DataCollectionService.class);
+        intent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.EXPORT_DATA);
+        mContext.startService(intent);
     }
 
     @Override
     public void clearCollectedData() {
-        serviceIntent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.CLEAR_DATA);
-        mContext.startService(serviceIntent);
+        Intent intent = new Intent(mContext, DataCollectionService.class);
+        intent.putExtra(DataCollectionService.CONTROL_KEY, DataCollectionService.CLEAR_DATA);
+        mContext.startService(intent);
     }
 
     @Override
     public void setActivityLabel(String label) {
-        serviceIntent.putExtra(DataCollectionService.SET_LABEL_KEY, label);
-        mContext.startService(serviceIntent);
+        Intent intent = new Intent(mContext, DataCollectionService.class);
+        intent.putExtra(DataCollectionService.SET_LABEL_KEY, label);
+        mContext.startService(intent);
     }
 
 

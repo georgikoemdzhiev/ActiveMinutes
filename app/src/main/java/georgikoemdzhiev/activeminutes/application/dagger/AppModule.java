@@ -4,9 +4,9 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import georgikoemdzhiev.activeminutes.Utils.FileManager;
 import georgikoemdzhiev.activeminutes.Utils.IFileManager;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
+import georgikoemdzhiev.activeminutes.data_manager.IDataManager;
 import georgikoemdzhiev.activeminutes.har.HarManager;
 import georgikoemdzhiev.activeminutes.har.IHarManager;
 
@@ -30,13 +30,8 @@ public class AppModule {
 
     @Provides
     @ApplicationScope
-    IHarManager provideHarManager(IFileManager fileManager) {
-        return new HarManager(fileManager);
+    IHarManager provideHarManager(IFileManager fileManager, IDataManager dataManager) {
+        return new HarManager(fileManager, dataManager);
     }
 
-    @Provides
-    @ApplicationScope
-    IFileManager providesFileManager(Context context) {
-        return new FileManager(context);
-    }
 }
