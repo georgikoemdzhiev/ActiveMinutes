@@ -1,4 +1,4 @@
-package georgikoemdzhiev.activeminutes.data_manager.db;
+package georgikoemdzhiev.activeminutes.database.db;
 
 import io.realm.RealmObject;
 

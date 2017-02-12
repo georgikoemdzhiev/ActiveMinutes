@@ -7,8 +7,8 @@ import dagger.Provides;
 import georgikoemdzhiev.activeminutes.Utils.FileManager;
 import georgikoemdzhiev.activeminutes.Utils.IFileManager;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
-import georgikoemdzhiev.activeminutes.data_manager.DataManager;
-import georgikoemdzhiev.activeminutes.data_manager.IDataManager;
+import georgikoemdzhiev.activeminutes.database.DataManager;
+import georgikoemdzhiev.activeminutes.database.IDataManager;
 import io.realm.Realm;
 
 /**

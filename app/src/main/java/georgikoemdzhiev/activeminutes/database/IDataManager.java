@@ -1,4 +1,4 @@
-package georgikoemdzhiev.activeminutes.data_manager;
+package georgikoemdzhiev.activeminutes.database;
 
 import weka.core.Instance;
 import weka.core.Instances;

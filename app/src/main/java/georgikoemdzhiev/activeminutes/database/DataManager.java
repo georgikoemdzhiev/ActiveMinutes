@@ -1,7 +1,7 @@
-package georgikoemdzhiev.activeminutes.data_manager;
+package georgikoemdzhiev.activeminutes.database;
 
 import georgikoemdzhiev.activeminutes.Utils.IFileManager;
-import georgikoemdzhiev.activeminutes.data_manager.db.TrainingData;
+import georgikoemdzhiev.activeminutes.database.db.TrainingData;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import weka.core.DenseInstance;
