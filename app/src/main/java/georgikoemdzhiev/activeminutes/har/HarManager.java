@@ -5,6 +5,8 @@ import georgikoemdzhiev.activeminutes.database.IDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
+import georgikoemdzhiev.activeminutes.har.common.data_preprocessing.DataPreprocessor;
+import georgikoemdzhiev.activeminutes.har.common.data_preprocessing.IDataPreprocessor;
 import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
 import weka.classifiers.Classifier;
 import weka.classifiers.lazy.IBk;
@@ -19,15 +21,12 @@ public class HarManager implements IHarManager {
     // 3 Second time window
     private static final long WINDOW_LENGTH = 3000;
     private long windowBegTime = -1;
-
     private TimeSeries accXSeries, accYSeries, accZSeries, accMSeries;
     private TimeWindow window;
-
     private String activityLabel;
-
     private IDataManager mDataManager;
-
     private Classifier iBkClassifier;
+    private IDataPreprocessor dataPreprocessor;
 
     public HarManager(IFileManager fileManager, IDataManager dataManager) {
         this.accXSeries = new TimeSeries("accX_");
@@ -40,16 +39,22 @@ public class HarManager implements IHarManager {
 
         iBkClassifier = new IBk(3);
 
+        dataPreprocessor = new DataPreprocessor();
+
     }
 
     @Override
     public void feedData(float[] xyz, long timestamp) {
-        double[] xyzNoGf = removeGravityForce(xyz);
-        accXSeries.addPoint(new Point(timestamp, xyzNoGf[0]));
-        accYSeries.addPoint(new Point(timestamp, xyzNoGf[1]));
-        accZSeries.addPoint(new Point(timestamp, xyzNoGf[2]));
-        accMSeries.addPoint(new Point(timestamp, calcMagnitude(xyzNoGf[0], xyzNoGf[1], xyzNoGf[2])));
+        // apply low-pass filter to remove earth's gravity force
+        double[] noGravForce = dataPreprocessor.applyLowPassFilter(xyz);
+        // add the data points to the appropriate lists..
+        accXSeries.addPoint(new Point(timestamp, noGravForce[0]));
+        accYSeries.addPoint(new Point(timestamp, noGravForce[1]));
+        accZSeries.addPoint(new Point(timestamp, noGravForce[2]));
+        accMSeries.addPoint(new Point(timestamp, calcMagnitude(noGravForce[0],
+                noGravForce[1], noGravForce[2])));
 
+        // Check if to issue a new time window...
         if (System.currentTimeMillis() - windowBegTime > WINDOW_LENGTH) {
             if (windowBegTime > 0) {
                 window.addTimeSeries(accXSeries);
@@ -74,26 +79,6 @@ public class HarManager implements IHarManager {
         this.window.clear();
     }
 
-    private double[] removeGravityForce(float[] xyz) {
-        // alpha is calculated as t / (t + dT),
-        // where t is the low-pass filter's time-constant and
-        // dT is the event delivery rate.
-
-        final float alpha = 0.8f;
-        final double[] gravity = new double[3];
-        final double[] linear_acc = new double[3];
-        // Isolate the force of gravity with the low-pass filter.
-        gravity[0] = alpha * gravity[0] + (1 - alpha) * xyz[0];
-        gravity[1] = alpha * gravity[1] + (1 - alpha) * xyz[1];
-        gravity[2] = alpha * gravity[2] + (1 - alpha) * xyz[2];
-
-        // Remove the gravity contribution with the high-pass filter.
-        linear_acc[0] = xyz[0] - gravity[0];
-        linear_acc[1] = xyz[1] - gravity[1];
-        linear_acc[2] = xyz[2] - gravity[2];
-
-        return linear_acc;
-    }
 
     @Override
     public void issueTimeWindow() {
@@ -117,7 +102,6 @@ public class HarManager implements IHarManager {
             e.printStackTrace();
         }
 
-//        dataSet.add(featureSet.toInstance(this.INSTANCE_HEADER));
     }
 
     public void resetWindowBegTime() {
@@ -145,7 +129,6 @@ public class HarManager implements IHarManager {
             e.printStackTrace();
         }
     }
-
 
 
 }
