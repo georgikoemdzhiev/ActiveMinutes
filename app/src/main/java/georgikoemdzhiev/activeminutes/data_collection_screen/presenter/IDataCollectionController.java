@@ -13,4 +13,6 @@ public interface IDataCollectionController {
     void exportCollectedData();
 
     void clearCollectedData();
+
+    void setActivityLabel(String label);
 }

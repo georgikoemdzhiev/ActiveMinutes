@@ -6,7 +6,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -19,7 +21,7 @@ public class DataCollectionService extends Service implements SensorEventListene
     public static final String STOP_RECORDING = "stop_recording";
     public static final String START_RECORDING = "start_recording";
     public static final String CLEAR_DATA = "clear_collected_data";
-    public static final String SET_LABEL = "set_activity_label";
+    public static final String SET_LABEL_KEY = "set_activity_label";
     public static final String CONTROL_KEY = "export_data_key";
     @Inject
     IHarManager mHarManager;
@@ -40,26 +42,35 @@ public class DataCollectionService extends Service implements SensorEventListene
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getExtras() != null)
-            switch (intent.getExtras().getString(CONTROL_KEY, "")) {
+        if (intent.getExtras() != null) {
+            Bundle intentBundle = intent.getExtras();
+            switch (intentBundle.getString(CONTROL_KEY, "")) {
                 case EXPORT_DATA:
                     saveCollectedDataToDB();
-                    System.out.println("SAVING DATA TO DATA BASE...");
+                    showToastMessage("SAVING DATA TO DATA BASE...");
                     break;
                 case START_RECORDING:
-                    System.out.println("Recording...");
+                    showToastMessage("Recording...");
                     sensorManager.registerListener(this, accSensor, SensorManager.SENSOR_DELAY_FASTEST);
                     break;
                 case CLEAR_DATA:
-                    System.out.println("Data cleared!");
+                    showToastMessage("Data cleared!");
                     break;
                 case STOP_RECORDING:
                     mHarManager.resetWindowBegTime();
                     sensorManager.unregisterListener(this, accSensor);
-                    System.out.println("Recording stopped!");
+                    showToastMessage("Recording stopped!");
                     break;
 
+                default:
+                    System.out.println("DEFAULT case activated!");
+                    this.activityLabel = intentBundle.getString(SET_LABEL_KEY);
+                    mHarManager.setActivityLabel(activityLabel);
+                    showToastMessage("Activity label change to: " + activityLabel);
+                    break;
             }
+
+        }
         return START_NOT_STICKY;
     }
 
@@ -82,5 +93,9 @@ public class DataCollectionService extends Service implements SensorEventListene
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    private void showToastMessage(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

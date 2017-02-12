@@ -2,8 +2,11 @@ package georgikoemdzhiev.activeminutes.data_collection_screen.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import javax.inject.Inject;
 
@@ -56,8 +59,17 @@ public class DataCollectionActivity extends AppCompatActivity implements IDataCo
 
     @OnClick(R.id.changeActLabelBtn)
     public void onChangeLabelButton(Button button) {
-        // show dialog
-        System.out.println("Showing change activity label dialog...");
+        new MaterialDialog.Builder(this)
+                .title(R.string.select_activity_dialog_title)
+                .items(R.array.activity_types)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence activityName) {
+                        mPresenter.setActivityLabel(activityName.toString());
+                        mActivityLabel.setText(activityName);
+                    }
+                })
+                .show();
     }
 
     @Override

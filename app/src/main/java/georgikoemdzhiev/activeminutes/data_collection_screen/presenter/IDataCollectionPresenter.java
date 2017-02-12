@@ -16,6 +16,7 @@ public interface IDataCollectionPresenter {
 
     void clearData();
 
+    void setActivityLabel(String label);
 
     void setView(IDataCollectionView view);
 

@@ -46,6 +46,12 @@ public class DataCollectionController implements IDataCollectionController {
         mContext.startService(serviceIntent);
     }
 
+    @Override
+    public void setActivityLabel(String label) {
+        serviceIntent.putExtra(DataCollectionService.SET_LABEL_KEY, label);
+        mContext.startService(serviceIntent);
+    }
+
 
     private boolean isServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);

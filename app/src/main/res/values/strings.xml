@@ -10,4 +10,5 @@
     <string name="activity_type_label_text">Activity Type</string>
     <string name="controls_text_label">Controls</string>
     <string name="number_of_recorded_instances_textview_text">Number of recorded instances:</string>
+    <string name="select_activity_dialog_title">Select Activity</string>
 </resources>

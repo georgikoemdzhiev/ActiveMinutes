@@ -34,6 +34,11 @@ public class DataCollectionPresenter implements IDataCollectionPresenter {
         mController.clearCollectedData();
     }
 
+    @Override
+    public void setActivityLabel(String label) {
+        mController.setActivityLabel(label);
+    }
+
     public void setView(IDataCollectionView view) {
         this.mView = view;
     }
