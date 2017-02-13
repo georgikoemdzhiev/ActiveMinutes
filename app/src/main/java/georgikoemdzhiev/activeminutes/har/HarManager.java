@@ -1,7 +1,7 @@
 package georgikoemdzhiev.activeminutes.har;
 
-import georgikoemdzhiev.activeminutes.Utils.IFileManager;
 import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
@@ -92,7 +92,7 @@ public class HarManager implements IHarManager {
 
             instance = featureSet.toInstance(mDataManager.getInstanceHeader());
             // save this training instance with userId 0 (generic training data)
-            mDataManager.saveInstanceToDB(instance);
+            mDataManager.saveInstance(instance, 0);
             System.out.println("FeatureSet.toString: " + featureSet.toString());
             System.out.println("FeatureSet.toInstance: " + instance);
 
@@ -122,19 +122,25 @@ public class HarManager implements IHarManager {
      * @param userId id of the user to be used to retrieve the user's collected training data
      */
     @Override
-    public void trainClassifier(int userId) {
-        Instances userOwnDataSet = mDataManager.readInstancesFromDB(userId);
-        System.out.println("Building personalised classifier for user with id= " +
-                userId + "data set used:" + userOwnDataSet.toString());
-        buildClassifier(userOwnDataSet);
+    public void trainAndSavePersonalisedClassifier(int userId, TrainClassifierResult result) {
+        Instances userOwnDataSet = mDataManager.getInstances(userId);
+        if (userOwnDataSet.size() == 0) {
+            result.onError("Cannot train classifier with empty dataset!");
+        } else {
+            System.out.println("Building personalised classifier for user with id= " +
+                    userId + " data set used:" + userOwnDataSet.toString());
+            buildClassifier(userOwnDataSet);
+            result.onSuccess();
+        }
+
     }
 
     /***
      * Method that builds a generic classifier
      */
     @Override
-    public void trainClassifier() {
-        Instances genericDataSet = mDataManager.readInstancesFromDB();
+    public void trainAndSaveGenericClassifier() {
+        Instances genericDataSet = mDataManager.getInstances(0);
         System.out.println("Building generic classifier. Data set used:" + genericDataSet.toString());
         buildClassifier(genericDataSet);
     }

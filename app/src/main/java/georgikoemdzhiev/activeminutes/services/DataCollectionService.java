@@ -60,8 +60,8 @@ public class DataCollectionService extends Service implements SensorEventListene
     public void onControlMessageEvent(ControlMessage message) {
         switch (message.getMESSAGE()) {
             case EXPORT_DATA:
-                mHarManager.trainClassifier();
-                showToastMessage("Exporting data to sd card...");
+                mHarManager.trainAndSaveGenericClassifier();
+                showToastMessage("Training & Saving Classifier...");
                 break;
             case START_RECORDING:
                 showToastMessage("Recording...");

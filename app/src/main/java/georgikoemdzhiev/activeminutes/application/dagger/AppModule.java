@@ -4,9 +4,9 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import georgikoemdzhiev.activeminutes.Utils.IFileManager;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
 import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
 import georgikoemdzhiev.activeminutes.har.HarManager;
 import georgikoemdzhiev.activeminutes.har.IHarManager;
 

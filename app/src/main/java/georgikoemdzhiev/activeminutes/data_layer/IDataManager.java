@@ -1,7 +1,8 @@
 package georgikoemdzhiev.activeminutes.data_layer;
 
+import java.util.ArrayList;
+
 import georgikoemdzhiev.activeminutes.data_layer.db.TrainingData;
-import io.realm.RealmResults;
 import weka.classifiers.Classifier;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -12,23 +13,18 @@ import weka.core.Instances;
 
 public interface IDataManager {
 
-    Instances readInstancesFromDB(int userId);
+    Instances getInstances(int userId);
 
-    Instances readInstancesFromDB();
+    Instances getAll();
 
-    void saveInstanceToDB(Instance instance, int userId);
+    void saveInstance(Instance instance, int userId);
 
-    void saveInstanceToDB(Instance instance);
-
-    RealmResults<TrainingData> getAllTrainingInstances(int userId);
-
-    void saveInstancesToDB(Instances instances, int userId);
-
-    void saveInstancesToDB(Instances instances);
+    ArrayList<TrainingData> getInstancesAsList(int userId);
 
     Instances getInstanceHeader();
 
     void serialiseClassifierToFile(Classifier classifier);
+
 
     Classifier deSerialiseClassifierFromFile();
 

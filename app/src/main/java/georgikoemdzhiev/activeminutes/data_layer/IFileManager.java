@@ -1,4 +1,4 @@
-package georgikoemdzhiev.activeminutes.Utils;
+package georgikoemdzhiev.activeminutes.data_layer;
 
 import weka.classifiers.Classifier;
 import weka.core.Instances;
@@ -8,9 +8,10 @@ import weka.core.Instances;
  */
 
 public interface IFileManager {
-    void saveCurrentDataToArffFile(Instances instances, String activityLabel);
 
     Instances readARFFFileSchema();
+
+    void saveToArffFile(Instances instances);
 
     void serialiseAndStoreClassifier(Classifier classifier);
 

@@ -1,6 +1,7 @@
 package georgikoemdzhiev.activeminutes.data_layer;
 
-import georgikoemdzhiev.activeminutes.Utils.IFileManager;
+import java.util.ArrayList;
+
 import georgikoemdzhiev.activeminutes.data_layer.db.TrainingData;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -27,36 +28,32 @@ public class DataManager implements IDataManager {
         INSTANCE_HEADER = fileManager.readARFFFileSchema();
     }
 
+
     @Override
-    public Instances readInstancesFromDB(int userId) {
-        realm.beginTransaction();
+    public Instances getInstances(int userId) {
         RealmResults<TrainingData> realmResults = realm.where(TrainingData.class)
                 .equalTo(USER_ID, userId)
                 .findAll();
-
-        System.out.println("RealmResults: " + realmResults.toString());
-
-        Instances dataSet = toWekaInstance(realmResults);
-
-        realm.commitTransaction();
-        return dataSet;
+        return getWekaInstanceFrom(realmResults);
     }
 
     @Override
-    public Instances readInstancesFromDB() {
-        realm.beginTransaction();
+    public Instances getAll() {
         RealmResults<TrainingData> realmResults = realm.where(TrainingData.class)
-                .equalTo(USER_ID, 0)
                 .findAll();
-        System.out.println("RealmResults: " + realmResults.toString());
-        Instances dataSet = toWekaInstance(realmResults);
-        realm.commitTransaction();
-        return dataSet;
+        return getWekaInstanceFrom(realmResults);
     }
 
+    @Override
+    public ArrayList<TrainingData> getInstancesAsList(int userId) {
+        RealmResults<TrainingData> realmResults = realm.where(TrainingData.class)
+                .equalTo(USER_ID, userId)
+                .findAll();
+        return getListFrom(realmResults);
+    }
 
     @Override
-    public void saveInstanceToDB(Instance instance, int userId) {
+    public void saveInstance(Instance instance, int userId) {
         double[] instanceValues = instance.toDoubleArray();
         realm.beginTransaction();
         TrainingData trainingDataInstance = realm.createObject(TrainingData.class);
@@ -66,23 +63,6 @@ public class DataManager implements IDataManager {
         System.out.println("Instance saved to Database");
     }
 
-    @Override
-    public void saveInstanceToDB(Instance instance) {
-        saveInstanceToDB(instance, 0);
-    }
-
-    @Override
-    public void saveInstancesToDB(Instances instances, int userId) {
-        for (Instance instance : instances) {
-            saveInstanceToDB(instance, userId);
-        }
-        System.out.println("Instances saved to Database");
-    }
-
-    @Override
-    public void saveInstancesToDB(Instances instances) {
-        saveInstancesToDB(instances, 0);
-    }
 
     @Override
     public Instances getInstanceHeader() {
@@ -91,27 +71,21 @@ public class DataManager implements IDataManager {
 
     @Override
     public void serialiseClassifierToFile(Classifier classifier) {
+        // Serialise the classifier object and save it to a file for later use
         fileManager.serialiseAndStoreClassifier(classifier);
+        // Save the data for the generic user to arff file as  well
+        fileManager.saveToArffFile(getInstances(0));
     }
+
 
     @Override
     public Classifier deSerialiseClassifierFromFile() {
         return fileManager.deSerialiseClassifier();
     }
 
-    @Override
-    public RealmResults<TrainingData> getAllTrainingInstances(int userId) {
-        RealmResults<TrainingData> genericTrainingData;
-        realm.beginTransaction();
-        genericTrainingData = realm.where(TrainingData.class)
-                .equalTo(USER_ID, userId)
-                .findAll();
-        realm.commitTransaction();
-        return genericTrainingData;
-    }
 
-    private Instances toWekaInstance(RealmResults<TrainingData> realmResults) {
-        Instances dataSet = INSTANCE_HEADER;
+    private Instances getWekaInstanceFrom(RealmResults<TrainingData> realmResults) {
+        Instances dataSet = new Instances(INSTANCE_HEADER);
         for (int p = 0; p < realmResults.size(); p++) {
             TrainingData currentDBInstance = realmResults.get(p);
             DenseInstance instance = new DenseInstance(INSTANCE_HEADER.numAttributes());
@@ -127,4 +101,13 @@ public class DataManager implements IDataManager {
         }
         return dataSet;
     }
+
+    private ArrayList<TrainingData> getListFrom(RealmResults<TrainingData> realResults) {
+        ArrayList<TrainingData> trainingDataList = new ArrayList<>();
+        for (TrainingData td : realResults) {
+            trainingDataList.add(td);
+        }
+        return trainingDataList;
+    }
+
 }

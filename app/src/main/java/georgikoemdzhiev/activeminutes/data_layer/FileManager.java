@@ -1,8 +1,7 @@
-package georgikoemdzhiev.activeminutes.Utils;
+package georgikoemdzhiev.activeminutes.data_layer;
 
 import android.content.Context;
 import android.os.Environment;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,33 +33,10 @@ public class FileManager implements IFileManager {
 
     private File classifierFile = new File(path, "/" + "classifierModel.data");
 
+    private File arffFile = new File(path, "/" + "dataset.arff");
+
     public FileManager(Context context) {
         this.context = context;
-    }
-
-    @Override
-    public void saveCurrentDataToArffFile(Instances instances, String activityLabel) {
-//        String formattedUserName = userName.replace(" ", "_");
-
-        // have the object build the directory structure, if needed.
-        boolean harDirectoryCreated = path.mkdirs();
-        if (harDirectoryCreated) {
-            File file = new File(path, "/" + "HAR_" + activityLabel + "_" +
-                    System.currentTimeMillis() + ".arff");
-            BufferedWriter writer = null;
-            try {
-                writer = new BufferedWriter(new FileWriter(file));
-                writer.write(instances.toString());
-                writer.flush();
-                writer.close();
-                Toast.makeText(context, "File Saved!", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(context, "Error during saving data to Arff file!", Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     @Override
@@ -73,7 +49,7 @@ public class FileManager implements IFileManager {
             instances = arff.getData();
             instances.setClassIndex(instances.numAttributes() - 1);
 
-            System.out.println("Schema read successfully ->" + instances.toString());
+            System.out.println("Reading ARFF file schema: " + instances.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,11 +57,23 @@ public class FileManager implements IFileManager {
         return instances;
     }
 
+    public void saveToArffFile(Instances instances) {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(arffFile));
+            writer.write(instances.toString());
+            writer.flush();
+            writer.close();
+            System.out.println("Arff file saved!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Arff file NOT saved! " + e.getMessage());
+        }
+
+    }
+
     @Override
     public void serialiseAndStoreClassifier(Classifier classifier) {
-        path.mkdirs();
-
-
         try {
             FileOutputStream fos = new FileOutputStream(classifierFile);
             ObjectOutputStream ou = new ObjectOutputStream(fos);
@@ -116,6 +104,5 @@ public class FileManager implements IFileManager {
 
         return classifier;
     }
-
 
 }

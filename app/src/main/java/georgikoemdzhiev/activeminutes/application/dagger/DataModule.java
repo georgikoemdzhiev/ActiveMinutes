@@ -4,11 +4,11 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import georgikoemdzhiev.activeminutes.Utils.FileManager;
-import georgikoemdzhiev.activeminutes.Utils.IFileManager;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
 import georgikoemdzhiev.activeminutes.data_layer.DataManager;
+import georgikoemdzhiev.activeminutes.data_layer.FileManager;
 import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
 import io.realm.Realm;
 
 /**

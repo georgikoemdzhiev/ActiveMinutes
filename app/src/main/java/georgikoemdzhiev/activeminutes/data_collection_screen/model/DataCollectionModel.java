@@ -17,10 +17,10 @@ public class DataCollectionModel implements IDataCollectionModel {
     /***
      * Method that returns the number of collected instances for the generic user (id = 0)
      *
-     * @param result interface that is used to store the value of getAllTrainingInstances method
+     * @param result interface that is used to store the value of getAllTrainingInstancesForAllUsers method
      */
     @Override
     public void getNumOfInstances(NumOfInstResult result) {
-        result.onResult(dataManager.getAllTrainingInstances(0).size() + "");
+        result.onResult(dataManager.getAll().size() + "");
     }
 }
