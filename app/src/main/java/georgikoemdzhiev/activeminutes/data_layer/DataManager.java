@@ -1,7 +1,7 @@
-package georgikoemdzhiev.activeminutes.database;
+package georgikoemdzhiev.activeminutes.data_layer;
 
 import georgikoemdzhiev.activeminutes.Utils.IFileManager;
-import georgikoemdzhiev.activeminutes.database.db.TrainingData;
+import georgikoemdzhiev.activeminutes.data_layer.db.TrainingData;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import weka.classifiers.Classifier;

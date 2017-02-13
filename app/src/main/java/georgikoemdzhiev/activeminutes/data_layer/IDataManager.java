@@ -1,6 +1,6 @@
-package georgikoemdzhiev.activeminutes.database;
+package georgikoemdzhiev.activeminutes.data_layer;
 
-import georgikoemdzhiev.activeminutes.database.db.TrainingData;
+import georgikoemdzhiev.activeminutes.data_layer.db.TrainingData;
 import io.realm.RealmResults;
 import weka.classifiers.Classifier;
 import weka.core.Instance;

@@ -1,7 +1,7 @@
 package georgikoemdzhiev.activeminutes.data_collection_screen.model;
 
-import georgikoemdzhiev.activeminutes.database.IDataManager;
-import georgikoemdzhiev.activeminutes.database.NumOfInstResult;
+import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.NumOfInstResult;
 
 /**
  * Created by Georgi Koemdzhiev on 13/02/2017.

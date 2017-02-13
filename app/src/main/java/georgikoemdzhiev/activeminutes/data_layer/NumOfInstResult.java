@@ -1,4 +1,4 @@
-package georgikoemdzhiev.activeminutes.database;
+package georgikoemdzhiev.activeminutes.data_layer;
 
 /**
  * Created by Georgi Koemdzhiev on 12/02/2017.

@@ -1,7 +1,7 @@
 package georgikoemdzhiev.activeminutes.har;
 
 import georgikoemdzhiev.activeminutes.Utils.IFileManager;
-import georgikoemdzhiev.activeminutes.database.IDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
