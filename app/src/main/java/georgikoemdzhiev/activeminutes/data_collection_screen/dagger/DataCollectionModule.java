@@ -5,6 +5,8 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ActivityScope;
+import georgikoemdzhiev.activeminutes.data_collection_screen.model.DataCollectionModel;
+import georgikoemdzhiev.activeminutes.data_collection_screen.model.IDataCollectionModel;
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.DataCollectionController;
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.DataCollectionPresenter;
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.IDataCollectionController;
@@ -26,9 +28,15 @@ public class DataCollectionModule {
 
     @Provides
     @ActivityScope
+    IDataCollectionModel provideDataCollectionModel(IDataManager dataManager) {
+        return new DataCollectionModel(dataManager);
+    }
+
+    @Provides
+    @ActivityScope
     IDataCollectionPresenter provideDataCollectionPresenter(IDataCollectionController controller,
-                                                            IDataManager dataManager) {
-        return new DataCollectionPresenter(controller, dataManager);
+                                                            IDataCollectionModel model) {
+        return new DataCollectionPresenter(controller, model);
     }
 
 }

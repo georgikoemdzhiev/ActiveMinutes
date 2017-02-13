@@ -91,7 +91,7 @@ public class HarManager implements IHarManager {
             featureSet.setActivityLabel(activityLabel);
 
             instance = featureSet.toInstance(mDataManager.getInstanceHeader());
-
+            // save this training instance with userId 0 (generic training data)
             mDataManager.saveInstanceToDB(instance);
             System.out.println("FeatureSet.toString: " + featureSet.toString());
             System.out.println("FeatureSet.toInstance: " + instance);
@@ -116,11 +116,35 @@ public class HarManager implements IHarManager {
         this.activityLabel = activityLabel;
     }
 
+    /***
+     * Method that builds a personalised classifier using user's own data
+     *
+     * @param userId id of the user to be used to retrieve the user's collected training data
+     */
+    @Override
+    public void trainClassifier(int userId) {
+        Instances userOwnDataSet = mDataManager.readInstancesFromDB(userId);
+        System.out.println("Building personalised classifier for user with id= " +
+                userId + "data set used:" + userOwnDataSet.toString());
+        buildClassifier(userOwnDataSet);
+    }
+
+    /***
+     * Method that builds a generic classifier
+     */
     @Override
     public void trainClassifier() {
-        Instances dataSet = mDataManager.readInstancesFromDB();
-        System.out.println("DATASET TO BE USED FOR TRAINING: " + dataSet.toString());
+        Instances genericDataSet = mDataManager.readInstancesFromDB();
+        System.out.println("Building generic classifier. Data set used:" + genericDataSet.toString());
+        buildClassifier(genericDataSet);
+    }
 
+    /***
+     * Method that builds a classifier from a given dataset
+     *
+     * @param dataSet dataset that will be used for the classifier training
+     */
+    private void buildClassifier(Instances dataSet) {
         try {
             iBkClassifier.buildClassifier(dataSet);
             mDataManager.serialiseClassifierToFile(iBkClassifier);
@@ -129,6 +153,4 @@ public class HarManager implements IHarManager {
             e.printStackTrace();
         }
     }
-
-
 }

@@ -7,6 +7,9 @@ import io.realm.RealmObject;
  */
 
 public class TrainingData extends RealmObject {
+
+    private int userId;
+
     private double accX__fft1;
     private double accX__fft2;
     private double accX__fft3;
@@ -88,5 +91,13 @@ public class TrainingData extends RealmObject {
         accM__fft5 = values[19];
 
         classValue = values[20];
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

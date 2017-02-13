@@ -1,7 +1,7 @@
 package georgikoemdzhiev.activeminutes.data_collection_screen.presenter;
 
+import georgikoemdzhiev.activeminutes.data_collection_screen.model.IDataCollectionModel;
 import georgikoemdzhiev.activeminutes.data_collection_screen.view.IDataCollectionView;
-import georgikoemdzhiev.activeminutes.database.IDataManager;
 import georgikoemdzhiev.activeminutes.database.NumOfInstResult;
 
 /**
@@ -11,17 +11,17 @@ import georgikoemdzhiev.activeminutes.database.NumOfInstResult;
 public class DataCollectionPresenter implements IDataCollectionPresenter {
     private IDataCollectionController controller;
     private IDataCollectionView view;
-    private IDataManager dataManager;
+    private IDataCollectionModel model;
 
-    public DataCollectionPresenter(IDataCollectionController controller, IDataManager dataManager) {
+    public DataCollectionPresenter(IDataCollectionController controller, IDataCollectionModel model) {
         this.controller = controller;
-        this.dataManager = dataManager;
+        this.model = model;
     }
 
 
     @Override
     public void getNumberOfInstances() {
-        dataManager.getNumOfInstances(new NumOfInstResult() {
+        model.getNumOfInstances(new NumOfInstResult() {
             @Override
             public void onResult(String result) {
                 view.updateNumberOfInstances(result);

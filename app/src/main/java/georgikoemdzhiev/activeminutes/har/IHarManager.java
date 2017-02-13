@@ -14,5 +14,7 @@ public interface IHarManager {
 
     void setActivityLabel(String activityLabel);
 
+    void trainClassifier(int userId);
+
     void trainClassifier();
 }
