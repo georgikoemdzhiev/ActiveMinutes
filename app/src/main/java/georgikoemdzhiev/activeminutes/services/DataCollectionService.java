@@ -1,5 +1,7 @@
 package georgikoemdzhiev.activeminutes.services;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -7,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -15,7 +18,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
+import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
+import georgikoemdzhiev.activeminutes.data_collection_screen.view.DataCollectionActivity;
 import georgikoemdzhiev.activeminutes.har.IHarManager;
 import georgikoemdzhiev.activeminutes.services.service_events.ControlMessage;
 import georgikoemdzhiev.activeminutes.services.service_events.DataMessage;
@@ -65,6 +70,7 @@ public class DataCollectionService extends Service implements SensorEventListene
                 break;
             case START_RECORDING:
                 showToastMessage("Recording...");
+                runAsForeground();
                 sensorManager.registerListener(this, accSensor, SensorManager.SENSOR_DELAY_FASTEST);
                 break;
             case CLEAR_DATA:
@@ -73,6 +79,7 @@ public class DataCollectionService extends Service implements SensorEventListene
             case STOP_RECORDING:
                 mHarManager.resetWindowBegTime();
                 sensorManager.unregisterListener(this, accSensor);
+                stopForeground(true);
                 showToastMessage("Recording stopped!");
                 break;
         }
@@ -105,5 +112,17 @@ public class DataCollectionService extends Service implements SensorEventListene
 
     private void showToastMessage(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void runAsForeground() {
+        Intent notificationIntent = new Intent(this, DataCollectionActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                notificationIntent, 0);
+        Notification notification = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("My Awesome App")
+                .setContentText("Doing some work...")
+                .setContentIntent(pendingIntent).build();
+        startForeground(1337, notification);
     }
 }
