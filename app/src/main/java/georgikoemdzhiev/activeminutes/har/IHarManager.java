@@ -18,7 +18,7 @@ public interface IHarManager {
 
     void trainAndSavePersonalisedClassifier(int userId, TrainClassifierResult result);
 
-    void trainAndSaveGenericClassifier();
+    void trainAndSaveGenericClassifier(TrainClassifierResult result);
 
     IDataManager getDataManager();
 

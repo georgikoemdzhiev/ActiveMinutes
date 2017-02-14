@@ -5,7 +5,7 @@ package georgikoemdzhiev.activeminutes.har;
  */
 public interface TrainClassifierResult {
 
-    void onSuccess();
+    void onSuccess(String message);
 
     void onError(String message);
 }

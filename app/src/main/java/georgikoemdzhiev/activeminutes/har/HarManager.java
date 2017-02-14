@@ -135,25 +135,16 @@ public class HarManager implements IHarManager {
     @Override
     public void trainAndSavePersonalisedClassifier(int userId, TrainClassifierResult result) {
         Instances userOwnDataSet = mDataManager.getTrainingData(userId);
-        if (userOwnDataSet.size() == 0) {
-            result.onError("Cannot train classifier with empty dataset!");
-        } else {
-            System.out.println("Building personalised classifier for user with id= " +
-                    userId + " data set used:" + userOwnDataSet.toString());
-            buildClassifier(userOwnDataSet);
-            result.onSuccess();
-        }
-
+        buildClassifier(userOwnDataSet, result);
     }
 
     /***
      * Method that builds a generic classifier
      */
     @Override
-    public void trainAndSaveGenericClassifier() {
+    public void trainAndSaveGenericClassifier(TrainClassifierResult result) {
         Instances genericDataSet = mDataManager.getTrainingData(0);
-        System.out.println("Building generic classifier. Data set used:" + genericDataSet.toString());
-        buildClassifier(genericDataSet);
+        buildClassifier(genericDataSet, result);
     }
 
     @Override
@@ -171,13 +162,19 @@ public class HarManager implements IHarManager {
      *
      * @param dataSet dataset that will be used for the classifier training
      */
-    private void buildClassifier(Instances dataSet) {
-        try {
-            iBkClassifier.buildClassifier(dataSet);
-            mDataManager.serialiseClassifierToFile(iBkClassifier);
-            System.out.println("Classifier build successfully!");
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void buildClassifier(Instances dataSet, TrainClassifierResult result) {
+        if (dataSet.size() != 0) {
+            try {
+                iBkClassifier.buildClassifier(dataSet);
+                mDataManager.serialiseClassifierToFile(iBkClassifier);
+                result.onSuccess("Classifier is built successfully!");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                result.onError("Could NOT build classifier! " + e.getMessage());
+            }
+        } else {
+            result.onError("No data provided to build a classifier!");
         }
     }
 }

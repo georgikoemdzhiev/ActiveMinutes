@@ -22,6 +22,7 @@ import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.data_collection_screen.view.DataCollectionActivity;
 import georgikoemdzhiev.activeminutes.har.IHarManager;
+import georgikoemdzhiev.activeminutes.har.TrainClassifierResult;
 import georgikoemdzhiev.activeminutes.services.service_events.ControlMessage;
 import georgikoemdzhiev.activeminutes.services.service_events.DataMessage;
 
@@ -65,8 +66,17 @@ public class DataCollectionService extends Service implements SensorEventListene
     public void onControlMessageEvent(ControlMessage message) {
         switch (message.getMESSAGE()) {
             case EXPORT_DATA:
-                mHarManager.trainAndSaveGenericClassifier();
-                showToastMessage("Training & Saving Classifier...");
+                mHarManager.trainAndSaveGenericClassifier(new TrainClassifierResult() {
+                    @Override
+                    public void onSuccess(String message) {
+                        showToastMessage(message);
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        showToastMessage(message);
+                    }
+                });
                 break;
             case START_RECORDING:
                 showToastMessage("Recording...");
