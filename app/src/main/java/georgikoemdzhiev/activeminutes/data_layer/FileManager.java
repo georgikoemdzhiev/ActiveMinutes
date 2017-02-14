@@ -58,11 +58,11 @@ public class FileManager implements IFileManager {
         return instances;
     }
 
-    public void saveToArffFile(Instances instances) {
+    public void saveToArffFile(Instances dataset) {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(arffFile));
-            writer.write(instances.toString());
+            writer.write(dataset.toString());
             writer.flush();
             writer.close();
             System.out.println("Arff file saved!");

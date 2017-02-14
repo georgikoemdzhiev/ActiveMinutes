@@ -11,9 +11,9 @@ public interface IFileManager {
 
     Instances readArffFileSchema();
 
-    void saveToArffFile(Instances instances);
-
     Instances readFromArffFile();
+
+    void saveToArffFile(Instances dataset);
 
     void serialiseAndStoreClassifier(Classifier classifier);
 
