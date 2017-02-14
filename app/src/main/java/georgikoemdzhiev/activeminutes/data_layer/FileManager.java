@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -70,6 +71,24 @@ public class FileManager implements IFileManager {
             System.out.println("Arff file NOT saved! " + e.getMessage());
         }
 
+    }
+
+    @Override
+    public Instances readFromArffFile() {
+        BufferedReader reader = null;
+        Instances instances = null;
+        try {
+            reader = new BufferedReader(new FileReader(arffFile));
+            ArffLoader.ArffReader arff = new ArffLoader.ArffReader(reader);
+            instances = arff.getData();
+            instances.setClassIndex(instances.numAttributes() - 1);
+
+            System.out.println("Reading ARFF file from ES: " + instances.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return instances;
     }
 
     @Override

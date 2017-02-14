@@ -13,6 +13,8 @@ public interface IFileManager {
 
     void saveToArffFile(Instances instances);
 
+    Instances readFromArffFile();
+
     void serialiseAndStoreClassifier(Classifier classifier);
 
     Classifier deSerialiseClassifier();

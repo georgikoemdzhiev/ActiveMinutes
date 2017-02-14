@@ -15,6 +15,8 @@ public interface IDataManager {
 
     Instances getTrainingData(int userId);
 
+    Instances getTrainingDataFromArffFile();
+
     ArrayList<TrainingData> getTrainingDataAsList(int userId);
 
     void saveTrainingData(Instance instance, int userId);

@@ -38,6 +38,11 @@ public class DataManager implements IDataManager {
     }
 
     @Override
+    public Instances getTrainingDataFromArffFile() {
+        return fileManager.readFromArffFile();
+    }
+
+    @Override
     public ArrayList<TrainingData> getTrainingDataAsList(int userId) {
         RealmResults<TrainingData> realmResults = realm.where(TrainingData.class)
                 .equalTo(USER_ID, userId)
