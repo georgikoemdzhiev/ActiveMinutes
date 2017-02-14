@@ -1,4 +1,4 @@
-package georgikoemdzhiev.activeminutes.application.dagger;
+package georgikoemdzhiev.activeminutes.application.dagger.modules;
 
 import android.content.Context;
 

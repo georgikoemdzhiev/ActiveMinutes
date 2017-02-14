@@ -25,4 +25,9 @@ public class DataPreprocessor implements IDataPreprocessor {
         linear_acc[2] = xyzRawData[2] - gravity[2];
         return linear_acc;
     }
+
+    @Override
+    public double calculateMagnitude(double x, double y, double z) {
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+    }
 }

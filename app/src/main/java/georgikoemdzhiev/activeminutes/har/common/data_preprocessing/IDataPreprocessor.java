@@ -7,4 +7,6 @@ package georgikoemdzhiev.activeminutes.har.common.data_preprocessing;
 public interface IDataPreprocessor {
 
     double[] applyLowPassFilter(float[] xyzRawData);
+
+    double calculateMagnitude(double x, double y, double z);
 }

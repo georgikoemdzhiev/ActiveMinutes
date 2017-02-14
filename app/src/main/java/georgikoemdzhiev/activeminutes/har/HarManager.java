@@ -28,7 +28,7 @@ public abstract class HarManager implements IHarManager {
     private String activityLabel;
     private IDataManager mDataManager;
     private Classifier iBkClassifier;
-    private IDataPreprocessor dataPreprocessor;
+    private IDataPreprocessor dataPrep;
 
     public HarManager(IDataManager dataManager) {
         this.accXSeries = new TimeSeries("accX_");
@@ -41,19 +41,19 @@ public abstract class HarManager implements IHarManager {
 
         iBkClassifier = new IBk(3);
 
-        dataPreprocessor = new DataPreprocessor();
+        dataPrep = new DataPreprocessor();
 
     }
 
     @Override
     public void feedData(float[] xyz, long timestamp) {
         // apply low-pass filter to remove earth's gravity force
-        double[] noGravForce = dataPreprocessor.applyLowPassFilter(xyz);
+        double[] noGravForce = dataPrep.applyLowPassFilter(xyz);
         // add the data points to the appropriate lists..
         accXSeries.addPoint(new Point(timestamp, noGravForce[0]));
         accYSeries.addPoint(new Point(timestamp, noGravForce[1]));
         accZSeries.addPoint(new Point(timestamp, noGravForce[2]));
-        accMSeries.addPoint(new Point(timestamp, calcMagnitude(noGravForce[0],
+        accMSeries.addPoint(new Point(timestamp, dataPrep.calculateMagnitude(noGravForce[0],
                 noGravForce[1], noGravForce[2])));
 
         // Check if 3 seconds have passed...
@@ -119,9 +119,6 @@ public abstract class HarManager implements IHarManager {
         time_offset_counter = 0;
     }
 
-    private double calcMagnitude(double x, double y, double z) {
-        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
-    }
 
     public void setActivityLabel(String activityLabel) {
         this.activityLabel = activityLabel;

@@ -2,10 +2,10 @@ package georgikoemdzhiev.activeminutes.application;
 
 import android.app.Application;
 
-import georgikoemdzhiev.activeminutes.application.dagger.AppComponent;
-import georgikoemdzhiev.activeminutes.application.dagger.AppModule;
-import georgikoemdzhiev.activeminutes.application.dagger.DaggerAppComponent;
-import georgikoemdzhiev.activeminutes.application.dagger.DataModule;
+import georgikoemdzhiev.activeminutes.application.dagger.components.AppComponent;
+import georgikoemdzhiev.activeminutes.application.dagger.components.DaggerAppComponent;
+import georgikoemdzhiev.activeminutes.application.dagger.modules.AppModule;
+import georgikoemdzhiev.activeminutes.application.dagger.modules.DataModule;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionComponent;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
 import io.realm.Realm;
