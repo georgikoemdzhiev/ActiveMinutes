@@ -41,7 +41,7 @@ public class FileManager implements IFileManager {
     }
 
     @Override
-    public Instances readARFFFileSchema() {
+    public Instances readArffFileSchema() {
         BufferedReader reader = null;
         Instances instances = null;
         try {

@@ -25,7 +25,7 @@ public class DataManager implements IDataManager {
     public DataManager(Realm realm, IFileManager fileManager) {
         this.realm = realm;
         this.fileManager = fileManager;
-        INSTANCE_HEADER = fileManager.readARFFFileSchema();
+        INSTANCE_HEADER = fileManager.readArffFileSchema();
     }
 
 
