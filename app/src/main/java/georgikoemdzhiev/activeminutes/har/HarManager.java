@@ -16,7 +16,7 @@ import weka.core.Instances;
  * Created by koemdzhiev on 10/02/2017.
  */
 
-public class HarManager implements IHarManager {
+public abstract class HarManager implements IHarManager {
     // 3 Second time window
     private static final long WINDOW_LENGTH = 3000;
     // OFFSET time that will "cut" the first 3 seconds from the start of the recording

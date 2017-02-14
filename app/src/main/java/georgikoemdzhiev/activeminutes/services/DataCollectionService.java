@@ -20,6 +20,7 @@ import javax.inject.Inject;
 
 import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
+import georgikoemdzhiev.activeminutes.application.dagger.qualifiers.Named;
 import georgikoemdzhiev.activeminutes.data_collection_screen.view.DataCollectionActivity;
 import georgikoemdzhiev.activeminutes.har.IHarManager;
 import georgikoemdzhiev.activeminutes.har.TrainClassifierResult;
@@ -34,6 +35,7 @@ public class DataCollectionService extends Service implements SensorEventListene
     public static final String CLEAR_DATA = "clear_collected_data";
 
     @Inject
+    @Named("train")
     IHarManager mHarManager;
     private String activityLabel = "";
     private SensorManager sensorManager;
@@ -50,6 +52,7 @@ public class DataCollectionService extends Service implements SensorEventListene
         // Register event bus so this class can receive event messages
         EventBus.getDefault().register(this);
         ((ActiveMinutesApplication) getApplication()).getComponent().inject(this);
+        System.out.println("Testing qualifiers " + mHarManager.getClass().getSimpleName());
     }
 
     @Override

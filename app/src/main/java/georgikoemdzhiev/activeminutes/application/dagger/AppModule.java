@@ -5,9 +5,6 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
-import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
-import georgikoemdzhiev.activeminutes.har.HarManager;
-import georgikoemdzhiev.activeminutes.har.IHarManager;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
@@ -27,10 +24,5 @@ public class AppModule {
         return this.mContext;
     }
 
-    @Provides
-    @ApplicationScope
-    IHarManager provideHarManager(IDataManager dataManager) {
-        return new HarManager(dataManager);
-    }
 
 }

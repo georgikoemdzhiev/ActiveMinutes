@@ -10,7 +10,11 @@ import georgikoemdzhiev.activeminutes.services.DataCollectionService;
  * Created by koemdzhiev on 09/02/2017.
  */
 
-@Component(modules = {AppModule.class, DataModule.class})
+@Component(modules = {
+        AppModule.class,
+        DataModule.class,
+        HarModule.class
+})
 @ApplicationScope
 public interface AppComponent {
     DataCollectionComponent plus(DataCollectionModule module);
