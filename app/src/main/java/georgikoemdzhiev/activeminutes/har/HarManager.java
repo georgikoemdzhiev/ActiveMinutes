@@ -92,7 +92,7 @@ public class HarManager implements IHarManager {
 
             instance = featureSet.toInstance(mDataManager.getInstanceHeader());
             // save this training instance with userId 0 (generic training data)
-            mDataManager.saveTrainingInstance(instance, 0);
+            mDataManager.saveTrainingData(instance, 0);
             System.out.println("FeatureSet.toString: " + featureSet.toString());
             System.out.println("FeatureSet.toInstance: " + instance);
 
@@ -123,7 +123,7 @@ public class HarManager implements IHarManager {
      */
     @Override
     public void trainAndSavePersonalisedClassifier(int userId, TrainClassifierResult result) {
-        Instances userOwnDataSet = mDataManager.getTrainingInstances(userId);
+        Instances userOwnDataSet = mDataManager.getTrainingData(userId);
         if (userOwnDataSet.size() == 0) {
             result.onError("Cannot train classifier with empty dataset!");
         } else {
@@ -140,9 +140,14 @@ public class HarManager implements IHarManager {
      */
     @Override
     public void trainAndSaveGenericClassifier() {
-        Instances genericDataSet = mDataManager.getTrainingInstances(0);
+        Instances genericDataSet = mDataManager.getTrainingData(0);
         System.out.println("Building generic classifier. Data set used:" + genericDataSet.toString());
         buildClassifier(genericDataSet);
+    }
+
+    @Override
+    public IDataManager getDataManager() {
+        return this.mDataManager;
     }
 
     /***

@@ -21,6 +21,6 @@ public class DataCollectionModel implements IDataCollectionModel {
      */
     @Override
     public void getNumOfInstances(NumOfInstResult result) {
-        result.onResult(dataManager.getTrainingInstancesAsList(0).size() + "");
+        result.onResult(dataManager.getTrainingDataAsList(0).size() + "");
     }
 }

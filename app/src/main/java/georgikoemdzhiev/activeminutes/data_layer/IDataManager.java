@@ -13,11 +13,13 @@ import weka.core.Instances;
 
 public interface IDataManager {
 
-    Instances getTrainingInstances(int userId);
+    Instances getTrainingData(int userId);
 
-    ArrayList<TrainingData> getTrainingInstancesAsList(int userId);
+    ArrayList<TrainingData> getTrainingDataAsList(int userId);
 
-    void saveTrainingInstance(Instance instance, int userId);
+    void saveTrainingData(Instance instance, int userId);
+
+    void deleteAllTrainingData();
 
     Instances getInstanceHeader();
 

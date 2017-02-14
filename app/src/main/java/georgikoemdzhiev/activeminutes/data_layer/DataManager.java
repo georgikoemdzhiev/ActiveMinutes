@@ -30,7 +30,7 @@ public class DataManager implements IDataManager {
 
 
     @Override
-    public Instances getTrainingInstances(int userId) {
+    public Instances getTrainingData(int userId) {
         RealmResults<TrainingData> realmResults = realm.where(TrainingData.class)
                 .equalTo(USER_ID, userId)
                 .findAll();
@@ -38,7 +38,7 @@ public class DataManager implements IDataManager {
     }
 
     @Override
-    public ArrayList<TrainingData> getTrainingInstancesAsList(int userId) {
+    public ArrayList<TrainingData> getTrainingDataAsList(int userId) {
         RealmResults<TrainingData> realmResults = realm.where(TrainingData.class)
                 .equalTo(USER_ID, userId)
                 .findAll();
@@ -46,7 +46,7 @@ public class DataManager implements IDataManager {
     }
 
     @Override
-    public void saveTrainingInstance(Instance instance, int userId) {
+    public void saveTrainingData(Instance instance, int userId) {
         double[] instanceValues = instance.toDoubleArray();
         realm.beginTransaction();
         TrainingData trainingDataInstance = realm.createObject(TrainingData.class);
@@ -54,6 +54,13 @@ public class DataManager implements IDataManager {
         trainingDataInstance.setValues(instanceValues);
         realm.commitTransaction();
         System.out.println("Instance saved to Database");
+    }
+
+    @Override
+    public void deleteAllTrainingData() {
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
     }
 
 
@@ -67,7 +74,7 @@ public class DataManager implements IDataManager {
         // Serialise the classifier object and save it to a file for later use
         fileManager.serialiseAndStoreClassifier(classifier);
         // Save the data for the generic user to arff file as  well
-        fileManager.saveToArffFile(getTrainingInstances(0));
+        fileManager.saveToArffFile(getTrainingData(0));
     }
 
 

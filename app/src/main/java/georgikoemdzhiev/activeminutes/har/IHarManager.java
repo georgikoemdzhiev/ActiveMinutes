@@ -1,5 +1,7 @@
 package georgikoemdzhiev.activeminutes.har;
 
+import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
+
 /**
  * Created by koemdzhiev on 10/02/2017.
  */
@@ -17,4 +19,6 @@ public interface IHarManager {
     void trainAndSavePersonalisedClassifier(int userId, TrainClassifierResult result);
 
     void trainAndSaveGenericClassifier();
+
+    IDataManager getDataManager();
 }
