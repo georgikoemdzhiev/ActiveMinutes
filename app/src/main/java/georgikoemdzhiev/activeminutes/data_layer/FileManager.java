@@ -41,6 +41,7 @@ public class FileManager implements IFileManager {
 
     public FileManager(Context context) {
         this.context = context;
+        path.mkdirs();
     }
 
     @Override
