@@ -25,7 +25,7 @@ public class DataManager implements IDataManager {
     public DataManager(Realm realm, IFileManager fileManager) {
         this.realm = realm;
         this.fileManager = fileManager;
-        INSTANCE_HEADER = fileManager.readArffFileSchema();
+        INSTANCE_HEADER = fileManager.readArffFileSchemaFromAssets();
     }
 
 
@@ -39,7 +39,7 @@ public class DataManager implements IDataManager {
 
     @Override
     public Instances getTrainingDataFromArffFile() {
-        return fileManager.readFromArffFile();
+        return fileManager.readFromArffFileFromES();
     }
 
     @Override

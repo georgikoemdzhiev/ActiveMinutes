@@ -9,9 +9,11 @@ import weka.core.Instances;
 
 public interface IFileManager {
 
-    Instances readArffFileSchema();
+    Instances readArffFileSchemaFromAssets();
 
-    Instances readFromArffFile();
+    Instances readArffFileFromAssets();
+
+    Instances readFromArffFileFromES();
 
     void saveToArffFile(Instances dataset);
 

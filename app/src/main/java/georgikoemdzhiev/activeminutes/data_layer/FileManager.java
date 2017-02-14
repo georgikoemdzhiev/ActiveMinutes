@@ -28,6 +28,9 @@ public class FileManager implements IFileManager {
 
     private static final String DIRECTORY_HAR = "HAR";
 
+    private final String DATASET_SCHEMA_FILE_NAME = "schema_file.arff";
+    private final String DATASET_FILE_NAME = "dataset.arff";
+
     private Context context;
 
     private File path = Environment.getExternalStoragePublicDirectory(DIRECTORY_HAR);
@@ -41,21 +44,13 @@ public class FileManager implements IFileManager {
     }
 
     @Override
-    public Instances readArffFileSchema() {
-        BufferedReader reader = null;
-        Instances instances = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(context.getAssets().open("schema_file.arff")));
-            ArffLoader.ArffReader arff = new ArffLoader.ArffReader(reader);
-            instances = arff.getData();
-            instances.setClassIndex(instances.numAttributes() - 1);
+    public Instances readArffFileSchemaFromAssets() {
+        return readArffFileFromAssets(DATASET_SCHEMA_FILE_NAME);
+    }
 
-            System.out.println("Reading ARFF file schema: " + instances.toString());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return instances;
+    @Override
+    public Instances readArffFileFromAssets() {
+        return readArffFileFromAssets(DATASET_FILE_NAME);
     }
 
     public void saveToArffFile(Instances dataset) {
@@ -74,7 +69,7 @@ public class FileManager implements IFileManager {
     }
 
     @Override
-    public Instances readFromArffFile() {
+    public Instances readFromArffFileFromES() {
         BufferedReader reader = null;
         Instances instances = null;
         try {
@@ -122,6 +117,29 @@ public class FileManager implements IFileManager {
         }
 
         return classifier;
+    }
+
+    /***
+     * Helper method that reads a arff file from the application's asset folder
+     *
+     * @param fileName the name of the file to be read
+     * @return Instances (dataset) WEKA object
+     */
+    private Instances readArffFileFromAssets(String fileName) {
+        BufferedReader reader = null;
+        Instances instances = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)));
+            ArffLoader.ArffReader arff = new ArffLoader.ArffReader(reader);
+            instances = arff.getData();
+            instances.setClassIndex(instances.numAttributes() - 1);
+
+            System.out.println("Reading ARFF " + fileName + " file from Assets: " + instances.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return instances;
     }
 
 }
