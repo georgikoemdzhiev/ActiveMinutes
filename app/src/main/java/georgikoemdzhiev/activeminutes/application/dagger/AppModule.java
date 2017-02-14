@@ -6,7 +6,6 @@ import dagger.Module;
 import dagger.Provides;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
 import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
-import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
 import georgikoemdzhiev.activeminutes.har.HarManager;
 import georgikoemdzhiev.activeminutes.har.IHarManager;
 
@@ -30,8 +29,8 @@ public class AppModule {
 
     @Provides
     @ApplicationScope
-    IHarManager provideHarManager(IFileManager fileManager, IDataManager dataManager) {
-        return new HarManager(fileManager, dataManager);
+    IHarManager provideHarManager(IDataManager dataManager) {
+        return new HarManager(dataManager);
     }
 
 }

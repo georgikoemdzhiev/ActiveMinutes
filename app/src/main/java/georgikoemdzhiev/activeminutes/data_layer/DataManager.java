@@ -63,6 +63,20 @@ public class DataManager implements IDataManager {
         realm.commitTransaction();
     }
 
+    @Override
+    public void deleteLastTrainingDataRecord(int userId) {
+        RealmResults<TrainingData> trainingData = realm
+                .where(TrainingData.class)
+                .equalTo(USER_ID, userId)
+                .findAll();
+        if (trainingData.size() > 1) {
+            realm.beginTransaction();
+            trainingData.get(trainingData.size() - 1).deleteFromRealm();
+            realm.commitTransaction();
+        }
+
+    }
+
 
     @Override
     public Instances getInstanceHeader() {

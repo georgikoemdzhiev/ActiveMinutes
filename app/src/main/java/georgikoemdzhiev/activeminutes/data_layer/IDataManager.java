@@ -21,6 +21,8 @@ public interface IDataManager {
 
     void deleteAllTrainingData();
 
+    void deleteLastTrainingDataRecord(int userId);
+
     Instances getInstanceHeader();
 
     void serialiseClassifierToFile(Classifier classifier);

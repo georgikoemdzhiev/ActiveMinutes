@@ -79,6 +79,7 @@ public class DataCollectionService extends Service implements SensorEventListene
                 break;
             case STOP_RECORDING:
                 mHarManager.resetWindowBegTime();
+                mHarManager.applyTimeOffset();
                 sensorManager.unregisterListener(this, accSensor);
                 stopForeground(true);
                 showToastMessage("Recording stopped!");

@@ -21,4 +21,6 @@ public interface IHarManager {
     void trainAndSaveGenericClassifier();
 
     IDataManager getDataManager();
+
+    void applyTimeOffset();
 }
