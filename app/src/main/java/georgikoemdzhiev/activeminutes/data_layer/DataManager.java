@@ -30,7 +30,7 @@ public class DataManager implements IDataManager {
 
 
     @Override
-    public Instances getInstances(int userId) {
+    public Instances getTrainingInstances(int userId) {
         RealmResults<TrainingData> realmResults = realm.where(TrainingData.class)
                 .equalTo(USER_ID, userId)
                 .findAll();
@@ -38,14 +38,7 @@ public class DataManager implements IDataManager {
     }
 
     @Override
-    public Instances getAll() {
-        RealmResults<TrainingData> realmResults = realm.where(TrainingData.class)
-                .findAll();
-        return getWekaInstanceFrom(realmResults);
-    }
-
-    @Override
-    public ArrayList<TrainingData> getInstancesAsList(int userId) {
+    public ArrayList<TrainingData> getTrainingInstancesAsList(int userId) {
         RealmResults<TrainingData> realmResults = realm.where(TrainingData.class)
                 .equalTo(USER_ID, userId)
                 .findAll();
@@ -53,7 +46,7 @@ public class DataManager implements IDataManager {
     }
 
     @Override
-    public void saveInstance(Instance instance, int userId) {
+    public void saveTrainingInstance(Instance instance, int userId) {
         double[] instanceValues = instance.toDoubleArray();
         realm.beginTransaction();
         TrainingData trainingDataInstance = realm.createObject(TrainingData.class);
@@ -74,7 +67,7 @@ public class DataManager implements IDataManager {
         // Serialise the classifier object and save it to a file for later use
         fileManager.serialiseAndStoreClassifier(classifier);
         // Save the data for the generic user to arff file as  well
-        fileManager.saveToArffFile(getInstances(0));
+        fileManager.saveToArffFile(getTrainingInstances(0));
     }
 
 

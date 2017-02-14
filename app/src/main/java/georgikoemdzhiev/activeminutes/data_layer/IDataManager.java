@@ -13,18 +13,15 @@ import weka.core.Instances;
 
 public interface IDataManager {
 
-    Instances getInstances(int userId);
+    Instances getTrainingInstances(int userId);
 
-    Instances getAll();
+    ArrayList<TrainingData> getTrainingInstancesAsList(int userId);
 
-    void saveInstance(Instance instance, int userId);
-
-    ArrayList<TrainingData> getInstancesAsList(int userId);
+    void saveTrainingInstance(Instance instance, int userId);
 
     Instances getInstanceHeader();
 
     void serialiseClassifierToFile(Classifier classifier);
-
 
     Classifier deSerialiseClassifierFromFile();
 
