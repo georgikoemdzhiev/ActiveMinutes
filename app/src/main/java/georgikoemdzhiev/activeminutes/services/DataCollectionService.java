@@ -120,8 +120,8 @@ public class DataCollectionService extends Service implements SensorEventListene
                 notificationIntent, 0);
         Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("My Awesome App")
-                .setContentText("Doing some work...")
+                .setContentTitle("Data collection")
+                .setContentText("Recording accelerometer data...")
                 .setContentIntent(pendingIntent).build();
         startForeground(1337, notification);
     }
