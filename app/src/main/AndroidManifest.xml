@@ -29,6 +29,9 @@
             android:enabled="true"
             android:exported="true">
         </service>
+
+        <activity android:name=".login_screen.LoginActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,6 @@
 package georgikoemdzhiev.activeminutes.har;
 
-import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
 
 /**
  * Created by koemdzhiev on 10/02/2017.
@@ -14,13 +14,14 @@ public interface IHarManager {
 
     void resetWindowBegTime();
 
+    void resetTimeSeries();
+
     void setActivityLabel(String activityLabel);
 
     void trainAndSavePersonalisedClassifier(int userId, TrainClassifierResult result);
 
     void trainAndSaveGenericClassifier(TrainClassifierResult result);
 
-    IDataManager getDataManager();
+    IHarDataManager getDataManager();
 
-    void applyTimeOffset();
 }

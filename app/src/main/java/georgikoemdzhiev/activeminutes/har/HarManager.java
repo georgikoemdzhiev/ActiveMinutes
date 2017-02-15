@@ -1,6 +1,6 @@
 package georgikoemdzhiev.activeminutes.har;
 
-import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
@@ -18,19 +18,17 @@ import weka.core.Instances;
 
 public abstract class HarManager implements IHarManager {
     // 3 Second time window
-    private static final long WINDOW_LENGTH = 3000;
-    // OFFSET time that will "cut" the first 3 seconds from the start of the recording
-    private final int TIME_OFFSET = 1;
-    private int time_offset_counter = 0;
-    private long windowBegTime = -1;
-    private TimeSeries accXSeries, accYSeries, accZSeries, accMSeries;
-    private TimeWindow window;
-    private String activityLabel;
-    private IDataManager mDataManager;
-    private Classifier iBkClassifier;
-    private IDataPreprocessor dataPrep;
+    protected static final long WINDOW_LENGTH = 3000;
 
-    public HarManager(IDataManager dataManager) {
+    long windowBegTime = -1;
+    TimeSeries accXSeries, accYSeries, accZSeries, accMSeries;
+    TimeWindow window;
+    IHarDataManager mDataManager;
+    IDataPreprocessor dataPrep;
+    private String activityLabel;
+    private Classifier iBkClassifier;
+
+    public HarManager(IHarDataManager dataManager) {
         this.accXSeries = new TimeSeries("accX_");
         this.accYSeries = new TimeSeries("accY_");
         this.accZSeries = new TimeSeries("accZ_");
@@ -60,25 +58,22 @@ public abstract class HarManager implements IHarManager {
         if (System.currentTimeMillis() - windowBegTime > WINDOW_LENGTH) {
             if (windowBegTime > 0) {
                 // Check if to start recording checking the time offset
-                if (time_offset_counter >= TIME_OFFSET) {
-                    window.addTimeSeries(accXSeries);
-                    window.addTimeSeries(accYSeries);
-                    window.addTimeSeries(accZSeries);
-                    window.addTimeSeries(accMSeries);
+                window.addTimeSeries(accXSeries);
+                window.addTimeSeries(accYSeries);
+                window.addTimeSeries(accZSeries);
+                window.addTimeSeries(accMSeries);
 
-                    System.out.println("Time Window Issued!");
-                    issueTimeWindow();
-                    resetTimeSeries();
-                } else {
-                    time_offset_counter++;
-                }
+                System.out.println("Time Window Issued!");
+                issueTimeWindow();
+                resetTimeSeries();
             }
-
-            windowBegTime = System.currentTimeMillis();
         }
+
+        windowBegTime = System.currentTimeMillis();
+
     }
 
-    private void resetTimeSeries() {
+    public void resetTimeSeries() {
         this.accXSeries.clear();
         this.accYSeries.clear();
         this.accZSeries.clear();
@@ -116,7 +111,6 @@ public abstract class HarManager implements IHarManager {
      */
     public void resetWindowBegTime() {
         windowBegTime = -1;
-        time_offset_counter = 0;
     }
 
 
@@ -145,14 +139,10 @@ public abstract class HarManager implements IHarManager {
     }
 
     @Override
-    public IDataManager getDataManager() {
+    public IHarDataManager getDataManager() {
         return this.mDataManager;
     }
 
-    @Override
-    public void applyTimeOffset() {
-        mDataManager.deleteLastTrainingDataRecord(0);
-    }
 
     /***
      * Method that builds a classifier from a given dataset

@@ -22,6 +22,7 @@ import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.application.dagger.qualifiers.Named;
 import georgikoemdzhiev.activeminutes.data_collection_screen.view.DataCollectionActivity;
+import georgikoemdzhiev.activeminutes.har.HarTrainManager;
 import georgikoemdzhiev.activeminutes.har.IHarManager;
 import georgikoemdzhiev.activeminutes.har.TrainClassifierResult;
 import georgikoemdzhiev.activeminutes.services.service_events.ControlMessage;
@@ -92,7 +93,7 @@ public class DataCollectionService extends Service implements SensorEventListene
                 break;
             case STOP_RECORDING:
                 mHarManager.resetWindowBegTime();
-                mHarManager.applyTimeOffset();
+                ((HarTrainManager) mHarManager).applyTimeOffset();
                 sensorManager.unregisterListener(this, accSensor);
                 stopForeground(true);
                 showToastMessage("Recording stopped!");

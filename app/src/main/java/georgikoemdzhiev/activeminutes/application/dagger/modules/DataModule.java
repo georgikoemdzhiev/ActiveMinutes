@@ -5,10 +5,10 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
-import georgikoemdzhiev.activeminutes.data_layer.DataManager;
 import georgikoemdzhiev.activeminutes.data_layer.FileManager;
-import georgikoemdzhiev.activeminutes.data_layer.IDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.HarDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
+import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
 import io.realm.Realm;
 
 /**
@@ -29,8 +29,8 @@ public class DataModule {
 
     @Provides
     @ApplicationScope
-    IDataManager provideDataManager(Realm realm, IFileManager fileManager) {
-        return new DataManager(realm, fileManager);
+    IHarDataManager provideDataManager(Realm realm, IFileManager fileManager) {
+        return new HarDataManager(realm, fileManager);
     }
 
     @Provides
