@@ -1,4 +1,4 @@
-package georgikoemdzhiev.activeminutes.login_screen;
+package georgikoemdzhiev.activeminutes.login_screen.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

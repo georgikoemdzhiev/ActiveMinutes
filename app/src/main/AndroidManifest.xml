@@ -30,7 +30,7 @@
             android:exported="true">
         </service>
 
-        <activity android:name=".login_screen.LoginActivity">
+        <activity android:name=".login_screen.view.LoginActivity">
         </activity>
     </application>
 

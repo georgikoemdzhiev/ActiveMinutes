@@ -1,7 +1,5 @@
 package georgikoemdzhiev.activeminutes.data_layer;
 
-import georgikoemdzhiev.activeminutes.login_screen.AuthResult;
-
 /**
  * Created by Georgi Koemdzhiev on 15/02/2017.
  */
