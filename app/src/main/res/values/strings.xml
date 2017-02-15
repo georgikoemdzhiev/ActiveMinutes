@@ -11,4 +11,7 @@
     <string name="controls_text_label">Controls</string>
     <string name="number_of_recorded_instances_textview_text">Number of recorded instances:</string>
     <string name="select_activity_dialog_title">Select Activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

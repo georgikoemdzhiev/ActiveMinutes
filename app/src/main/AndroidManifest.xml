@@ -17,11 +17,7 @@
             android:name=".data_collection_screen.view.DataCollectionActivity"
             android:label="@string/data_collection_screen"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <service
@@ -31,6 +27,11 @@
         </service>
 
         <activity android:name=".authentication_screen.view.AuthenticationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 
