@@ -19,6 +19,15 @@ public class LoginFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static LoginFragment newInstance() {
+        LoginFragment loginFragment = new LoginFragment();
+//        Bundle args = new Bundle();
+//        args.putInt("someInt", someInt);
+//        args.putString("someString", someString);
+//        // Put any other arguments
+//        loginFragment.setArguments(args);
+        return loginFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

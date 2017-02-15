@@ -16,8 +16,8 @@ public class AuthenticationActivity extends AppIntro {
 
         // Add your slide fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
-        addSlide(new LoginFragment());
-        addSlide(new SignUpFragment());
+        addSlide(LoginFragment.newInstance());
+        addSlide(SignUpFragment.newInstance());
 
 
         // Instead of fragments, you can also use our default slide

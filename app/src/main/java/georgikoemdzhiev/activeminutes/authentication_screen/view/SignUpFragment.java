@@ -19,6 +19,15 @@ public class SignUpFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static SignUpFragment newInstance() {
+        SignUpFragment signUpFragment = new SignUpFragment();
+//        Bundle args = new Bundle();
+//        args.putInt("someInt", someInt);
+//        args.putString("someString", someString);
+//        // Put any other arguments
+//        loginFragment.setArguments(args);
+        return signUpFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
