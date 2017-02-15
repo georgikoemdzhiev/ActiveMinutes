@@ -4,7 +4,7 @@ package georgikoemdzhiev.activeminutes.data_layer;
  * Created by Georgi Koemdzhiev on 15/02/2017.
  */
 
-public interface IUserAuthDataManager {
+public interface IAuthDataManager {
 
     void createNewUser(String username, String password, AuthResult result);
 

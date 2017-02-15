@@ -6,6 +6,8 @@ import georgikoemdzhiev.activeminutes.application.dagger.components.AppComponent
 import georgikoemdzhiev.activeminutes.application.dagger.components.DaggerAppComponent;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.AppModule;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.DataModule;
+import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthComponent;
+import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthModule;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionComponent;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
 import io.realm.Realm;
@@ -18,7 +20,7 @@ import io.realm.RealmConfiguration;
 public class ActiveMinutesApplication extends Application {
     private AppComponent mComponent;
     private DataCollectionComponent mDataCollectionComponent;
-
+    private AuthComponent mAuthenticationComponent;
 
     @Override
     public void onCreate() {
@@ -51,6 +53,11 @@ public class ActiveMinutesApplication extends Application {
 
     public void releaseDataCollectionComponent() {
         this.mDataCollectionComponent = null;
+    }
+
+    public AuthComponent build() {
+        mAuthenticationComponent = mComponent.plus(new AuthModule());
+        return mAuthenticationComponent;
     }
 
 

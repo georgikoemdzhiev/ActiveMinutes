@@ -8,12 +8,12 @@ import io.realm.RealmResults;
  * Created by Georgi Koemdzhiev on 15/02/2017.
  */
 
-public class UserAuthDataManager implements IUserAuthDataManager {
+public class AuthDataManager implements IAuthDataManager {
     private final String USERNAME = "username";
     private final String PASSWORD = "password";
     private Realm mRealm;
 
-    public UserAuthDataManager(Realm realm) {
+    public AuthDataManager(Realm realm) {
         this.mRealm = realm;
     }
 
