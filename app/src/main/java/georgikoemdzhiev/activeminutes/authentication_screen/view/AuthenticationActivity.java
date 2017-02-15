@@ -1,15 +1,15 @@
-package georgikoemdzhiev.activeminutes.login_screen.view;
+package georgikoemdzhiev.activeminutes.authentication_screen.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import georgikoemdzhiev.activeminutes.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class AuthenticationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.authentication_login);
     }
 }
