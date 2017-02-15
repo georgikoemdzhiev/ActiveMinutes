@@ -57,4 +57,5 @@ public class AuthenticationActivity extends AppIntro {
         // Do something when the slide changes.
     }
 
+
 }
