@@ -11,13 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="georgikoemdzhiev.activeminutes.authentication_screen.view.LoginFragment">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Signup Fragment"
-        android:textColor="@android:color/white"/>
+    <include layout="@layout/active_minutes_font_applied"/>
 
 </RelativeLayout>

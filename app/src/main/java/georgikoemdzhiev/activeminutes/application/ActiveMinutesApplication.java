@@ -25,7 +25,6 @@ public class ActiveMinutesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         // Initial Database setup
         // The Realm file will be located in Context.getFilesDir() with name "default.realm"
         setUpRealmDatabase();
