@@ -37,6 +37,7 @@ public class ActiveMinutesApplication extends Application {
 
     }
 
+
     private void setUpRealmDatabase() {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()

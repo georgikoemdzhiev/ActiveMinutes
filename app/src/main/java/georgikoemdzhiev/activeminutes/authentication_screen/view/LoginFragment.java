@@ -1,15 +1,20 @@
 package georgikoemdzhiev.activeminutes.authentication_screen.view;
 
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.authentication_screen.presenter.ILoginPresenter;
@@ -20,6 +25,8 @@ import georgikoemdzhiev.activeminutes.authentication_screen.presenter.ILoginPres
 public class LoginFragment extends Fragment implements ILoginView {
     @Inject
     ILoginPresenter mPresenter;
+    @BindView(R.id.activeMinutesTextView)
+    TextView mActiveMinutesTextView;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -42,7 +49,12 @@ public class LoginFragment extends Fragment implements ILoginView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        // Provide this layout for injecting views to this fragment
+        ButterKnife.bind(this, view);
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/SignPainter-HouseScript.ttf");
+        mActiveMinutesTextView.setTypeface(face);
+        return view;
     }
 
     @Override
@@ -53,12 +65,17 @@ public class LoginFragment extends Fragment implements ILoginView {
 
     @Override
     public void showDialogMessage(String message) {
-
+        System.out.println(message);
     }
 
     private void satisfyDependencies() {
         ((ActiveMinutesApplication) getActivity()
                 .getApplication()).build().inject(this);
+    }
+
+    @OnClick(R.id.loginBtn)
+    public void onLoginBtnClicked() {
+        mPresenter.login("Georgi", "123");
     }
 
 }

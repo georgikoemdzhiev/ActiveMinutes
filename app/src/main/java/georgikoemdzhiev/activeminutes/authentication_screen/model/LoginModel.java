@@ -16,7 +16,7 @@ public class LoginModel implements ILoginModel {
 
     @Override
     public void loginUser(String username, String password, final ActionResult result) {
-        mDataManager.createNewUser(username, password, new AuthResult() {
+        mDataManager.login(username, password, new AuthResult() {
             @Override
             public void onSuccess(String message) {
                 result.onSuccess(message);

@@ -11,6 +11,7 @@ import io.realm.RealmResults;
 public class AuthDataManager implements IAuthDataManager {
     private final String USERNAME = "username";
     private final String PASSWORD = "password";
+    private final String USER_ID = "userId";
     private Realm mRealm;
 
     public AuthDataManager(Realm realm) {
@@ -26,8 +27,7 @@ public class AuthDataManager implements IAuthDataManager {
         if (users.size() == 0) {
             // Create new user
             mRealm.beginTransaction();
-            User newUser = mRealm.createObject(User.class);
-            newUser.setUserId(getNextInt());
+            User newUser = mRealm.createObject(User.class, getNextInt());
             newUser.setUsername(username);
             newUser.setPassword(password);
             mRealm.commitTransaction();
@@ -54,7 +54,7 @@ public class AuthDataManager implements IAuthDataManager {
     private int getNextInt() {
         int key;
         try {
-            key = mRealm.where(User.class).max("id").intValue() + 1;
+            key = mRealm.where(User.class).max(USER_ID).intValue() + 1;
         } catch (ArrayIndexOutOfBoundsException ex) {
             key = 0;
         }

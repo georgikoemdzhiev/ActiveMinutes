@@ -11,6 +11,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="georgikoemdzhiev.activeminutes.authentication_screen.view.LoginFragment">
 
-    <include layout="@layout/active_minutes_font_applied"/>
+    <Button
+        android:id="@+id/signupBtn"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="92dp"
+        android:background="@drawable/round_corrners_button"
+        android:text="@string/button_sign_up_text"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"/>
+
+    <include layout="@layout/active_minutes_title_text"/>
 
 </RelativeLayout>
