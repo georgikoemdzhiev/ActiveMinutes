@@ -61,6 +61,9 @@ public class LoginFragment extends Fragment implements ILoginView {
     public void onDestroy() {
         super.onDestroy();
         mPresenter.releaseView();
+        ((ActiveMinutesApplication) getActivity()
+                .getApplication())
+                .releaseAuthComp();
     }
 
     @Override
@@ -70,7 +73,7 @@ public class LoginFragment extends Fragment implements ILoginView {
 
     private void satisfyDependencies() {
         ((ActiveMinutesApplication) getActivity()
-                .getApplication()).build().inject(this);
+                .getApplication()).buildAuthComp().inject(this);
     }
 
     @OnClick(R.id.loginBtn)

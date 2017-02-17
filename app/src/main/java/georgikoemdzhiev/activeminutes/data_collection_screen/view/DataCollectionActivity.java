@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
-import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.IDataCollectionPresenter;
 
 public class DataCollectionActivity extends AppCompatActivity implements IDataCollectionView {
@@ -82,8 +81,8 @@ public class DataCollectionActivity extends AppCompatActivity implements IDataCo
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((ActiveMinutesApplication) getApplication()).releaseDataCollectionComponent();
         mPresenter.releaseView();
+        ((ActiveMinutesApplication) getApplication()).releaseDataCollComp();
     }
 
     /***
@@ -92,8 +91,7 @@ public class DataCollectionActivity extends AppCompatActivity implements IDataCo
      */
     private void satisfyDependencies() {
         ((ActiveMinutesApplication) getApplication())
-                .getComponent()
-                .plus(new DataCollectionModule())
+                .buildDataCollComp()
                 .inject(this);
     }
 

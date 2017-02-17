@@ -46,20 +46,23 @@ public class ActiveMinutesApplication extends Application {
         Realm.setDefaultConfiguration(config);
     }
 
-    public DataCollectionComponent inject() {
+    public DataCollectionComponent buildDataCollComp() {
         mDataCollectionComponent = mComponent.plus(new DataCollectionModule());
         return mDataCollectionComponent;
     }
 
-    public void releaseDataCollectionComponent() {
+    public void releaseDataCollComp() {
         this.mDataCollectionComponent = null;
     }
 
-    public AuthComponent build() {
+    public AuthComponent buildAuthComp() {
         mAuthenticationComponent = mComponent.plus(new AuthModule());
         return mAuthenticationComponent;
     }
 
+    public void releaseAuthComp() {
+        this.mAuthenticationComponent = null;
+    }
 
     public AppComponent getComponent() {
         return mComponent;
