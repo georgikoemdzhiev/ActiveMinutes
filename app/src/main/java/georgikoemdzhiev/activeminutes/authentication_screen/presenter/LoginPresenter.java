@@ -18,17 +18,21 @@ public class LoginPresenter implements ILoginPresenter {
 
     @Override
     public void login(String username, String password) {
-        model.loginUser(username, password, new ActionResult() {
-            @Override
-            public void onSuccess(String message) {
-                view.showDialogMessage(message);
-            }
+        if (username.trim().isEmpty() || password.trim().isEmpty()) {
+            view.showDialogMessage("Wrong username or password!");
+        } else {
+            model.loginUser(username, password, new ActionResult() {
+                @Override
+                public void onSuccess(String message) {
+                    view.showDialogMessage(message);
+                }
 
-            @Override
-            public void onError(String message) {
-                view.showDialogMessage(message);
-            }
-        });
+                @Override
+                public void onError(String message) {
+                    view.showDialogMessage(message);
+                }
+            });
+        }
     }
 
     public void setView(ILoginView view) {

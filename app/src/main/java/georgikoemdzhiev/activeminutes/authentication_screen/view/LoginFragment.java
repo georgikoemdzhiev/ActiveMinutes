@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -27,6 +28,10 @@ public class LoginFragment extends Fragment implements ILoginView {
     ILoginPresenter mPresenter;
     @BindView(R.id.activeMinutesTextView)
     TextView mActiveMinutesTextView;
+    @BindView(R.id.username)
+    EditText mUsername;
+    @BindView(R.id.password)
+    EditText mPassword;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -78,7 +83,7 @@ public class LoginFragment extends Fragment implements ILoginView {
 
     @OnClick(R.id.loginBtn)
     public void onLoginBtnClicked() {
-        mPresenter.login("Georgi", "123");
+        mPresenter.login(mUsername.getText().toString(), mPassword.getText().toString());
     }
 
 }
