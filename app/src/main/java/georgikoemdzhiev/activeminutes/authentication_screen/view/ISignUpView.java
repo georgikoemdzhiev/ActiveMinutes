@@ -7,4 +7,6 @@ package georgikoemdzhiev.activeminutes.authentication_screen.view;
 public interface ISignUpView {
 
     void showDialogMessage(String message);
+
+    void navigateToTodayScreen();
 }
