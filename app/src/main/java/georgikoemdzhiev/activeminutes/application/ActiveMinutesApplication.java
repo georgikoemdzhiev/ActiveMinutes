@@ -13,6 +13,7 @@ import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollecti
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
@@ -47,10 +48,17 @@ public class ActiveMinutesApplication extends Application {
         Realm.setDefaultConfiguration(config);
         Realm realm = Realm.getDefaultInstance();
 
-        realm.beginTransaction();
-        // Create default User with id = 0;
-        User defaultUser = realm.createObject(User.class, 0);
-        realm.commitTransaction();
+        // Find all users with id == 0 (default user's id)
+        RealmResults<User> users = realm.where(User.class)
+                .equalTo("userId", 0).findAll();
+        // Check if the default user has been created already...
+        if (users.size() == 0) {
+            // Default user has not been created. Create default User with id = 0;
+            realm.beginTransaction();
+            User defaultUser = realm.createObject(User.class, 0);
+            realm.commitTransaction();
+        }
+
     }
 
     public DataCollectionComponent buildDataCollComp() {
