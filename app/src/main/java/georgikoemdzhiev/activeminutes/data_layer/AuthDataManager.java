@@ -36,6 +36,7 @@ public class AuthDataManager implements IAuthDataManager {
             mRealm.commitTransaction();
 
             userManager.setLoggedInUser(nextUserId);
+            userManager.setLoggedIn(true);
             result.onSuccess("new user created. Id = " + nextUserId);
         } else {
             result.onError("Username already exists!");
@@ -54,6 +55,7 @@ public class AuthDataManager implements IAuthDataManager {
             result.onSuccess("Login successful");
 
             userManager.setLoggedInUser(users.get(0).getUserId());
+            userManager.setLoggedIn(true);
 //            System.out.println("Logged user id = " + userManager.getLoggedInUser());
         }
     }

@@ -10,6 +10,8 @@ import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthModule;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionComponent;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
 import georgikoemdzhiev.activeminutes.services.DataCollectionService;
+import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesComponent;
+import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesModule;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
@@ -22,9 +24,12 @@ import georgikoemdzhiev.activeminutes.services.DataCollectionService;
 })
 @ApplicationScope
 public interface AppComponent {
+
     DataCollectionComponent plus(DataCollectionModule module);
 
     AuthComponent plus(AuthModule module);
+
+    ActiveMinutesComponent plus(ActiveMinutesModule module);
 
     void inject(DataCollectionService service);
 }

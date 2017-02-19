@@ -9,4 +9,8 @@ public interface IUserManager {
     int getLoggedInUser();
 
     void setLoggedInUser(int userId);
+
+    boolean isLoggedIn();
+
+    void setLoggedIn(boolean keepLoggedIn);
 }

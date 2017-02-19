@@ -10,8 +10,8 @@ import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
 public class LoginModel implements ILoginModel {
     private IAuthDataManager mAuthManager;
 
-    public LoginModel(IAuthDataManager dataManager) {
-        mAuthManager = dataManager;
+    public LoginModel(IAuthDataManager authManager) {
+        mAuthManager = authManager;
     }
 
     @Override
