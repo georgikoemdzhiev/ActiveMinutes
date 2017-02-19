@@ -1,6 +1,7 @@
 package georgikoemdzhiev.activeminutes.application.dagger.components;
 
 import dagger.Component;
+import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.AppModule;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.DataModule;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.HarModule;
@@ -32,4 +33,6 @@ public interface AppComponent {
     ActiveMinutesComponent plus(ActiveMinutesModule module);
 
     void inject(DataCollectionService service);
+
+    void inject(ActiveMinutesApplication application);
 }

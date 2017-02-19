@@ -2,6 +2,8 @@ package georgikoemdzhiev.activeminutes.application;
 
 import android.app.Application;
 
+import javax.inject.Inject;
+
 import georgikoemdzhiev.activeminutes.application.dagger.components.AppComponent;
 import georgikoemdzhiev.activeminutes.application.dagger.components.DaggerAppComponent;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.AppModule;
@@ -10,18 +12,23 @@ import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthComponent
 import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthModule;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionComponent;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
+import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesComponent;
 import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesModule;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import weka.classifiers.lazy.IBk;
+import weka.core.Instances;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
  */
 
 public class ActiveMinutesApplication extends Application {
+    @Inject
+    IFileManager mFileManager;
     private AppComponent mComponent;
     private DataCollectionComponent mDataCollectionComponent;
     private AuthComponent mAuthenticationComponent;
@@ -40,6 +47,9 @@ public class ActiveMinutesApplication extends Application {
                 .dataModule(new DataModule())
                 .build();
 
+        mComponent.inject(this);
+
+        setUpGenericClassifier();
     }
 
 
@@ -61,6 +71,25 @@ public class ActiveMinutesApplication extends Application {
             User defaultUser = realm.createObject(User.class, 0);
             realm.commitTransaction();
         }
+
+    }
+
+    /***
+     * Method that reads the default ARFF dataset file from the assets folder,
+     * trains a generic classifier and saves it to the HAR directory for
+     * later use in ActiveMinutesService
+     */
+    public void setUpGenericClassifier() {
+        Instances genericDataset = mFileManager.readArffFileFromAssets();
+        IBk ibkClassifier = new IBk(3);
+        try {
+            ibkClassifier.buildClassifier(genericDataset);
+            mFileManager.serialiseAndStoreClassifier(ibkClassifier);
+            System.out.println("Generic classifier trained and stored to SD Card!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
