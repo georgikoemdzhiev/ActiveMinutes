@@ -14,6 +14,7 @@ import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollecti
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
 import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
+import georgikoemdzhiev.activeminutes.har.IClassifierBuilder;
 import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesComponent;
 import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesModule;
 import io.realm.Realm;
@@ -29,6 +30,9 @@ import weka.core.Instances;
 public class ActiveMinutesApplication extends Application {
     @Inject
     IFileManager mFileManager;
+    @Inject
+    IClassifierBuilder mClassifierBuilder;
+
     private AppComponent mComponent;
     private DataCollectionComponent mDataCollectionComponent;
     private AuthComponent mAuthenticationComponent;
@@ -81,16 +85,9 @@ public class ActiveMinutesApplication extends Application {
      */
     public void setUpGenericClassifier() {
         Instances genericDataset = mFileManager.readArffFileFromAssets();
-        IBk ibkClassifier = new IBk(3);
-        try {
-            ibkClassifier.buildClassifier(genericDataset);
-            mFileManager.serialiseAndStoreClassifier(ibkClassifier);
-            System.out.println("Generic classifier trained and stored to SD Card!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
+        IBk ibkClassifier = (IBk) mClassifierBuilder.buildClassifier(genericDataset);
+        mFileManager.serialiseAndStoreClassifier(ibkClassifier);
+        System.out.println("Generic classifier trained and stored to SD Card!");
     }
 
     public DataCollectionComponent buildDataCollComp() {
