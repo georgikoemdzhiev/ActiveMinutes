@@ -54,7 +54,7 @@ public class AuthDataManager implements IAuthDataManager {
             result.onSuccess("Login successful");
 
             userManager.setLoggedInUser(users.get(0).getUserId());
-            System.out.println("Logged user id = " + userManager.getLoggedInUser());
+//            System.out.println("Logged user id = " + userManager.getLoggedInUser());
         }
     }
 

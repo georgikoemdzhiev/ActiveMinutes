@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,13 @@ import georgikoemdzhiev.activeminutes.authentication_screen.presenter.ISignUpPre
 public class SignUpFragment extends Fragment implements ISignUpView {
     @BindView(R.id.activeMinutesTextView)
     TextView mActiveMinutesTextView;
+    @BindView(R.id.username)
+    EditText mUsername;
+    @BindView(R.id.password1)
+    EditText mPassword;
+    @BindView(R.id.passwordConf)
+    EditText mPasswordConfirm;
+
     @Inject
     ISignUpPresenter mPresenter;
 
@@ -73,8 +81,9 @@ public class SignUpFragment extends Fragment implements ISignUpView {
 
     @OnClick(R.id.signupBtn)
     public void onSignUpClicked() {
-        // TODO Change those values when the UI of the screen is implemented
-        mPresenter.signUp("Georgi", "12", "12");
+        mPresenter.signUp(mUsername.getText().toString()
+                , mPassword.getText().toString()
+                , mPasswordConfirm.getText().toString());
     }
 
     private void satisfyDependencies() {
