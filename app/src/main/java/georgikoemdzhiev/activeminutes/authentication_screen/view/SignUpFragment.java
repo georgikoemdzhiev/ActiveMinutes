@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -58,7 +59,7 @@ public class SignUpFragment extends Fragment implements ISignUpView {
 
     @Override
     public void showDialogMessage(String message) {
-        System.out.println(message);
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
