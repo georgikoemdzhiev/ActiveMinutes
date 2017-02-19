@@ -149,6 +149,7 @@ public abstract class HarManager implements IHarManager {
      *
      * @param dataSet dataset that will be used for the classifier training
      */
+    // TODO This method potentially would be replaced by the IClassifierBuilder variable
     private void buildClassifier(Instances dataSet, TrainClassifierResult result) {
         if (dataSet.size() != 0) {
             try {
