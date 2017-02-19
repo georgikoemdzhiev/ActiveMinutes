@@ -29,7 +29,7 @@ public class FileManager implements IFileManager {
     private static final String DIRECTORY_HAR = "HAR";
 
     private final String DATASET_SCHEMA_FILE_NAME = "schema_file.arff";
-    private final String DATASET_FILE_NAME = "dataset.arff";
+    private final String DATASET_FILE_NAME = "genericDataset.arff";
 
     private Context context;
 
@@ -37,7 +37,7 @@ public class FileManager implements IFileManager {
 
     private File classifierFile = new File(path, "/" + "classifierModel.data");
 
-    private File arffFile = new File(path, "/" + "dataset.arff");
+    private File arffFile = new File(path, "/" + DATASET_FILE_NAME);
 
     public FileManager(Context context) {
         this.context = context;
