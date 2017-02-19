@@ -1,6 +1,7 @@
 package georgikoemdzhiev.activeminutes.authentication_screen.view;
 
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import butterknife.OnClick;
 import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.authentication_screen.presenter.ILoginPresenter;
+import georgikoemdzhiev.activeminutes.today_screen.view.ActiveMinutesActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,6 +77,12 @@ public class LoginFragment extends Fragment implements ILoginView {
     @Override
     public void showDialogMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void navigateToTodayScreen() {
+        startActivity(new Intent(getActivity(), ActiveMinutesActivity.class));
+        getActivity().finish();
     }
 
     private void satisfyDependencies() {

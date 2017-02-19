@@ -25,6 +25,7 @@ public class LoginPresenter implements ILoginPresenter {
                 @Override
                 public void onSuccess(String message) {
                     view.showDialogMessage(message);
+                    view.navigateToTodayScreen();
                 }
 
                 @Override

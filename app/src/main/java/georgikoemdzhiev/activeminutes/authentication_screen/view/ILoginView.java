@@ -8,4 +8,6 @@ public interface ILoginView {
 
     void showDialogMessage(String message);
 
+    void navigateToTodayScreen();
+
 }
