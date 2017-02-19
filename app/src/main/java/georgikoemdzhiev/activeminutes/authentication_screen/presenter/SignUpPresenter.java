@@ -28,6 +28,7 @@ public class SignUpPresenter implements ISignUpPresenter {
             @Override
             public void onSuccess(String message) {
                 view.showDialogMessage("New user created!");
+                view.navigateToTodayScreen();
             }
 
             @Override
