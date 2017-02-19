@@ -3,22 +3,30 @@ package georgikoemdzhiev.activeminutes.authentication_screen.view;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import georgikoemdzhiev.activeminutes.R;
+import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
+import georgikoemdzhiev.activeminutes.authentication_screen.presenter.ISignUpPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements ISignUpView {
     @BindView(R.id.activeMinutesTextView)
     TextView mActiveMinutesTextView;
+    @Inject
+    ISignUpPresenter mPresenter;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -26,12 +34,14 @@ public class SignUpFragment extends Fragment {
 
     public static SignUpFragment newInstance() {
         SignUpFragment signUpFragment = new SignUpFragment();
-//        Bundle args = new Bundle();
-//        args.putInt("someInt", someInt);
-//        args.putString("someString", someString);
-//        // Put any other arguments
-//        loginFragment.setArguments(args);
         return signUpFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        satisfyDependencies();
+        mPresenter.setView(this);
     }
 
     @Override
@@ -46,4 +56,27 @@ public class SignUpFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void showDialogMessage(String message) {
+        System.out.println(message);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.releaseView();
+        ((ActiveMinutesApplication) getActivity()
+                .getApplication())
+                .releaseAuthComp();
+    }
+
+    @OnClick(R.id.signupBtn)
+    public void onSignUpClicked() {
+        mPresenter.signUp("Georgi", "12", "12");
+    }
+
+    private void satisfyDependencies() {
+        ((ActiveMinutesApplication) getActivity()
+                .getApplication()).buildAuthComp().inject(this);
+    }
 }

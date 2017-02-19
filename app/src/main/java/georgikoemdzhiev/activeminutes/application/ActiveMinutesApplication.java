@@ -10,6 +10,7 @@ import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthComponent
 import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthModule;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionComponent;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
+import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -44,6 +45,12 @@ public class ActiveMinutesApplication extends Application {
                 .deleteRealmIfMigrationNeeded() // Only during for the development
                 .build();
         Realm.setDefaultConfiguration(config);
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.beginTransaction();
+        // Create default User with id = 0;
+        User defaultUser = realm.createObject(User.class, 0);
+        realm.commitTransaction();
     }
 
     public DataCollectionComponent buildDataCollComp() {

@@ -21,7 +21,6 @@ public class AuthDataManager implements IAuthDataManager {
     @Override
     public void createNewUser(String username, String password, AuthResult result) {
 
-
         RealmResults<User> users = mRealm.where(User.class)
                 .equalTo(USERNAME, username).findAll();
         if (users.size() == 0) {
