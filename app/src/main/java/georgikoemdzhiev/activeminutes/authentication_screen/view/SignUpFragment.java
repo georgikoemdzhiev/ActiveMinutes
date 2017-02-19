@@ -73,6 +73,7 @@ public class SignUpFragment extends Fragment implements ISignUpView {
 
     @OnClick(R.id.signupBtn)
     public void onSignUpClicked() {
+        // TODO Change those values when the UI of the screen is implemented
         mPresenter.signUp("Georgi", "12", "12");
     }
 
