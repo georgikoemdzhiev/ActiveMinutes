@@ -12,10 +12,13 @@ public class AuthDataManager implements IAuthDataManager {
     private final String USERNAME = "username";
     private final String PASSWORD = "password";
     private final String USER_ID = "userId";
-    private Realm mRealm;
 
-    public AuthDataManager(Realm realm) {
+    private Realm mRealm;
+    private IUserManager userManager;
+
+    public AuthDataManager(Realm realm, IUserManager userManager) {
         this.mRealm = realm;
+        this.userManager = userManager;
     }
 
     @Override
@@ -26,11 +29,14 @@ public class AuthDataManager implements IAuthDataManager {
         if (users.size() == 0) {
             // Create new user
             mRealm.beginTransaction();
-            User newUser = mRealm.createObject(User.class, getNextInt());
+            int nextUserId = getNextInt();
+            User newUser = mRealm.createObject(User.class, nextUserId);
             newUser.setUsername(username);
             newUser.setPassword(password);
             mRealm.commitTransaction();
-            result.onSuccess("new user created");
+
+            userManager.setLoggedInUser(nextUserId);
+            result.onSuccess("new user created. Id = " + nextUserId);
         } else {
             result.onError("Username already exists!");
         }
@@ -46,6 +52,9 @@ public class AuthDataManager implements IAuthDataManager {
             result.onError("Cannot find user with these credentials!");
         } else {
             result.onSuccess("Login successful");
+
+            userManager.setLoggedInUser(users.get(0).getUserId());
+            System.out.println("Logged user id = " + userManager.getLoggedInUser());
         }
     }
 
