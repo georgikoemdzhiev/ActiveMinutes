@@ -12,11 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".today_screen.view.ActiveMinutesActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".data_collection_screen.view.DataCollectionActivity"
@@ -34,7 +30,11 @@
         <activity
             android:name=".authentication_screen.view.AuthenticationActivity"
             android:theme="@style/FullScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 
