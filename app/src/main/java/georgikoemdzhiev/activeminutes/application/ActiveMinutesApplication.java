@@ -4,6 +4,8 @@ import android.app.Application;
 
 import javax.inject.Inject;
 
+import georgikoemdzhiev.activeminutes.active_minutes_screen.dagger.ActiveMinutesComponent;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.dagger.ActiveMinutesModule;
 import georgikoemdzhiev.activeminutes.application.dagger.components.AppComponent;
 import georgikoemdzhiev.activeminutes.application.dagger.components.DaggerAppComponent;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.AppModule;
@@ -15,8 +17,6 @@ import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollecti
 import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import georgikoemdzhiev.activeminutes.har.IClassifierBuilder;
-import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesComponent;
-import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesModule;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;

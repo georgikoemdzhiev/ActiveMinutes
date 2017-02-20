@@ -45,7 +45,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
-    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
+    compile('com.mikepenz:materialdrawer:5.8.1@aar') { // Material Drawer
         transitive = true
     }
+//    compile 'com.mikepenz:google-material-typeface:x.y.z@aar' //Google Material Icons
+//    compile 'com.mikepenz:fontawesome-typeface:x.y.z@aar'     //FontAwesome
 }

@@ -1,4 +1,4 @@
-package georgikoemdzhiev.activeminutes.today_screen.dagger;
+package georgikoemdzhiev.activeminutes.active_minutes_screen.dagger;
 
 import dagger.Module;
 

@@ -19,9 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import georgikoemdzhiev.activeminutes.R;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.view.ActiveMinutesActivity;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.authentication_screen.presenter.ISignUpPresenter;
-import georgikoemdzhiev.activeminutes.today_screen.view.ActiveMinutesActivity;
 
 /**
  * A simple {@link Fragment} subclass.

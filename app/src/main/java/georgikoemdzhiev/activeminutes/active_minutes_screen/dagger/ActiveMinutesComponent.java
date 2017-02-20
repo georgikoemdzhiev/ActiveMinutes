@@ -1,8 +1,8 @@
-package georgikoemdzhiev.activeminutes.today_screen.dagger;
+package georgikoemdzhiev.activeminutes.active_minutes_screen.dagger;
 
 import dagger.Subcomponent;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.view.ActiveMinutesActivity;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ActivityScope;
-import georgikoemdzhiev.activeminutes.today_screen.view.ActiveMinutesActivity;
 
 /**
  * Created by Georgi Koemdzhiev on 19/02/2017.

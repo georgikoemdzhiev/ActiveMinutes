@@ -1,6 +1,8 @@
 package georgikoemdzhiev.activeminutes.application.dagger.components;
 
 import dagger.Component;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.dagger.ActiveMinutesComponent;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.dagger.ActiveMinutesModule;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.AppModule;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.DataModule;
@@ -11,8 +13,6 @@ import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthModule;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionComponent;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
 import georgikoemdzhiev.activeminutes.services.DataCollectionService;
-import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesComponent;
-import georgikoemdzhiev.activeminutes.today_screen.dagger.ActiveMinutesModule;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
