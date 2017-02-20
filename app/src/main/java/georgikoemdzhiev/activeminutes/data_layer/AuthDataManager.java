@@ -69,13 +69,13 @@ public class AuthDataManager implements IAuthDataManager {
     }
 
     @Override
-    public void logOutUser() {
-        userManager.setLoggedIn(false);
+    public boolean isUserLoggedIn() {
+        return userManager.isLoggedIn();
     }
 
     @Override
-    public IUserManager getUserManager() {
-        return this.userManager;
+    public void logOutUser() {
+        userManager.setLoggedIn(false);
     }
 
 

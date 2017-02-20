@@ -45,7 +45,7 @@ public class ActiveMinutesActivity extends AppCompatActivity {
 
         // TODO Change that to a presenter call...
         // Check if the user is logged in...
-        if (!mAuthDataManager.getUserManager().isLoggedIn()) {
+        if (!mAuthDataManager.isUserLoggedIn()) {
             startActivity(new Intent(this, AuthenticationActivity.class));
             finish();
         }
@@ -125,6 +125,7 @@ public class ActiveMinutesActivity extends AppCompatActivity {
                                 // TODO Change that to a presenter call...
                                 mAuthDataManager.logOutUser();
                                 startActivity(new Intent(ActiveMinutesActivity.this, AuthenticationActivity.class));
+                                finish();
                             }
                         }
                         return false;

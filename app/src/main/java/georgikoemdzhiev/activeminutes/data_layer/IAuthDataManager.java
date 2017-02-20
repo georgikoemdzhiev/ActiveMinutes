@@ -14,7 +14,8 @@ public interface IAuthDataManager {
 
     User getLoggedInUser();
 
+    boolean isUserLoggedIn();
+
     void logOutUser();
 
-    IUserManager getUserManager();
 }
