@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -25,14 +26,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import georgikoemdzhiev.activeminutes.R;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.IActiveMinutesPresenter;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.authentication_screen.view.AuthenticationActivity;
-import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 
-public class ActiveMinutesActivity extends AppCompatActivity {
+public class ActiveMinutesActivity extends AppCompatActivity implements IActiveMinutesView {
     @Inject
-    IAuthDataManager mAuthDataManager;
+    IActiveMinutesPresenter mPresenter;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     private User mUser;
@@ -44,15 +45,9 @@ public class ActiveMinutesActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         satisfyDependencies();
         setSupportActionBar(mToolbar);
+        mPresenter.setView(this);
 
-        // TODO Change that to a presenter call...
-        // Check if the user is logged in...
-        if (!mAuthDataManager.isUserLoggedIn()) {
-            startActivity(new Intent(this, AuthenticationActivity.class));
-            finish();
-        }
-
-        mUser = mAuthDataManager.getLoggedInUser();
+        mPresenter.isUserLoggedIn();
         setUpNavigationDrawer();
         // Load today screen...
         loadScreen(1);
@@ -64,6 +59,7 @@ public class ActiveMinutesActivity extends AppCompatActivity {
         super.onDestroy();
         ((ActiveMinutesApplication) getApplication())
                 .releaseActiveMinutesComp();
+        mPresenter.releaseView();
 
     }
 
@@ -131,16 +127,16 @@ public class ActiveMinutesActivity extends AppCompatActivity {
 
         switch (item) {
             case 1:
-                fragment = TodayFragment.newInstance(mAuthDataManager.getLoggedInUser().getUserId());
+                fragment = TodayFragment.newInstance();
                 break;
             case 3:
-                fragment = HistoryFragment.newInstance(mAuthDataManager.getLoggedInUser().getUserId());
+                fragment = HistoryFragment.newInstance();
                 break;
             case 4:
 
                 break;
             case 5:
-                mAuthDataManager.logOutUser();
+                mPresenter.logOutUser();
                 startActivity(new Intent(ActiveMinutesActivity.this, AuthenticationActivity.class));
                 finish();
                 break;
@@ -150,5 +146,21 @@ public class ActiveMinutesActivity extends AppCompatActivity {
         if (fragment != null)
             ft.replace(R.id.content_frame, fragment);
         ft.commit();
+    }
+
+    @Override
+    public void userNotLoggedIn() {
+        startActivity(new Intent(this, AuthenticationActivity.class));
+        finish();
+    }
+
+    @Override
+    public void setLoggedInUser(User user) {
+        this.mUser = user;
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

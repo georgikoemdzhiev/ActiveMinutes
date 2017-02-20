@@ -29,15 +29,14 @@ public class HistoryFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param userId id of the logged in user
      * @return A new instance of fragment HistoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HistoryFragment newInstance(int userId) {
+    public static HistoryFragment newInstance() {
         HistoryFragment fragment = new HistoryFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_PARAM_USER_ID, userId);
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_PARAM_USER_ID, userId);
+//        fragment.setArguments(args);
         return fragment;
     }
 

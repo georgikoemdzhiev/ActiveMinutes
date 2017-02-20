@@ -29,14 +29,10 @@ public class TodayFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param userId id of the logged in user
      * @return A new instance of fragment TodayFragment.
      */
-    public static TodayFragment newInstance(int userId) {
+    public static TodayFragment newInstance() {
         TodayFragment fragment = new TodayFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_PARAM_USER_ID, userId);
-        fragment.setArguments(args);
         return fragment;
     }
 
