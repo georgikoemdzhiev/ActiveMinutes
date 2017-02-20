@@ -17,7 +17,7 @@ public class UserManager implements IUserManager {
     }
 
     @Override
-    public int getLoggedInUser() {
+    public int getLoggedInUserId() {
         return mSharedPreferences.getInt(LOGGED_USER, 0);
     }
 

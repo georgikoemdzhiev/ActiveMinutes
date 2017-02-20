@@ -6,7 +6,7 @@ package georgikoemdzhiev.activeminutes.data_layer;
 
 public interface IUserManager {
 
-    int getLoggedInUser();
+    int getLoggedInUserId();
 
     void setLoggedInUser(int userId);
 
