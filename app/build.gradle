@@ -33,6 +33,11 @@ dependencies {
     // Material Dialogs library
     // EventBus for communicating between Services and Activities
     // Add AppIntro library to implement the Authentication and Intro screens
+    compile('com.mikepenz:materialdrawer:5.8.1@aar') { // Material Drawer
+        transitive = true
+    }
+//    compile 'com.mikepenz:google-material-typeface:x.y.z@aar' //Google Material Icons
+//    compile 'com.mikepenz:fontawesome-typeface:x.y.z@aar'     //FontAwesome
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.jakewharton:butterknife:8.5.1'
     compile 'com.google.dagger:dagger:2.9'
@@ -41,13 +46,8 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.github.paolorotolo:appintro:4.1.0'
     compile 'com.android.support:support-v4:25.1.1'
-    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:design:25.1.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
-    compile('com.mikepenz:materialdrawer:5.8.1@aar') { // Material Drawer
-        transitive = true
-    }
-//    compile 'com.mikepenz:google-material-typeface:x.y.z@aar' //Google Material Icons
-//    compile 'com.mikepenz:fontawesome-typeface:x.y.z@aar'     //FontAwesome
 }

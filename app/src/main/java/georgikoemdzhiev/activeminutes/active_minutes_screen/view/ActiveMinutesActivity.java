@@ -2,6 +2,8 @@ package georgikoemdzhiev.activeminutes.active_minutes_screen.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -52,6 +54,8 @@ public class ActiveMinutesActivity extends AppCompatActivity {
 
         mUser = mAuthDataManager.getLoggedInUser();
         setUpNavigationDrawer();
+        // Load today screen...
+        loadScreen(1);
     }
 
 
@@ -93,9 +97,9 @@ public class ActiveMinutesActivity extends AppCompatActivity {
                 .build();
         // Create drawer menu items
         PrimaryDrawerItem todayItem = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_today);
-        SecondaryDrawerItem historyItem = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_history);
-        PrimaryDrawerItem logOutItem = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_log_out);
-        SecondaryDrawerItem settingsItem = new SecondaryDrawerItem().withName(R.string.drawer_item_settings);
+        SecondaryDrawerItem historyItem = new SecondaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_history);
+        PrimaryDrawerItem logOutItem = new PrimaryDrawerItem().withIdentifier(5).withName(R.string.drawer_item_log_out);
+        SecondaryDrawerItem settingsItem = new SecondaryDrawerItem().withIdentifier(4).withName(R.string.drawer_item_settings);
         //create the drawer and remember the `Drawer` result object
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
@@ -114,23 +118,37 @@ public class ActiveMinutesActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem != null) {
-                            if (drawerItem.getIdentifier() == 1) {
-                                // Navigate to Today fragment
-
-                            } else if (drawerItem.getIdentifier() == 2) {
-                                // Navigate to History fragment
-
-                            } else if (drawerItem.getIdentifier() == 3) {
-                                // Log out user & go to AuthenticationActivity
-                                // TODO Change that to a presenter call...
-                                mAuthDataManager.logOutUser();
-                                startActivity(new Intent(ActiveMinutesActivity.this, AuthenticationActivity.class));
-                                finish();
-                            }
+                            loadScreen((int) drawerItem.getIdentifier());
                         }
                         return false;
                     }
                 })
                 .build();
+    }
+
+    private void loadScreen(int item) {
+        Fragment fragment = null;
+
+        switch (item) {
+            case 1:
+                fragment = TodayFragment.newInstance(mAuthDataManager.getLoggedInUser().getUserId());
+                break;
+            case 3:
+                fragment = HistoryFragment.newInstance(mAuthDataManager.getLoggedInUser().getUserId());
+                break;
+            case 4:
+
+                break;
+            case 5:
+                mAuthDataManager.logOutUser();
+                startActivity(new Intent(ActiveMinutesActivity.this, AuthenticationActivity.class));
+                finish();
+                break;
+        }
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (fragment != null)
+            ft.replace(R.id.content_frame, fragment);
+        ft.commit();
     }
 }
