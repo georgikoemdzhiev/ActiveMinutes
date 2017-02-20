@@ -25,13 +25,15 @@ import butterknife.ButterKnife;
 import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.authentication_screen.view.AuthenticationActivity;
-import georgikoemdzhiev.activeminutes.data_layer.IUserManager;
+import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.db.User;
 
 public class ActiveMinutesActivity extends AppCompatActivity {
     @Inject
-    IUserManager mUserManager;
+    IAuthDataManager mAuthDataManager;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,14 @@ public class ActiveMinutesActivity extends AppCompatActivity {
         satisfyDependencies();
         setSupportActionBar(mToolbar);
 
+        // TODO Change that to a presenter call...
         // Check if the user is logged in...
-        if (!mUserManager.isLoggedIn()) {
+        if (!mAuthDataManager.getUserManager().isLoggedIn()) {
             startActivity(new Intent(this, AuthenticationActivity.class));
             finish();
         }
 
+        mUser = mAuthDataManager.getLoggedInUser();
         setUpNavigationDrawer();
     }
 
@@ -75,7 +79,10 @@ public class ActiveMinutesActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.account_header_bg)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Georgi Koemdzhiev").withEmail("koemdzhiev@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile))
+                        new ProfileDrawerItem()
+                                .withName(mUser.getUsername())
+                                .withEmail(String.valueOf(mUser.getUserId()))
+                                .withIcon(getResources().getDrawable(R.drawable.profile))
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -88,7 +95,7 @@ public class ActiveMinutesActivity extends AppCompatActivity {
         PrimaryDrawerItem todayItem = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_today);
         SecondaryDrawerItem historyItem = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_history);
         PrimaryDrawerItem logOutItem = new PrimaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_log_out);
-
+        SecondaryDrawerItem settingsItem = new SecondaryDrawerItem().withName(R.string.drawer_item_settings);
         //create the drawer and remember the `Drawer` result object
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
@@ -98,7 +105,7 @@ public class ActiveMinutesActivity extends AppCompatActivity {
                         todayItem,
                         new DividerDrawerItem(),
                         historyItem,
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings)
+                        settingsItem
                 )
                 .addStickyDrawerItems(
                         new SectionDrawerItem().withDivider(false).withName(R.string.drawer_sticky_header_title)
@@ -106,7 +113,20 @@ public class ActiveMinutesActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
+                        if (drawerItem != null) {
+                            if (drawerItem.getIdentifier() == 1) {
+                                // Navigate to Today fragment
+
+                            } else if (drawerItem.getIdentifier() == 2) {
+                                // Navigate to History fragment
+
+                            } else if (drawerItem.getIdentifier() == 3) {
+                                // Log out user & go to AuthenticationActivity
+                                // TODO Change that to a presenter call...
+                                mAuthDataManager.logOutUser();
+                                startActivity(new Intent(ActiveMinutesActivity.this, AuthenticationActivity.class));
+                            }
+                        }
                         return false;
                     }
                 })
