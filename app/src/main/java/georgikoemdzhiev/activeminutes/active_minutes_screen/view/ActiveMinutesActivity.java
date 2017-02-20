@@ -48,7 +48,6 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
         mPresenter.setView(this);
 
         mPresenter.isUserLoggedIn();
-        setUpNavigationDrawer();
         // Load today screen...
         loadScreen(1);
     }
@@ -157,6 +156,7 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     @Override
     public void setLoggedInUser(User user) {
         this.mUser = user;
+        setUpNavigationDrawer();
     }
 
     @Override
