@@ -4,7 +4,8 @@ import dagger.Module;
 import dagger.Provides;
 import georgikoemdzhiev.activeminutes.application.dagger.qualifiers.Named;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
-import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IClassificationDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
 import georgikoemdzhiev.activeminutes.har.ClassifierBuilder;
 import georgikoemdzhiev.activeminutes.har.HarClassifyManager;
 import georgikoemdzhiev.activeminutes.har.HarTrainManager;
@@ -21,14 +22,14 @@ public class HarModule {
     @Provides
     @ApplicationScope
     @Named("train")
-    IHarManager provideTrainManager(IHarDataManager dataManager) {
+    IHarManager provideTrainManager(ITrainingDataManager dataManager) {
         return new HarTrainManager(dataManager);
     }
 
     @Provides
     @ApplicationScope
     @Named("classify")
-    IHarManager provideClassifyManager(IHarDataManager dataManager) {
+    IHarManager provideClassifyManager(IClassificationDataManager dataManager) {
         return new HarClassifyManager(dataManager);
     }
 

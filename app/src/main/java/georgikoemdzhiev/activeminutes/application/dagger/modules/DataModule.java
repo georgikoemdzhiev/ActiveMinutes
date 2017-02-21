@@ -7,12 +7,14 @@ import dagger.Module;
 import dagger.Provides;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
 import georgikoemdzhiev.activeminutes.data_layer.AuthDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.ClassificationDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.FileManager;
-import georgikoemdzhiev.activeminutes.data_layer.HarDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IClassificationDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
-import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.IUserManager;
+import georgikoemdzhiev.activeminutes.data_layer.TrainingDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.UserManager;
 import io.realm.Realm;
 
@@ -34,8 +36,14 @@ public class DataModule {
 
     @Provides
     @ApplicationScope
-    IHarDataManager provideDataManager(Realm realm, IFileManager fileManager) {
-        return new HarDataManager(realm, fileManager);
+    ITrainingDataManager provideTrainingDataManager(Realm realm, IFileManager fileManager) {
+        return new TrainingDataManager(realm, fileManager);
+    }
+
+    @Provides
+    @ApplicationScope
+    IClassificationDataManager provideClassificationDataManager(IFileManager fileManager) {
+        return new ClassificationDataManager(fileManager);
     }
 
     @Provides

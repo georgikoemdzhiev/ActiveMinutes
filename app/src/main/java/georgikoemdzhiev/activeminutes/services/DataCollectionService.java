@@ -89,7 +89,7 @@ public class DataCollectionService extends Service implements SensorEventListene
                 break;
             case CLEAR_DATA:
                 showToastMessage("Data cleared!");
-                mHarManager.getDataManager().deleteAllTrainingData();
+                ((HarTrainManager) mHarManager).getDataManager().deleteAllTrainingData();
                 break;
             case STOP_RECORDING:
                 mHarManager.resetWindowBegTime();

@@ -1,7 +1,10 @@
 package georgikoemdzhiev.activeminutes.har;
 
-import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
+import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
+import weka.core.Instance;
+import weka.core.Instances;
 
 /**
  * Created by Georgi Koemdzhiev on 14/02/2017.
@@ -10,10 +13,12 @@ import georgikoemdzhiev.activeminutes.har.common.data.Point;
 public class HarTrainManager extends HarManager {
     // OFFSET time that will "cut" the first 3 seconds from the start of the recording
     private final int TIME_OFFSET = 1;
+    ITrainingDataManager mDataManager;
     private int time_offset_counter = 0;
 
-    public HarTrainManager(IHarDataManager dataManager) {
-        super(dataManager);
+    public HarTrainManager(ITrainingDataManager dataManager) {
+        super();
+        this.mDataManager = dataManager;
     }
 
     @Override
@@ -58,5 +63,77 @@ public class HarTrainManager extends HarManager {
 
     public void applyTimeOffset() {
         mDataManager.deleteLastTrainingDataRecord(0);
+    }
+
+    public void setActivityLabel(String activityLabel) {
+        this.activityLabel = activityLabel;
+    }
+
+    /***
+     * Method that builds a personalised classifier using user's own data
+     *
+     * @param userId id of the user to be used to retrieve the user's collected training data
+     */
+    @Override
+    public void trainAndSavePersonalisedClassifier(int userId, TrainClassifierResult result) {
+        Instances userOwnDataSet = mDataManager.getTrainingData(userId);
+        buildClassifier(userOwnDataSet, result);
+    }
+
+    /***
+     * Method that builds a generic classifier
+     */
+    @Override
+    public void trainAndSaveGenericClassifier(TrainClassifierResult result) {
+        Instances genericDataSet = mDataManager.getTrainingData(0);
+        buildClassifier(genericDataSet, result);
+    }
+
+
+    public ITrainingDataManager getDataManager() {
+        return this.mDataManager;
+    }
+
+    @Override
+    public void issueTimeWindow() {
+        // extract features, convert the featureSet to weka instance object and add it to a list
+        //Create a FeatureSet instance and use its toInstance method to create weka instance
+        FeatureSet featureSet = null;
+        Instance instance = null;
+        try {
+            featureSet = new FeatureSet(window);
+
+            instance = featureSet.toInstance(mDataManager.getInstanceHeader(), activityLabel);
+            // save this training instance with userId 0 (generic training data)
+            mDataManager.saveTrainingData(instance, 0);
+            System.out.println("FeatureSet.toString: " + featureSet.toString());
+            System.out.println("FeatureSet.toInstance: " + instance);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /***
+     * Method that builds a classifier from a given dataset
+     *
+     * @param dataSet dataset that will be used for the classifier training
+     */
+    // TODO This method potentially would be replaced by the IClassifierBuilder variable
+    private void buildClassifier(Instances dataSet, TrainClassifierResult result) {
+        if (dataSet.size() != 0) {
+            try {
+                iBkClassifier.buildClassifier(dataSet);
+                mDataManager.serialiseClassifierToFile(iBkClassifier);
+                result.onSuccess("Classifier is built successfully!");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                result.onError("Could NOT build classifier! " + e.getMessage());
+            }
+        } else {
+            result.onError("No data provided to build a classifier!");
+        }
     }
 }

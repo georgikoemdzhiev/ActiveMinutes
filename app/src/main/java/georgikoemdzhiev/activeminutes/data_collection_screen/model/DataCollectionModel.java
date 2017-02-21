@@ -1,6 +1,6 @@
 package georgikoemdzhiev.activeminutes.data_collection_screen.model;
 
-import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.NumOfInstResult;
 
 /**
@@ -8,9 +8,9 @@ import georgikoemdzhiev.activeminutes.data_layer.NumOfInstResult;
  */
 
 public class DataCollectionModel implements IDataCollectionModel {
-    private IHarDataManager dataManager;
+    private ITrainingDataManager dataManager;
 
-    public DataCollectionModel(IHarDataManager dataManager) {
+    public DataCollectionModel(ITrainingDataManager dataManager) {
         this.dataManager = dataManager;
     }
 

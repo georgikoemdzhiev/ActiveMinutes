@@ -1,6 +1,6 @@
 package georgikoemdzhiev.activeminutes.har;
 
-import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IClassificationDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
 import weka.classifiers.lazy.IBk;
@@ -11,10 +11,11 @@ import weka.core.Instance;
  */
 
 public class HarClassifyManager extends HarManager {
-    //    private int counter = 0;
-    public HarClassifyManager(IHarDataManager dataManager) {
-        super(dataManager);
+    private IClassificationDataManager mDataManager;
 
+    public HarClassifyManager(IClassificationDataManager dataManager) {
+        super();
+        this.mDataManager = dataManager;
         this.iBkClassifier = (IBk) mDataManager.deSerialiseClassifierFromFile();
     }
 
@@ -70,4 +71,20 @@ public class HarClassifyManager extends HarManager {
             System.out.println("Exception during classification! " + e.getMessage());
         }
     }
+
+    @Override
+    public void setActivityLabel(String activityLabel) {
+
+    }
+
+    @Override
+    public void trainAndSavePersonalisedClassifier(int userId, TrainClassifierResult result) {
+
+    }
+
+    @Override
+    public void trainAndSaveGenericClassifier(TrainClassifierResult result) {
+
+    }
+
 }
