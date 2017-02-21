@@ -1,6 +1,6 @@
 package georgikoemdzhiev.activeminutes.har;
 
-import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 
 /**
@@ -12,7 +12,7 @@ public class HarTrainManager extends HarManager {
     private final int TIME_OFFSET = 1;
     private int time_offset_counter = 0;
 
-    public HarTrainManager(ITrainingDataManager dataManager) {
+    public HarTrainManager(IHarDataManager dataManager) {
         super(dataManager);
     }
 

@@ -11,7 +11,7 @@ import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.DataColle
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.DataCollectionPresenter;
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.IDataCollectionController;
 import georgikoemdzhiev.activeminutes.data_collection_screen.presenter.IDataCollectionPresenter;
-import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
 
 /**
  * Created by koemdzhiev on 09/02/2017.
@@ -28,7 +28,7 @@ public class DataCollectionModule {
 
     @Provides
     @ActivityScope
-    IDataCollectionModel provideDataCollectionModel(ITrainingDataManager dataManager) {
+    IDataCollectionModel provideDataCollectionModel(IHarDataManager dataManager) {
         return new DataCollectionModel(dataManager);
     }
 
