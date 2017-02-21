@@ -7,7 +7,6 @@ import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
 import georgikoemdzhiev.activeminutes.har.common.data_preprocessing.DataPreprocessor;
 import georgikoemdzhiev.activeminutes.har.common.data_preprocessing.IDataPreprocessor;
 import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
-import weka.classifiers.Classifier;
 import weka.classifiers.lazy.IBk;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -25,8 +24,8 @@ public abstract class HarManager implements IHarManager {
     TimeWindow window;
     IHarDataManager mDataManager;
     IDataPreprocessor dataPrep;
-    private String activityLabel;
-    private Classifier iBkClassifier;
+    String activityLabel;
+    IBk iBkClassifier;
 
     public HarManager(IHarDataManager dataManager) {
         this.accXSeries = new TimeSeries("accX_");
@@ -90,15 +89,13 @@ public abstract class HarManager implements IHarManager {
         Instance instance = null;
         try {
             featureSet = new FeatureSet(window);
-            featureSet.setActivityLabel(activityLabel);
 
-            instance = featureSet.toInstance(mDataManager.getInstanceHeader());
+            instance = featureSet.toInstance(mDataManager.getInstanceHeader(), activityLabel);
             // save this training instance with userId 0 (generic training data)
             mDataManager.saveTrainingData(instance, 0);
             System.out.println("FeatureSet.toString: " + featureSet.toString());
             System.out.println("FeatureSet.toInstance: " + instance);
 
-            // TODO maybe setup a HarManager classification and classify the instance here...
 
         } catch (Exception e) {
             e.printStackTrace();

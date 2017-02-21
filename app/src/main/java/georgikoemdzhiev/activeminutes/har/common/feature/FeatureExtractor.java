@@ -13,9 +13,9 @@ public abstract class FeatureExtractor {
     //** The set of features extracted from the given time series */
     protected FeatureSet featureSet;
 
-    public FeatureExtractor(TimeSeries series, String activityLabel) {
+    public FeatureExtractor(TimeSeries series) {
         this.series = series;
-        this.featureSet = new FeatureSet(activityLabel);
+        this.featureSet = new FeatureSet();
     }
 
 }

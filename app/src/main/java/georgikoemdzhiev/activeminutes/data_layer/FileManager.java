@@ -88,7 +88,7 @@ public class FileManager implements IFileManager {
     }
 
     @Override
-    public void serialiseAndStoreClassifier(Classifier classifier) {
+    public void serialiseClassifierAndStoreToSDCard(Classifier classifier) {
         try {
             FileOutputStream fos = new FileOutputStream(classifierFile);
             ObjectOutputStream ou = new ObjectOutputStream(fos);
@@ -103,7 +103,7 @@ public class FileManager implements IFileManager {
     }
 
     @Override
-    public Classifier deSerialiseClassifier() {
+    public Classifier deSerialiseClassifierFromSDCard() {
         IBk classifier = null;
         try {
             FileInputStream fi = new FileInputStream(classifierFile);

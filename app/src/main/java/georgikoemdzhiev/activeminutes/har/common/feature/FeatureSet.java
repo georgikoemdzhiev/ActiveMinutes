@@ -17,10 +17,9 @@ import weka.core.Instances;
 
 public class FeatureSet extends Hashtable<String, Double> {
 
-    private String activityLabel;
 
-    public FeatureSet(String activityLabel) {
-        this.activityLabel = activityLabel;
+    public FeatureSet() {
+
     }
 
     public FeatureSet(double[] values, String[] attributes) {
@@ -46,7 +45,7 @@ public class FeatureSet extends Hashtable<String, Double> {
 
 
             /** Compute some structural features */
-            StructuralFeatureExtractor str = new StructuralFeatureExtractor(series, activityLabel);
+            StructuralFeatureExtractor str = new StructuralFeatureExtractor(series);
             double[] first5FFTCoefficients = str.computeFirst5FFTCoefficients();
 
             /** Add them to the feature set */
@@ -80,12 +79,18 @@ public class FeatureSet extends Hashtable<String, Double> {
      * Parameter INSTANCE_HEADER is an Instances object containing the attributes that the Instance should have.
      */
 
-    public Instance toInstance(Instances instanceHeader) {
+    public Instance toInstance(Instances instanceHeader, String activityLabel) {
         DenseInstance instance = null;
         if (instanceHeader != null) {
             instance = new DenseInstance(instanceHeader.numAttributes());
             instance.setDataset(instanceHeader);
-            instance.setClassValue(activityLabel);
+
+            if (activityLabel.equals("")) {
+                instance.setClassMissing();
+            } else {
+                instance.setClassValue(activityLabel);
+            }
+
 
             Enumeration e = instanceHeader.enumerateAttributes();
             while (e.hasMoreElements()) {
@@ -111,12 +116,5 @@ public class FeatureSet extends Hashtable<String, Double> {
         return instance;
     }
 
-    public String getActivityLabel() {
-        return activityLabel;
-    }
-
-    public void setActivityLabel(String activityLabel) {
-        this.activityLabel = activityLabel;
-    }
 
 }

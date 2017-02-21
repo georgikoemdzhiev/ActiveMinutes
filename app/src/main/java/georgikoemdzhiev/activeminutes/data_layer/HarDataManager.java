@@ -91,7 +91,7 @@ public class HarDataManager implements IHarDataManager {
     @Override
     public void serialiseClassifierToFile(Classifier classifier) {
         // Serialise the classifier object and save it to a file for later use
-        fileManager.serialiseAndStoreClassifier(classifier);
+        fileManager.serialiseClassifierAndStoreToSDCard(classifier);
         // Save the data for the generic user to arff file as  well
         fileManager.saveToArffFile(getTrainingData(0));
     }
@@ -99,7 +99,7 @@ public class HarDataManager implements IHarDataManager {
 
     @Override
     public Classifier deSerialiseClassifierFromFile() {
-        return fileManager.deSerialiseClassifier();
+        return fileManager.deSerialiseClassifierFromSDCard();
     }
 
 

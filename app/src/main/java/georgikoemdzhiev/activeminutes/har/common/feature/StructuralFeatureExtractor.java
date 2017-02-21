@@ -11,8 +11,8 @@ import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 public class StructuralFeatureExtractor extends FeatureExtractor {
     private double[] first5FFTCoefficients = null;
 
-    public StructuralFeatureExtractor(TimeSeries series, String activityLabel) {
-        super(series, activityLabel);
+    public StructuralFeatureExtractor(TimeSeries series) {
+        super(series);
         double[] tempArray = series.asArrayOfPointValues();
 
         DoubleFFT_1D fft = new DoubleFFT_1D(series.size());

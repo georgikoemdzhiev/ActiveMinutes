@@ -12,6 +12,7 @@ import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthComponent
 import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthModule;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionComponent;
 import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollectionModule;
+import georgikoemdzhiev.activeminutes.services.ActiveMinutesService;
 import georgikoemdzhiev.activeminutes.services.DataCollectionService;
 
 /**
@@ -33,6 +34,8 @@ public interface AppComponent {
     ActiveMinutesComponent plus(ActiveMinutesModule module);
 
     void inject(DataCollectionService service);
+
+    void inject(ActiveMinutesService service);
 
     void inject(ActiveMinutesApplication application);
 }

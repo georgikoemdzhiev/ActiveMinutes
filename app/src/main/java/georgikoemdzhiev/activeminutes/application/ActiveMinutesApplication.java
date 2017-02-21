@@ -86,7 +86,7 @@ public class ActiveMinutesApplication extends Application {
     public void setUpGenericClassifier() {
         Instances genericDataset = mFileManager.readArffFileFromAssets();
         IBk ibkClassifier = (IBk) mClassifierBuilder.buildClassifier(genericDataset);
-        mFileManager.serialiseAndStoreClassifier(ibkClassifier);
+        mFileManager.serialiseClassifierAndStoreToSDCard(ibkClassifier);
         System.out.println("Generic classifier trained and stored to SD Card!");
     }
 

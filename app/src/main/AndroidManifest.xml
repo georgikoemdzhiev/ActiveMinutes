@@ -24,7 +24,6 @@
             android:name=".data_collection_screen.view.DataCollectionActivity"
             android:label="@string/data_collection_screen"
             android:screenOrientation="portrait">
-
         </activity>
 
         <service
@@ -36,8 +35,13 @@
         <activity
             android:name=".authentication_screen.view.AuthenticationActivity"
             android:theme="@style/FullScreenTheme">
-
         </activity>
+
+        <service
+            android:name=".services.ActiveMinutesService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>

@@ -30,6 +30,7 @@ import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.IActiveMin
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.authentication_screen.view.AuthenticationActivity;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
+import georgikoemdzhiev.activeminutes.services.ActiveMinutesService;
 
 public class ActiveMinutesActivity extends AppCompatActivity implements IActiveMinutesView {
     @Inject
@@ -136,6 +137,7 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
                 break;
             case 5:
                 mPresenter.logOutUser();
+                stopService(new Intent(this, ActiveMinutesService.class));
                 startActivity(new Intent(ActiveMinutesActivity.this, AuthenticationActivity.class));
                 finish();
                 break;
@@ -153,10 +155,17 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
         finish();
     }
 
+    /***
+     * Method called upon successful check for logged in user
+     *
+     * @param user the logged in user passes as a parameter
+     */
     @Override
     public void setLoggedInUser(User user) {
         this.mUser = user;
         setUpNavigationDrawer();
+        // start the ActiveMinutesService
+        startService(new Intent(this, ActiveMinutesService.class));
     }
 
     @Override

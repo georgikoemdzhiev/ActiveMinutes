@@ -17,7 +17,7 @@ public interface IFileManager {
 
     void saveToArffFile(Instances dataset);
 
-    void serialiseAndStoreClassifier(Classifier classifier);
+    void serialiseClassifierAndStoreToSDCard(Classifier classifier);
 
-    Classifier deSerialiseClassifier();
+    Classifier deSerialiseClassifierFromSDCard();
 }
