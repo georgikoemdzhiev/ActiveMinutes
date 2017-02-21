@@ -3,6 +3,7 @@ package georgikoemdzhiev.activeminutes.har;
 import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
+import weka.classifiers.lazy.IBk;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -124,6 +125,7 @@ public class HarTrainManager extends HarManager {
     private void buildClassifier(Instances dataSet, TrainClassifierResult result) {
         if (dataSet.size() != 0) {
             try {
+                IBk iBkClassifier = new IBk(3);
                 iBkClassifier.buildClassifier(dataSet);
                 mDataManager.serialiseClassifierToFile(iBkClassifier);
                 result.onSuccess("Classifier is built successfully!");
