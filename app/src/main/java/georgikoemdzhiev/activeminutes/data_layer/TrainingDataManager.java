@@ -96,13 +96,6 @@ public class TrainingDataManager implements ITrainingDataManager {
         fileManager.saveToArffFile(getTrainingData(0));
     }
 
-
-    @Override
-    public Classifier deSerialiseClassifierFromFile() {
-        return fileManager.deSerialiseClassifierFromSDCard();
-    }
-
-
     private Instances getWekaInstanceFrom(RealmResults<TrainingData> realmResults) {
         Instances dataSet = new Instances(INSTANCE_HEADER);
         for (int p = 0; p < realmResults.size(); p++) {
