@@ -1,6 +1,6 @@
 package georgikoemdzhiev.activeminutes.har;
 
-import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.feature.FeatureSet;
 import weka.classifiers.lazy.IBk;
@@ -12,7 +12,7 @@ import weka.core.Instance;
 
 public class HarClassifyManager extends HarManager {
     //    private int counter = 0;
-    public HarClassifyManager(IHarDataManager dataManager) {
+    public HarClassifyManager(ITrainingDataManager dataManager) {
         super(dataManager);
 
         this.iBkClassifier = (IBk) mDataManager.deSerialiseClassifierFromFile();

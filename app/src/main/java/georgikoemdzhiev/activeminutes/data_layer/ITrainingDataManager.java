@@ -11,7 +11,7 @@ import weka.core.Instances;
  * Created by Georgi Koemdzhiev on 12/02/2017.
  */
 
-public interface IHarDataManager {
+public interface ITrainingDataManager {
 
     Instances getTrainingData(int userId);
 

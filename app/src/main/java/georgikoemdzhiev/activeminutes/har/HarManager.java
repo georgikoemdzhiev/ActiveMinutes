@@ -1,6 +1,6 @@
 package georgikoemdzhiev.activeminutes.har;
 
-import georgikoemdzhiev.activeminutes.data_layer.IHarDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
@@ -22,12 +22,12 @@ public abstract class HarManager implements IHarManager {
     long windowBegTime = -1;
     TimeSeries accXSeries, accYSeries, accZSeries, accMSeries;
     TimeWindow window;
-    IHarDataManager mDataManager;
+    ITrainingDataManager mDataManager;
     IDataPreprocessor dataPrep;
     String activityLabel;
     IBk iBkClassifier;
 
-    public HarManager(IHarDataManager dataManager) {
+    public HarManager(ITrainingDataManager dataManager) {
         this.accXSeries = new TimeSeries("accX_");
         this.accYSeries = new TimeSeries("accY_");
         this.accZSeries = new TimeSeries("accZ_");
@@ -136,7 +136,7 @@ public abstract class HarManager implements IHarManager {
     }
 
     @Override
-    public IHarDataManager getDataManager() {
+    public ITrainingDataManager getDataManager() {
         return this.mDataManager;
     }
 

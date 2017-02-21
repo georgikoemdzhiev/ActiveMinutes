@@ -14,7 +14,7 @@ import weka.core.Instances;
  * Created by Georgi Koemdzhiev on 12/02/2017.
  */
 
-public class HarDataManager implements IHarDataManager {
+public class TrainingDataManager implements ITrainingDataManager {
     private static final String USER_ID = "userId";
     private static Instances INSTANCE_HEADER;
 
@@ -22,7 +22,7 @@ public class HarDataManager implements IHarDataManager {
     private IFileManager fileManager;
 
 
-    public HarDataManager(Realm realm, IFileManager fileManager) {
+    public TrainingDataManager(Realm realm, IFileManager fileManager) {
         this.realm = realm;
         this.fileManager = fileManager;
         INSTANCE_HEADER = fileManager.readArffFileSchemaFromAssets();
