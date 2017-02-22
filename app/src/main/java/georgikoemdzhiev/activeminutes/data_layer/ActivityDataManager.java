@@ -87,6 +87,7 @@ public class ActivityDataManager implements IActivityDataManager {
             RealmResults<Activity> activityRealmResults = mRealm
                     .where(Activity.class)
                     .greaterThanOrEqualTo(DATE_KEY, today)
+                    .equalTo(USER_ID_KEY, mUser.getUserId())
                     .findAll();
             if (activityRealmResults.size() != 0) {
                 activity = activityRealmResults.get(0);
