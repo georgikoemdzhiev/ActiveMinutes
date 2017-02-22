@@ -30,7 +30,11 @@ public class HarClassifyManager extends HarManager {
             // empty activity label -> classIsMissing...
             instance = featureSet.toInstance(mDataManager.getInstanceHeader(), "");
 
-            double activityClass = iBkClassifier.classifyInstance(instance);
+            int activityClass = (int) iBkClassifier.classifyInstance(instance);
+
+            // Notify ActivityMonitor for recognised activity...
+            setChanged();
+            notifyObservers(activityClass);
 
             System.out.println("FeatureSet.toString: " + featureSet.toString());
             System.out.println("FeatureSet.toInstance: " + instance);

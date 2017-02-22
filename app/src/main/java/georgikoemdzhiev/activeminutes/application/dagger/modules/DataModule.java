@@ -6,9 +6,11 @@ import android.content.SharedPreferences;
 import dagger.Module;
 import dagger.Provides;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
+import georgikoemdzhiev.activeminutes.data_layer.ActivityDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.AuthDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.ClassificationDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.FileManager;
+import georgikoemdzhiev.activeminutes.data_layer.IActivityDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.IClassificationDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
@@ -50,6 +52,12 @@ public class DataModule {
     @ApplicationScope
     IAuthDataManager provideAuthDataManager(Realm realm, IUserManager userManager) {
         return new AuthDataManager(realm, userManager);
+    }
+
+    @Provides
+    @ApplicationScope
+    IActivityDataManager provideActivityDateManager(Realm realm) {
+        return new ActivityDataManager(realm);
     }
 
     @Provides

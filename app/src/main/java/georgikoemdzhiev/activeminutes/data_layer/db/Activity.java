@@ -3,12 +3,15 @@ package georgikoemdzhiev.activeminutes.data_layer.db;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Georgi Koemdzhiev on 21/02/2017.
  */
 
 public class Activity extends RealmObject {
+    @PrimaryKey
+    private int activity_id;
     private int user_id;
     private Date date;
     private int activeTime;
@@ -82,10 +85,19 @@ public class Activity extends RealmObject {
         this.userMaxContInacGoal = userMaxContInacGoal;
     }
 
+    public int getActivity_id() {
+        return activity_id;
+    }
+
+    public void setActivity_id(int activity_id) {
+        this.activity_id = activity_id;
+    }
+
     @Override
     public String toString() {
         return "Activity{" +
-                "user_id=" + user_id +
+                "activity_id=" + activity_id +
+                ", user_id=" + user_id +
                 ", date=" + date +
                 ", activeTime=" + activeTime +
                 ", longestInactivityInterval=" + longestInactivityInterval +
@@ -93,6 +105,6 @@ public class Activity extends RealmObject {
                 ", timesInactivityDetected=" + timesInactivityDetected +
                 ", userPaGoal=" + userPaGoal +
                 ", userMaxContInacGoal=" + userMaxContInacGoal +
-                '}';
+                '}' + "\n";
     }
 }

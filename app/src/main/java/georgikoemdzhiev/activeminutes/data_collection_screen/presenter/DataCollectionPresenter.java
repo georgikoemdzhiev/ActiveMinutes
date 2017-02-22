@@ -2,7 +2,7 @@ package georgikoemdzhiev.activeminutes.data_collection_screen.presenter;
 
 import georgikoemdzhiev.activeminutes.data_collection_screen.model.IDataCollectionModel;
 import georgikoemdzhiev.activeminutes.data_collection_screen.view.IDataCollectionView;
-import georgikoemdzhiev.activeminutes.data_layer.NumOfInstResult;
+import georgikoemdzhiev.activeminutes.data_layer.results.NumOfInstResult;
 
 /**
  * Created by koemdzhiev on 09/02/2017.

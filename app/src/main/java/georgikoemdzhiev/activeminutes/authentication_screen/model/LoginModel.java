@@ -1,7 +1,7 @@
 package georgikoemdzhiev.activeminutes.authentication_screen.model;
 
-import georgikoemdzhiev.activeminutes.data_layer.AuthResult;
 import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
+import georgikoemdzhiev.activeminutes.data_layer.results.AuthResult;
 
 /**
  * Created by Georgi Koemdzhiev on 15/02/2017.

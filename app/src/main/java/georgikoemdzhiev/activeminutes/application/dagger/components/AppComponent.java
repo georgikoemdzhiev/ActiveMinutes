@@ -7,6 +7,7 @@ import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.AppModule;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.DataModule;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.HarModule;
+import georgikoemdzhiev.activeminutes.application.dagger.modules.SelfManagementModule;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
 import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthComponent;
 import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthModule;
@@ -22,7 +23,8 @@ import georgikoemdzhiev.activeminutes.services.DataCollectionService;
 @Component(modules = {
         AppModule.class,
         DataModule.class,
-        HarModule.class
+        HarModule.class,
+        SelfManagementModule.class
 })
 @ApplicationScope
 public interface AppComponent {

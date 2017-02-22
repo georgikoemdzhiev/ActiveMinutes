@@ -12,14 +12,18 @@ import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import java.util.Observer;
+
 import javax.inject.Inject;
 
 import georgikoemdzhiev.activeminutes.R;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.view.ActiveMinutesActivity;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.application.dagger.qualifiers.Named;
-import georgikoemdzhiev.activeminutes.data_collection_screen.view.DataCollectionActivity;
 import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
+import georgikoemdzhiev.activeminutes.har.HarClassifyManager;
 import georgikoemdzhiev.activeminutes.har.IHarManager;
+import georgikoemdzhiev.activeminutes.self_management.IActivityMonitor;
 
 public class ActiveMinutesService extends Service implements SensorEventListener {
     @Inject
@@ -28,6 +32,9 @@ public class ActiveMinutesService extends Service implements SensorEventListener
     @Inject
     @Named("classify")
     IHarManager mHarManager;
+
+    @Inject
+    IActivityMonitor mActivityManager;
 
     private SensorManager sensorManager;
     private Sensor accSensor;
@@ -41,15 +48,26 @@ public class ActiveMinutesService extends Service implements SensorEventListener
         satisfyDependencies();
         Log.e("TAG", "ActiveMinutesService---OnCreate. Logged in user id: " + mAuthDataManager.getLoggedInUser().getUserId());
 
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        setUpActivityManager();
+
+
+    }
+
+    private void setUpActivityManager() {
+        // set the logged in user...
+        mActivityManager.setUser(mAuthDataManager.getLoggedInUser());
+        // add observable mHarManager to the observer ActivityMonitor
+        ((HarClassifyManager) mHarManager).addObserver((Observer) mActivityManager);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         runAsForeground();
-        sensorManager.registerListener(this, accSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, accSensor, SensorManager.SENSOR_DELAY_FASTEST);
         return START_STICKY;
     }
 
@@ -71,7 +89,7 @@ public class ActiveMinutesService extends Service implements SensorEventListener
     }
 
     private void runAsForeground() {
-        Intent notificationIntent = new Intent(this, DataCollectionActivity.class);
+        Intent notificationIntent = new Intent(this, ActiveMinutesActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
         Notification notification = new NotificationCompat.Builder(this)

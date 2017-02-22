@@ -1,7 +1,7 @@
 package georgikoemdzhiev.activeminutes.data_collection_screen.model;
 
 import georgikoemdzhiev.activeminutes.data_layer.ITrainingDataManager;
-import georgikoemdzhiev.activeminutes.data_layer.NumOfInstResult;
+import georgikoemdzhiev.activeminutes.data_layer.results.NumOfInstResult;
 
 /**
  * Created by Georgi Koemdzhiev on 13/02/2017.

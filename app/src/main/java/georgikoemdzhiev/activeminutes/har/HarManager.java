@@ -1,5 +1,7 @@
 package georgikoemdzhiev.activeminutes.har;
 
+import java.util.Observable;
+
 import georgikoemdzhiev.activeminutes.har.common.data.Point;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeSeries;
 import georgikoemdzhiev.activeminutes.har.common.data.TimeWindow;
@@ -10,7 +12,7 @@ import georgikoemdzhiev.activeminutes.har.common.data_preprocessing.IDataPreproc
  * Created by koemdzhiev on 10/02/2017.
  */
 
-public abstract class HarManager implements IHarManager {
+public abstract class HarManager extends Observable implements IHarManager {
     // 3 Second time window
     protected static final long WINDOW_LENGTH = 3000;
 

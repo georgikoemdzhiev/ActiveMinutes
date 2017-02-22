@@ -1,6 +1,7 @@
 package georgikoemdzhiev.activeminutes.data_layer;
 
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
+import georgikoemdzhiev.activeminutes.data_layer.results.AuthResult;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
