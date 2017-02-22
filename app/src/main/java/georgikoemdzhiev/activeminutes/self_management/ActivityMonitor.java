@@ -29,19 +29,24 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
         switch ((int) activityClass) {
             case 0:
                 activity = "walking";
-                mDataManager.incrementActiveTime();
+                mDataManager.incActiveTime();
+                mDataManager.clearCurrentInacInterval();
                 break;
             case 1:
                 activity = "running";
-                mDataManager.incrementActiveTime();
+                mDataManager.incActiveTime();
+                mDataManager.clearCurrentInacInterval();
                 break;
             case 2:
                 activity = "static";
-                mDataManager.incrementCurrentInacInterval();
+                mDataManager.incCurrentInacInterval();
+                mDataManager.incTimesInacDetected();
+                mDataManager.checkOrUpdateLognestInacInterval();
                 break;
             case 3:
                 activity = "cycling";
-                mDataManager.incrementActiveTime();
+                mDataManager.incActiveTime();
+                mDataManager.clearCurrentInacInterval();
                 break;
         }
 

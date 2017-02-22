@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import georgikoemdzhiev.activeminutes.R;
+import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,10 +17,6 @@ import georgikoemdzhiev.activeminutes.R;
  * create an instance of this fragment.
  */
 public class TodayFragment extends Fragment {
-    private static final String ARG_PARAM_USER_ID = "user_id";
-
-    private int user_id;
-
 
     public TodayFragment() {
         // Required empty public constructor
@@ -39,9 +36,8 @@ public class TodayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            user_id = getArguments().getInt(ARG_PARAM_USER_ID);
-        }
+//        satisfyDependencies();
+//        mPresenter.setView(this);
     }
 
     @Override
@@ -51,6 +47,11 @@ public class TodayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_today, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    private void satisfyDependencies() {
+        ((ActiveMinutesApplication) getActivity()
+                .getApplication()).buildActiveMinutesComp().inject(this);
     }
 
 }

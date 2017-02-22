@@ -2,6 +2,7 @@ package georgikoemdzhiev.activeminutes.active_minutes_screen.dagger;
 
 import dagger.Subcomponent;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.view.ActiveMinutesActivity;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.view.TodayFragment;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ActivityScope;
 
 /**
@@ -13,4 +14,6 @@ import georgikoemdzhiev.activeminutes.application.dagger.scopes.ActivityScope;
 public interface ActiveMinutesComponent {
 
     void inject(ActiveMinutesActivity activity);
+
+    void inject(TodayFragment fragment);
 }

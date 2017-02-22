@@ -32,43 +32,92 @@ public class ActivityDataManager implements IActivityDataManager {
     }
 
     @Override
-    public void incrementActiveTime() {
+    public void incActiveTime() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateActivityByDate();
         int currentActiveTime = activity.getActiveTime();
         activity.setActiveTime(currentActiveTime + INCREMENT_VALUE);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
-
         debugActivityTable();
     }
 
 
     @Override
-    public void incrementCurrentInacInterval() {
+    public void incCurrentInacInterval() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateActivityByDate();
         int currentInacInterval = activity.getCurrentInactivityInterval();
         int incremented = currentInacInterval + INCREMENT_VALUE;
         activity.setCurrentInactivityInterval(incremented);
-
         mRealm.copyToRealmOrUpdate(activity);
-
         mRealm.commitTransaction();
-
         debugActivityTable();
     }
 
     @Override
-    public void incrementTimesInactivityDetected() {
+    public void clearCurrentInacInterval() {
+        mRealm.beginTransaction();
+        Activity activity = getOrCreateActivityByDate();
+        activity.setCurrentInactivityInterval(0);
+        mRealm.copyToRealmOrUpdate(activity);
+        mRealm.commitTransaction();
+        //debugActivityTable();
+    }
+
+    @Override
+    public void incTimesInacDetected() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateActivityByDate();
         int timesInacDedected = activity.getTimesInactivityDetected();
-        activity.setTimesInactivityDetected(++timesInacDedected);
+        timesInacDedected++;
+        activity.setTimesInactivityDetected(timesInacDedected);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
+        //debugActivityTable();
+    }
 
-        debugActivityTable();
+    @Override
+    public void checkOrUpdateLognestInacInterval() {
+        mRealm.beginTransaction();
+        Activity activity = getOrCreateActivityByDate();
+        int currentInacInterval = activity.getCurrentInactivityInterval();
+        int longestInactInterval = activity.getLongestInactivityInterval();
+
+        if (currentInacInterval > longestInactInterval) {
+            activity.setLongestInactivityInterval(currentInacInterval);
+            mRealm.copyToRealmOrUpdate(activity);
+        }
+
+        mRealm.commitTransaction();
+        // debugActivityTable();
+    }
+
+    @Override
+    public int getActiveTimeByDate(Date date) {
+        Date truncatedDate = truncateDate(date);
+        Activity activity = mRealm.where(Activity.class)
+                .greaterThanOrEqualTo(DATE_KEY, truncatedDate)
+                .findFirst();
+        return activity.getActiveTime();
+    }
+
+    @Override
+    public int getLongestInacTimeByDate(Date date) {
+        Date truncatedDate = truncateDate(date);
+        Activity activity = mRealm.where(Activity.class)
+                .greaterThanOrEqualTo(DATE_KEY, truncatedDate)
+                .findFirst();
+        return activity.getLongestInactivityInterval();
+    }
+
+    @Override
+    public int getTimesInacDetected(Date date) {
+        Date truncatedDate = truncateDate(date);
+        Activity activity = mRealm.where(Activity.class)
+                .greaterThanOrEqualTo(DATE_KEY, truncatedDate)
+                .findFirst();
+        return activity.getTimesInactivityDetected();
     }
 
 
@@ -128,6 +177,11 @@ public class ActivityDataManager implements IActivityDataManager {
 
     private Date getTruncatedTodayDate() {
         Date today = new Date();
+        return truncateDate(today);
+    }
+
+    private Date truncateDate(Date date) {
+        Date today = date;
         Calendar cal = Calendar.getInstance();
         cal.setTime(today);
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -156,7 +210,7 @@ public class ActivityDataManager implements IActivityDataManager {
                 .findAll();
 
         for (Activity activity : activities) {
-            System.out.println(activities.toString());
+            System.out.println(activity.toString());
         }
     }
 }
