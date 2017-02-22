@@ -47,9 +47,20 @@ public class ActivityDataManager implements IActivityDataManager {
     public void incCurrentInacInterval() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateActivityByDate();
+
         int currentInacInterval = activity.getCurrentInactivityInterval();
-        int incremented = currentInacInterval + INCREMENT_VALUE;
-        activity.setCurrentInactivityInterval(incremented);
+        int longestInactInterval = activity.getLongestInactivityInterval();
+
+        int currentInacInterIncremented = currentInacInterval + INCREMENT_VALUE;
+
+        activity.setAverageInactInterval((currentInacInterval + longestInactInterval) / 2);
+
+        // Check if longest inactivity interval against current - if it needs updating...
+        if (currentInacInterval > longestInactInterval) {
+            activity.setLongestInactivityInterval(currentInacInterval);
+        }
+
+        activity.setCurrentInactivityInterval(currentInacInterIncremented);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
         debugActivityTable();
@@ -65,64 +76,9 @@ public class ActivityDataManager implements IActivityDataManager {
         //debugActivityTable();
     }
 
-    @Override
-    public void incTimesInacDetected() {
-        mRealm.beginTransaction();
-        Activity activity = getOrCreateActivityByDate();
-        int timesInacDedected = activity.getTimesInactivityDetected();
-        timesInacDedected++;
-        activity.setTimesInactivityDetected(timesInacDedected);
-        mRealm.copyToRealmOrUpdate(activity);
-        mRealm.commitTransaction();
-        //debugActivityTable();
-    }
-
-    @Override
-    public void checkOrUpdateLognestInacInterval() {
-        mRealm.beginTransaction();
-        Activity activity = getOrCreateActivityByDate();
-        int currentInacInterval = activity.getCurrentInactivityInterval();
-        int longestInactInterval = activity.getLongestInactivityInterval();
-
-        if (currentInacInterval > longestInactInterval) {
-            activity.setLongestInactivityInterval(currentInacInterval);
-            mRealm.copyToRealmOrUpdate(activity);
-        }
-
-        mRealm.commitTransaction();
-        // debugActivityTable();
-    }
-
-    @Override
-    public int getActiveTimeByDate(Date date) {
-        Date truncatedDate = truncateDate(date);
-        Activity activity = mRealm.where(Activity.class)
-                .greaterThanOrEqualTo(DATE_KEY, truncatedDate)
-                .findFirst();
-        return activity.getActiveTime();
-    }
-
-    @Override
-    public int getLongestInacTimeByDate(Date date) {
-        Date truncatedDate = truncateDate(date);
-        Activity activity = mRealm.where(Activity.class)
-                .greaterThanOrEqualTo(DATE_KEY, truncatedDate)
-                .findFirst();
-        return activity.getLongestInactivityInterval();
-    }
-
-    @Override
-    public int getTimesInacDetected(Date date) {
-        Date truncatedDate = truncateDate(date);
-        Activity activity = mRealm.where(Activity.class)
-                .greaterThanOrEqualTo(DATE_KEY, truncatedDate)
-                .findFirst();
-        return activity.getTimesInactivityDetected();
-    }
-
 
     private Activity getOrCreateActivityByDate() {
-        Date today = getTruncatedTodayDate();
+        Date today = truncateDate(new Date());
 
         Activity activity;
         // Find all Activity table records...
@@ -151,8 +107,7 @@ public class ActivityDataManager implements IActivityDataManager {
                 activity.setDate(today);
                 activity.setLongestInactivityInterval(0);
                 activity.setCurrentInactivityInterval(0);
-                activity.setTimesInactivityDetected(0);
-                activity.setUserMaxContInacGoal(mUser.getMaxContInactGoal());
+                activity.setUserMaxContInacTarget(mUser.getMaxContInactGoal());
                 activity.setUserPaGoal(mUser.getPaGoal());
             }
         } else {
@@ -166,8 +121,7 @@ public class ActivityDataManager implements IActivityDataManager {
             activity.setDate(today);
             activity.setLongestInactivityInterval(0);
             activity.setCurrentInactivityInterval(0);
-            activity.setTimesInactivityDetected(0);
-            activity.setUserMaxContInacGoal(mUser.getMaxContInactGoal());
+            activity.setUserMaxContInacTarget(mUser.getMaxContInactGoal());
             activity.setUserPaGoal(mUser.getPaGoal());
         }
 
@@ -175,10 +129,6 @@ public class ActivityDataManager implements IActivityDataManager {
         return activity;
     }
 
-    private Date getTruncatedTodayDate() {
-        Date today = new Date();
-        return truncateDate(today);
-    }
 
     private Date truncateDate(Date date) {
         Date today = date;

@@ -18,8 +18,12 @@ public class User extends RealmObject {
     private byte[] profilePicture;
 
     public User() {
-        this.paGoal = 30;
-        this.maxContInactGoal = 60;
+        // TODO change those to minutes
+        // 30 minutes = 1800 seconds
+        this.paGoal = 30 * 60;
+        // 60 minutues = 3600 seconds
+        // TODO change those to minutes
+        this.maxContInactGoal = 60 * 60;
         isClassifierPersonalised = false;
     }
 

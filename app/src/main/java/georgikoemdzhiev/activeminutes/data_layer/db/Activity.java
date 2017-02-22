@@ -15,11 +15,14 @@ public class Activity extends RealmObject {
     private int user_id;
     private Date date;
     private int activeTime;
+
     private int longestInactivityInterval;
     private int currentInactivityInterval;
-    private int timesInactivityDetected;
+
+    private int averageInactInterval;
+    // goal and targets
     private int userPaGoal;
-    private int userMaxContInacGoal;
+    private int userMaxContInacTarget;
 
     public int getUser_id() {
         return user_id;
@@ -61,13 +64,6 @@ public class Activity extends RealmObject {
         this.currentInactivityInterval = currentInactivityInterval;
     }
 
-    public int getTimesInactivityDetected() {
-        return timesInactivityDetected;
-    }
-
-    public void setTimesInactivityDetected(int timesInactivityDetected) {
-        this.timesInactivityDetected = timesInactivityDetected;
-    }
 
     public int getUserPaGoal() {
         return userPaGoal;
@@ -77,12 +73,20 @@ public class Activity extends RealmObject {
         this.userPaGoal = userPaGoal;
     }
 
-    public int getUserMaxContInacGoal() {
-        return userMaxContInacGoal;
+    public int getUserMaxContInacTarget() {
+        return userMaxContInacTarget;
     }
 
-    public void setUserMaxContInacGoal(int userMaxContInacGoal) {
-        this.userMaxContInacGoal = userMaxContInacGoal;
+    public void setUserMaxContInacTarget(int userMaxContInacTarget) {
+        this.userMaxContInacTarget = userMaxContInacTarget;
+    }
+
+    public int getAverageInactInterval() {
+        return averageInactInterval;
+    }
+
+    public void setAverageInactInterval(int averageInactInterval) {
+        this.averageInactInterval = averageInactInterval;
     }
 
     public int getActivity_id() {
@@ -95,16 +99,16 @@ public class Activity extends RealmObject {
 
     @Override
     public String toString() {
-        return "Activity{" +
-                "activity_id=" + activity_id +
-                ", user_id=" + user_id +
-                ", date=" + date +
-                ", activeTime=" + activeTime +
-                ", longestInactivityInterval=" + longestInactivityInterval +
-                ", currentInactivityInterval=" + currentInactivityInterval +
-                ", timesInactivityDetected=" + timesInactivityDetected +
-                ", userPaGoal=" + userPaGoal +
-                ", userMaxContInacGoal=" + userMaxContInacGoal +
+        return "Activity{" + "\n" +
+                "activity_id=" + activity_id + "\n" +
+                ", user_id=" + user_id + "\n" +
+                ", date=" + date + "\n" +
+                ", activeTime=" + activeTime + "\n" +
+                ", longestInactivityInterval=" + longestInactivityInterval + "\n" +
+                ", currentInactivityInterval=" + currentInactivityInterval + "\n" +
+                ", averageInactInterval=" + averageInactInterval + "\n" +
+                ", userPaGoal=" + userPaGoal + "\n" +
+                ", userMaxContInacTarget=" + userMaxContInacTarget + "\n" +
                 '}' + "\n";
     }
 }

@@ -1,7 +1,5 @@
 package georgikoemdzhiev.activeminutes.data_layer;
 
-import java.util.Date;
-
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 
 /**
@@ -18,13 +16,4 @@ public interface IActivityDataManager {
 
     void clearCurrentInacInterval();
 
-    void incTimesInacDetected();
-
-    void checkOrUpdateLognestInacInterval();
-
-    int getActiveTimeByDate(Date date);
-
-    int getLongestInacTimeByDate(Date date);
-
-    int getTimesInacDetected(Date date);
 }

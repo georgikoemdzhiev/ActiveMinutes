@@ -19,38 +19,28 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
     }
 
     @Override
-    public void update(Observable observable, Object o) {
-        System.out.println("Recognised activity: " + getStringActivityFromClass(o));
-
+    public void update(Observable observable, Object activity) {
+        monitorActivity(activity);
     }
 
-    private String getStringActivityFromClass(Object activityClass) {
-        String activity = "";
+    private void monitorActivity(Object activityClass) {
+
         switch ((int) activityClass) {
             case 0:
-                activity = "walking";
-                mDataManager.incActiveTime();
-                mDataManager.clearCurrentInacInterval();
-                break;
+                //activity = "walking";
             case 1:
-                activity = "running";
+                //activity = "running";
+            case 3:
+                //activity = "cycling";
                 mDataManager.incActiveTime();
                 mDataManager.clearCurrentInacInterval();
                 break;
             case 2:
-                activity = "static";
+                //activity = "static";
                 mDataManager.incCurrentInacInterval();
-                mDataManager.incTimesInacDetected();
-                mDataManager.checkOrUpdateLognestInacInterval();
-                break;
-            case 3:
-                activity = "cycling";
-                mDataManager.incActiveTime();
-                mDataManager.clearCurrentInacInterval();
                 break;
         }
 
-        return activity;
     }
 
     @Override
