@@ -12,13 +12,13 @@
         android:layout_marginTop="40dp">
 
         <ProgressBar
-            android:id="@+id/circular_progress_bar"
+            android:id="@+id/activeTimeProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="280dp"
             android:layout_height="280dp"
             android:indeterminate="false"
             android:max="100"
-            android:progress="90"
+            android:progress="0"
             android:progressDrawable="@drawable/circular_probress_bar"
             android:rotation="270"
             tools:progress="90"/>

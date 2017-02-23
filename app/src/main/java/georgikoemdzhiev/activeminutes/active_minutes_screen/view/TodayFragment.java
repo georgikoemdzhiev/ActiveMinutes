@@ -6,7 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
@@ -17,6 +20,20 @@ import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
  * create an instance of this fragment.
  */
 public class TodayFragment extends Fragment {
+    @BindView(R.id.activeTime)
+    TextView mActivityTime;
+
+    @BindView(R.id.activeTimeProgressBar)
+    ProgressBar mActiveTimeProgressBar;
+
+    @BindView(R.id.paGoal)
+    TextView mPaGoal;
+
+    @BindView(R.id.longestInacInterval)
+    TextView mLongestInacInterval;
+
+    @BindView(R.id.averageInacInterval)
+    TextView mAverageInacInterval;
 
     public TodayFragment() {
         // Required empty public constructor
@@ -46,6 +63,10 @@ public class TodayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_today, container, false);
         ButterKnife.bind(this, view);
+//        mActivityTime.setText("15");
+//        mPaGoal.setText("30");
+//        mActiveTimeProgressBar.setProgress(15);
+//        mActiveTimeProgressBar.setMax(30);
         return view;
     }
 
