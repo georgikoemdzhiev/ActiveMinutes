@@ -16,4 +16,15 @@ public interface IActivityDataManager {
 
     void clearCurrentInacInterval();
 
+
+    // Getters
+
+    int getActiveTime();
+
+    int getLongestInacInterval();
+
+    int getAverageInacInterval();
+
+    int getUserPaGoal();
+
 }

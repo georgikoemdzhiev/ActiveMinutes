@@ -34,7 +34,7 @@ public class ActiveMinutesService extends Service implements SensorEventListener
     IHarManager mHarManager;
 
     @Inject
-    IActivityMonitor mActivityManager;
+    IActivityMonitor mActivityMonitor;
 
     private SensorManager sensorManager;
     private Sensor accSensor;
@@ -59,9 +59,9 @@ public class ActiveMinutesService extends Service implements SensorEventListener
 
     private void setUpActivityManager() {
         // set the logged in user...
-        mActivityManager.setUser(mAuthDataManager.getLoggedInUser());
+        mActivityMonitor.setUser(mAuthDataManager.getLoggedInUser());
         // add observable mHarManager to the observer ActivityMonitor
-        ((HarClassifyManager) mHarManager).addObserver((Observer) mActivityManager);
+        ((HarClassifyManager) mHarManager).addObserver((Observer) mActivityMonitor);
     }
 
     @Override

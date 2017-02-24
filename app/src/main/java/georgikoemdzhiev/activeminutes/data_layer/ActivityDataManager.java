@@ -76,7 +76,31 @@ public class ActivityDataManager implements IActivityDataManager {
         //debugActivityTable();
     }
 
+    @Override
+    public int getActiveTime() {
+        Activity activity = getOrCreateActivityByDate();
+        return activity.getActiveTime();
+    }
 
+    @Override
+    public int getLongestInacInterval() {
+        Activity activity = getOrCreateActivityByDate();
+        return activity.getLongestInactivityInterval();
+    }
+
+    @Override
+    public int getAverageInacInterval() {
+        Activity activity = getOrCreateActivityByDate();
+        return activity.getAverageInactInterval();
+    }
+
+    @Override
+    public int getUserPaGoal() {
+        Activity activity = getOrCreateActivityByDate();
+        return activity.getUserPaGoal();
+    }
+
+    // helper methods
     private Activity getOrCreateActivityByDate() {
         Date today = truncateDate(new Date());
 
