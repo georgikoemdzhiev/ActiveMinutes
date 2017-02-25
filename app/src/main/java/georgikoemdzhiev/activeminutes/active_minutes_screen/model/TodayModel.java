@@ -1,5 +1,7 @@
 package georgikoemdzhiev.activeminutes.active_minutes_screen.model;
 
+import android.util.Log;
+
 import georgikoemdzhiev.activeminutes.data_layer.IActivityDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
 
@@ -9,11 +11,11 @@ import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
 
 public class TodayModel implements ITodayModel {
     private IActivityDataManager mActivityDataManager;
-    private IAuthDataManager mAuthDataManager;
 
     public TodayModel(IActivityDataManager activityDataManager, IAuthDataManager authDataManager) {
         mActivityDataManager = activityDataManager;
-        mAuthDataManager = authDataManager;
+        mActivityDataManager.setUser(authDataManager.getLoggedInUser());
+        Log.e("TodayModel", "TodayModel constructor created!");
     }
 
     @Override
@@ -21,7 +23,6 @@ public class TodayModel implements ITodayModel {
         int paGoal, activeTime, longestInacInter, averageInacInter, maxContInacTarget, timesTargetExceeded;
 
         try {
-            mActivityDataManager.setUser(mAuthDataManager.getLoggedInUser());
             paGoal = mActivityDataManager.getUserPaGoal();
             activeTime = mActivityDataManager.getActiveTime();
             longestInacInter = mActivityDataManager.getLongestInacInterval();

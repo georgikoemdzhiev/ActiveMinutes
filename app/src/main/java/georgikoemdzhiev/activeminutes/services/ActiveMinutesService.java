@@ -48,7 +48,6 @@ public class ActiveMinutesService extends Service implements SensorEventListener
         satisfyDependencies();
         Log.e("TAG", "ActiveMinutesService---OnCreate. Logged in user id: " + mAuthDataManager.getLoggedInUser().getUserId());
 
-
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
