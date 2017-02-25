@@ -34,7 +34,7 @@ public class ActivityDataManager implements IActivityDataManager {
     @Override
     public void incActiveTime() {
         mRealm.beginTransaction();
-        Activity activity = getOrCreateActivityByDate();
+        Activity activity = getOrCreateTodayUserActivity();
         int currentActiveTime = activity.getActiveTime();
         activity.setActiveTime(currentActiveTime + INCREMENT_VALUE);
         mRealm.copyToRealmOrUpdate(activity);
@@ -46,7 +46,7 @@ public class ActivityDataManager implements IActivityDataManager {
     @Override
     public void incCurrentInacInterval() {
         mRealm.beginTransaction();
-        Activity activity = getOrCreateActivityByDate();
+        Activity activity = getOrCreateTodayUserActivity();
 
         int currentInacInterval = activity.getCurrentInactivityInterval();
         int longestInactInterval = activity.getLongestInactivityInterval();
@@ -69,7 +69,7 @@ public class ActivityDataManager implements IActivityDataManager {
     @Override
     public void clearCurrentInacInterval() {
         mRealm.beginTransaction();
-        Activity activity = getOrCreateActivityByDate();
+        Activity activity = getOrCreateTodayUserActivity();
         activity.setCurrentInactivityInterval(0);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
@@ -78,30 +78,30 @@ public class ActivityDataManager implements IActivityDataManager {
 
     @Override
     public int getActiveTime() {
-        Activity activity = getOrCreateActivityByDate();
+        Activity activity = getOrCreateTodayUserActivity();
         return activity.getActiveTime();
     }
 
     @Override
     public int getLongestInacInterval() {
-        Activity activity = getOrCreateActivityByDate();
+        Activity activity = getOrCreateTodayUserActivity();
         return activity.getLongestInactivityInterval();
     }
 
     @Override
     public int getAverageInacInterval() {
-        Activity activity = getOrCreateActivityByDate();
+        Activity activity = getOrCreateTodayUserActivity();
         return activity.getAverageInactInterval();
     }
 
     @Override
     public int getUserPaGoal() {
-        Activity activity = getOrCreateActivityByDate();
+        Activity activity = getOrCreateTodayUserActivity();
         return activity.getUserPaGoal();
     }
 
     // helper methods
-    private Activity getOrCreateActivityByDate() {
+    private Activity getOrCreateTodayUserActivity() {
         Date today = truncateDate(new Date());
 
         Activity activity;
