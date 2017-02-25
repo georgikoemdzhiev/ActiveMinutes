@@ -100,6 +100,20 @@ public class ActivityDataManager implements IActivityDataManager {
         return activity.getUserPaGoal();
     }
 
+    @Override
+    public int getMaxContInacTarget() {
+        Activity activity = getOrCreateTodayUserActivity();
+        return activity.getUserMaxContInacTarget();
+    }
+
+    @Override
+    public int getTimesTargetExceeded() {
+        Activity activity = getOrCreateTodayUserActivity();
+        int maxContInacTarget = activity.getUserMaxContInacTarget();
+        int longestInactInterval = activity.getLongestInactivityInterval();
+        return Math.round(longestInactInterval / maxContInacTarget);
+    }
+
     // helper methods
     private Activity getOrCreateTodayUserActivity() {
         Date today = truncateDate(new Date());
@@ -131,7 +145,7 @@ public class ActivityDataManager implements IActivityDataManager {
                 activity.setDate(today);
                 activity.setLongestInactivityInterval(0);
                 activity.setCurrentInactivityInterval(0);
-                activity.setUserMaxContInacTarget(mUser.getMaxContInactGoal());
+                activity.setUserMaxContInacTarget(mUser.getMaxContInactTarget());
                 activity.setUserPaGoal(mUser.getPaGoal());
             }
         } else {
@@ -145,7 +159,7 @@ public class ActivityDataManager implements IActivityDataManager {
             activity.setDate(today);
             activity.setLongestInactivityInterval(0);
             activity.setCurrentInactivityInterval(0);
-            activity.setUserMaxContInacTarget(mUser.getMaxContInactGoal());
+            activity.setUserMaxContInacTarget(mUser.getMaxContInactTarget());
             activity.setUserPaGoal(mUser.getPaGoal());
         }
 

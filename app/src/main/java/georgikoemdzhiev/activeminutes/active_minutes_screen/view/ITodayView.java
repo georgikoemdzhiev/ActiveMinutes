@@ -6,7 +6,12 @@ package georgikoemdzhiev.activeminutes.active_minutes_screen.view;
 
 public interface ITodayView {
 
-    void setData(int paGoal, int activeTime, int longestInacInter, int averageIacInter);
+    void setData(int paGoal,
+                 String maxContInacTarget,
+                 String timesTargetExceeded,
+                 int activeTime,
+                 String longestInacInter,
+                 String averageIacInter);
 
     void showErrorMessage(String message);
 }

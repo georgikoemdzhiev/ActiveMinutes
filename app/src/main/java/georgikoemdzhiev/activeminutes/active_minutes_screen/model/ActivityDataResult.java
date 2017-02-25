@@ -5,7 +5,13 @@ package georgikoemdzhiev.activeminutes.active_minutes_screen.model;
  */
 public interface ActivityDataResult {
 
-    void onSuccess(int paGoal, int activeTime, int longestInacInter, int averageIacInter);
+    void onSuccess(int paGoal,
+                   int maxContInacTarget,
+                   int timesTargetExceeded,
+                   int activeTime,
+                   int longestInacInter,
+                   int averageIacInter
+    );
 
     void onError(String message);
 }

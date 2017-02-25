@@ -18,7 +18,7 @@ public class TodayModel implements ITodayModel {
 
     @Override
     public void getActivityData(ActivityDataResult result) {
-        int paGoal, activeTime, longestInacInter, averageInacInter;
+        int paGoal, activeTime, longestInacInter, averageInacInter, maxContInacTarget, timesTargetExceeded;
 
         try {
             mActivityDataManager.setUser(mAuthDataManager.getLoggedInUser());
@@ -26,8 +26,15 @@ public class TodayModel implements ITodayModel {
             activeTime = mActivityDataManager.getActiveTime();
             longestInacInter = mActivityDataManager.getLongestInacInterval();
             averageInacInter = mActivityDataManager.getAverageInacInterval();
+            maxContInacTarget = mActivityDataManager.getMaxContInacTarget();
+            timesTargetExceeded = mActivityDataManager.getTimesTargetExceeded();
 
-            result.onSuccess(paGoal, activeTime, longestInacInter, averageInacInter);
+            result.onSuccess(paGoal,
+                    maxContInacTarget,
+                    timesTargetExceeded,
+                    activeTime,
+                    longestInacInter,
+                    averageInacInter);
         } catch (Exception e) {
             result.onError(e.getMessage());
         }

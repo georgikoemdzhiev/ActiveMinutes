@@ -20,8 +20,18 @@ public class TodayPresenter implements ITodayPresenter {
     public void getActivityInformation() {
         mModel.getActivityData(new ActivityDataResult() {
             @Override
-            public void onSuccess(int paGoal, int activeTime, int longestInacInter, int averageIacInter) {
-                mView.setData(paGoal, activeTime, longestInacInter, averageIacInter);
+            public void onSuccess(int paGoal,
+                                  int maxContInacTarget,
+                                  int timesTargetExceeded,
+                                  int activeTime,
+                                  int longestInacInter,
+                                  int averageIacInter) {
+                mView.setData(paGoal,
+                        String.valueOf(maxContInacTarget / 60),
+                        String.valueOf(timesTargetExceeded),
+                        activeTime,
+                        String.valueOf(longestInacInter / 60),
+                        String.valueOf(averageIacInter / 60));
             }
 
             @Override

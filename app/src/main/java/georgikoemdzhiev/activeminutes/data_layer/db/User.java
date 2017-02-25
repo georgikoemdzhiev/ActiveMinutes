@@ -13,7 +13,7 @@ public class User extends RealmObject {
     private String username;
     private String password;
     private int paGoal;
-    private int maxContInactGoal;
+    private int maxContInactTarget;
     private boolean isClassifierPersonalised;
     private byte[] profilePicture;
 
@@ -23,7 +23,7 @@ public class User extends RealmObject {
         this.paGoal = 30 * 60;
         // 60 minutues = 3600 seconds
         // TODO change those to minutes
-        this.maxContInactGoal = 60 * 60;
+        this.maxContInactTarget = 60 * 60;
         isClassifierPersonalised = false;
     }
 
@@ -59,12 +59,12 @@ public class User extends RealmObject {
         this.paGoal = paGoal;
     }
 
-    public int getMaxContInactGoal() {
-        return maxContInactGoal;
+    public int getMaxContInactTarget() {
+        return maxContInactTarget;
     }
 
-    public void setMaxContInactGoal(int maxContInactGoal) {
-        this.maxContInactGoal = maxContInactGoal;
+    public void setMaxContInactTarget(int maxContInactTarget) {
+        this.maxContInactTarget = maxContInactTarget;
     }
 
     public boolean isClassifierPersonalised() {

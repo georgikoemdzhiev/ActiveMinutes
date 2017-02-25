@@ -34,6 +34,10 @@ public class TodayFragment extends Fragment implements ITodayView {
     TextView mLongestInacInterval;
     @BindView(R.id.averageInacInterval)
     TextView mAverageInacInterval;
+    @BindView(R.id.maxContInactTarget)
+    TextView mMaxContInactTarget;
+    @BindView(R.id.timesTargetExceeded)
+    TextView mTimesTargetExceeded;
 
     @Inject
     ITodayPresenter mPresenter;
@@ -87,15 +91,22 @@ public class TodayFragment extends Fragment implements ITodayView {
     }
 
     @Override
-    public void setData(int paGoal, int activeTime, int longestInacInter, int averageIacInter) {
+    public void setData(int paGoal,
+                        String maxContInacTarget,
+                        String timesTargetExceeded,
+                        int activeTime,
+                        String longestInacInter,
+                        String averageIacInter) {
         // seconds to minutes convection
         mActivityTime.setText(String.valueOf(activeTime / 60));
         // seconds to minutes convection
         mPaGoal.setText(String.valueOf(paGoal / 60));
         mActiveTimeProgressBar.setMax(paGoal);
         mActiveTimeProgressBar.setProgress(activeTime);
-        mLongestInacInterval.setText(String.valueOf(longestInacInter / 60));
-        mAverageInacInterval.setText(String.valueOf(averageIacInter / 60));
+        mLongestInacInterval.setText(longestInacInter);
+        mAverageInacInterval.setText(averageIacInter);
+        mMaxContInactTarget.setText(maxContInacTarget);
+        mTimesTargetExceeded.setText(timesTargetExceeded);
     }
 
     @Override

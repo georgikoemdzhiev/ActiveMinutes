@@ -27,4 +27,8 @@ public interface IActivityDataManager {
 
     int getUserPaGoal();
 
+    int getMaxContInacTarget();
+
+    int getTimesTargetExceeded();
+
 }
