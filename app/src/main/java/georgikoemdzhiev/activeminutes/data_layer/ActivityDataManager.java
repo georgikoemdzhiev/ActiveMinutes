@@ -27,7 +27,7 @@ public class ActivityDataManager implements IActivityDataManager {
     }
 
     @Override
-    public void setUserId(User user) {
+    public void setUser(User user) {
         mUser = user;
     }
 

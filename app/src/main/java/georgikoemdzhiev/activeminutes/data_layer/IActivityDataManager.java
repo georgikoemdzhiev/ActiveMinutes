@@ -8,7 +8,7 @@ import georgikoemdzhiev.activeminutes.data_layer.db.User;
 
 public interface IActivityDataManager {
 
-    void setUserId(User user);
+    void setUser(User user);
 
     void incActiveTime();
 

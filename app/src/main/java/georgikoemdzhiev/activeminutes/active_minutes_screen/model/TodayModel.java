@@ -21,7 +21,7 @@ public class TodayModel implements ITodayModel {
         int paGoal, activeTime, longestInacInter, averageInacInter;
 
         try {
-            mActivityDataManager.setUserId(mAuthDataManager.getLoggedInUser());
+            mActivityDataManager.setUser(mAuthDataManager.getLoggedInUser());
             paGoal = mActivityDataManager.getUserPaGoal();
             activeTime = mActivityDataManager.getActiveTime();
             longestInacInter = mActivityDataManager.getLongestInacInterval();

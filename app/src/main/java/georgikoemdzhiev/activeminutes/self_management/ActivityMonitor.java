@@ -46,6 +46,6 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
     @Override
     public void setUser(User user) {
         this.mUser = user;
-        this.mDataManager.setUserId(mUser);
+        this.mDataManager.setUser(mUser);
     }
 }

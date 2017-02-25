@@ -92,8 +92,8 @@ public class TodayFragment extends Fragment implements ITodayView {
         mActivityTime.setText(String.valueOf(activeTime / 60));
         // seconds to minutes convection
         mPaGoal.setText(String.valueOf(paGoal / 60));
-        mActiveTimeProgressBar.setProgress(activeTime);
         mActiveTimeProgressBar.setMax(paGoal);
+        mActiveTimeProgressBar.setProgress(activeTime);
         mLongestInacInterval.setText(String.valueOf(longestInacInter / 60));
         mAverageInacInterval.setText(String.valueOf(averageIacInter / 60));
     }
