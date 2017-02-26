@@ -13,12 +13,17 @@ import georgikoemdzhiev.activeminutes.utils.LimitedSizeQueue;
  */
 
 public class ActivityMonitor implements Observer, IActivityMonitor {
+    // increment time is 3 seconds
+    private final int INCREMENT_AMOUNT = 3;
+    private final double ENCOURAGEMENT_PERCENTAGE = 0.8;
     private IActivityDataManager mDataManager;
     private ArrayList<Integer> correctionList;
+    private IFeedbackProvider mFeedbackProvider;
 
-    public ActivityMonitor(IActivityDataManager dataManager) {
+    public ActivityMonitor(IActivityDataManager dataManager, IFeedbackProvider feedbackProvider) {
         mDataManager = dataManager;
         correctionList = new LimitedSizeQueue<>(3);
+        this.mFeedbackProvider = feedbackProvider;
     }
 
     @Override
@@ -28,26 +33,48 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
 
     private void monitorActivity(Object activityClass) {
         int activityInt = (int) activityClass;
+        int currentPa = 0;
+        int currentSt = 0;
+        // Get the user's PA goal...
+        int paGoal = mDataManager.getUserPaGoal();
+        int stTarget = mDataManager.getMaxContInacTarget();
+
         correctionList.add(activityInt);
-        int correctResult = applyCorrection(activityInt);
-        // TODO Maybe make incActiveTime to return the active time for FeedBack management in the future
+        int correctResult = applyCorrection();
+        // check of the correctedResult contains activity of type ACTIVE
         if (correctResult == correctionList.size()) {
-            mDataManager.incActiveTime();
+            // It does, so incrementActive time.
+            currentPa = mDataManager.incActiveTime();
+            // clear current inactive interval since activity is detected...
             mDataManager.clearCurrentInacInterval();
         } else {
-            mDataManager.incCurrentInacInterval();
+            currentSt = mDataManager.incCurrentInacInterval();
         }
-
-
+        // Check if the user's goal is achieved and make sure make
+        // the notification is send only once
+        if (currentPa > paGoal && currentPa <= paGoal + INCREMENT_AMOUNT) {
+            // is achieved, so notify for goal achieved..
+            mFeedbackProvider.provideGoalAchievedFeedback(paGoal);
+        }
+        // Check to see if the PA goal is 80% achieved
+        if (currentPa > paGoal * ENCOURAGEMENT_PERCENTAGE &&
+                currentPa <= paGoal * ENCOURAGEMENT_PERCENTAGE + INCREMENT_AMOUNT) {
+            // is achieved, so notify for goal achieved..
+            int leftMinutesTillGoal = (int) (paGoal - (paGoal * ENCOURAGEMENT_PERCENTAGE));
+            mFeedbackProvider.provideEncouragingFeedback(leftMinutesTillGoal);
+        }
+        // Check if the maximum continuous inactivity is reached
+        if (currentSt > stTarget && currentSt <= stTarget + INCREMENT_AMOUNT) {
+            mFeedbackProvider.provideProlongedInactivityFeedback(currentSt);
+        }
     }
 
     @Override
     public void setUser(User user) {
-        User user1 = user;
-        this.mDataManager.setUser(user1);
+        this.mDataManager.setUser(user);
     }
 
-    private int applyCorrection(int classInt) {
+    private int applyCorrection() {
         int count = 0;
         // iterate through the correctionList containing the last 3 recognised classes (i.e. 0,1,3)
         for (int item : correctionList) {

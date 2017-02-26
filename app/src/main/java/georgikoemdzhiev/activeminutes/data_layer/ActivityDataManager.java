@@ -1,12 +1,13 @@
 package georgikoemdzhiev.activeminutes.data_layer;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import io.realm.Realm;
 import io.realm.RealmResults;
+
+import static georgikoemdzhiev.activeminutes.utils.DateUtils.truncateDate;
 
 /**
  * Created by Georgi Koemdzhiev on 21/02/2017.
@@ -32,7 +33,7 @@ public class ActivityDataManager implements IActivityDataManager {
     }
 
     @Override
-    public void incActiveTime() {
+    public int incActiveTime() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateTodayUserActivity();
         int currentActiveTime = activity.getActiveTime();
@@ -40,30 +41,27 @@ public class ActivityDataManager implements IActivityDataManager {
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
         debugActivityTable();
+        return activity.getActiveTime();
     }
 
 
     @Override
-    public void incCurrentInacInterval() {
+    public int incCurrentInacInterval() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateTodayUserActivity();
-
         int currentInacInterval = activity.getCurrentInactivityInterval();
         int longestInactInterval = activity.getLongestInactivityInterval();
-
         int currentInacInterIncremented = currentInacInterval + INCREMENT_VALUE;
-
         activity.setAverageInactInterval((currentInacInterval + longestInactInterval) / 2);
-
         // Check if longest inactivity interval against current - if it needs updating...
         if (currentInacInterval > longestInactInterval) {
             activity.setLongestInactivityInterval(currentInacInterval);
         }
-
         activity.setCurrentInactivityInterval(currentInacInterIncremented);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
         debugActivityTable();
+        return activity.getCurrentInactivityInterval();
     }
 
     @Override
@@ -117,8 +115,7 @@ public class ActivityDataManager implements IActivityDataManager {
     // helper methods
     private Activity getOrCreateTodayUserActivity() {
         Date today = truncateDate(new Date());
-
-        Activity activity;
+        Activity activity = new Activity();
         // Find all Activity table records...
         RealmResults<Activity> activities = mRealm
                 .where(Activity.class)
@@ -134,52 +131,27 @@ public class ActivityDataManager implements IActivityDataManager {
                     .findAll();
             if (activityRealmResults.size() != 0) {
                 activity = activityRealmResults.get(0);
+                return activity;
             } else {
-                // create new Activity entry...
-                activity = new Activity();
+                // create new Activity entry with id field incremented...
                 activity.setActivity_id(getNextInt());
-
-                //set up the reset of the attributes...
-                activity.setUser_id(mUser.getUserId());
-                activity.setActiveTime(0);
-                activity.setDate(today);
-                activity.setLongestInactivityInterval(0);
-                activity.setCurrentInactivityInterval(0);
-                activity.setUserMaxContInacTarget(mUser.getMaxContInactTarget());
-                activity.setUserPaGoal(mUser.getPaGoal());
             }
         } else {
-            // no data in the date. Create first entry...
-            activity = new Activity();
+            // no data in the date. Create first entry - id = 0...
             activity.setActivity_id(0);
-
             //set up the reset of the attributes...
-            activity.setUser_id(mUser.getUserId());
-            activity.setActiveTime(0);
-            activity.setDate(today);
-            activity.setLongestInactivityInterval(0);
-            activity.setCurrentInactivityInterval(0);
-            activity.setUserMaxContInacTarget(mUser.getMaxContInactTarget());
-            activity.setUserPaGoal(mUser.getPaGoal());
         }
-
+        //set up the reset of the attributes...
+        activity.setUser_id(mUser.getUserId());
+        activity.setActiveTime(0);
+        activity.setDate(today);
+        activity.setLongestInactivityInterval(0);
+        activity.setCurrentInactivityInterval(0);
+        activity.setUserMaxContInacTarget(mUser.getMaxContInactTarget());
+        activity.setUserPaGoal(mUser.getPaGoal());
 
         return activity;
     }
-
-
-    private Date truncateDate(Date date) {
-        Date today = date;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(today);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        today = cal.getTime();
-        return today;
-    }
-
 
     private int getNextInt() {
         int key;

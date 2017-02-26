@@ -10,9 +10,9 @@ public interface IActivityDataManager {
 
     void setUser(User user);
 
-    void incActiveTime();
+    int incActiveTime();
 
-    void incCurrentInacInterval();
+    int incCurrentInacInterval();
 
     void clearCurrentInacInterval();
 
