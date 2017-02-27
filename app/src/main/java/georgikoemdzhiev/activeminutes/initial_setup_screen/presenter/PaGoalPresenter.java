@@ -1,7 +1,7 @@
 package georgikoemdzhiev.activeminutes.initial_setup_screen.presenter;
 
 import georgikoemdzhiev.activeminutes.initial_setup_screen.model.IPaGoalModel;
-import georgikoemdzhiev.activeminutes.initial_setup_screen.model.SetPaGoalResult;
+import georgikoemdzhiev.activeminutes.initial_setup_screen.model.SetResult;
 import georgikoemdzhiev.activeminutes.initial_setup_screen.view.IPaGoalView;
 
 /**
@@ -18,7 +18,7 @@ public class PaGoalPresenter implements IPaGoalPresenter {
 
     @Override
     public void setSetPa(int paGoal) {
-        mModel.setPaGoal(paGoal, new SetPaGoalResult() {
+        mModel.setPaGoal(paGoal, new SetResult() {
             @Override
             public void onSuccess() {
                 mView.showMessage("Goal set");

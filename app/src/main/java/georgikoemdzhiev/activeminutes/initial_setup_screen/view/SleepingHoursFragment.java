@@ -81,6 +81,7 @@ public class SleepingHoursFragment extends Fragment
                 , Toast.LENGTH_LONG).show();
 
         mPresenter.onSleepingHoursSet(hourOfDay, minute, hourOfDayEnd, minuteEnd);
+
     }
 
     @Override

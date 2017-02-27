@@ -18,21 +18,21 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
-import georgikoemdzhiev.activeminutes.initial_setup_screen.presenter.IPaGoalPresenter;
+import georgikoemdzhiev.activeminutes.initial_setup_screen.presenter.IMaxContInacPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PaGoalFragment extends Fragment implements IPaGoalView {
+public class MaxContInacFragment extends Fragment implements IMaxContInacView {
     @Inject
-    IPaGoalPresenter mPresenter;
+    IMaxContInacPresenter mPresenter;
 
-    public PaGoalFragment() {
+    public MaxContInacFragment() {
         // Required empty public constructor
     }
 
-    public static PaGoalFragment newInstance() {
-        PaGoalFragment fragment = new PaGoalFragment();
+    public static MaxContInacFragment newInstance() {
+        MaxContInacFragment fragment = new MaxContInacFragment();
         return fragment;
     }
 
@@ -41,7 +41,7 @@ public class PaGoalFragment extends Fragment implements IPaGoalView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_pa_goal, container, false);
+        View view = inflater.inflate(R.layout.fragment_max_cont_inac, container, false);
         // Provide this layout for injecting views to this fragment
         ButterKnife.bind(this, view);
         return view;
@@ -54,36 +54,33 @@ public class PaGoalFragment extends Fragment implements IPaGoalView {
         mPresenter.setView(this);
     }
 
-    private void satisfyDependencies() {
-        ((ActiveMinutesApplication) getActivity()
-                .getApplication())
-                .getInitialSetupComponent().inject(this);
-    }
-
-    @Override
-    public void showErrorMessage(String errorMessage) {
-        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void showMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
     }
 
-    @OnClick(R.id.setPaButton)
-    public void onSetPaGoalClicked() {
+
+    @OnClick(R.id.setMaxContInacButton)
+    public void onMaxContInacButtonClicked() {
         new MaterialDialog.Builder(getActivity())
-                .title(R.string.set_pa_goal_dialog_title)
-                .items(R.array.pa_goal_list)
+                .title(R.string.set_mci_dialog_title)
+                .items(R.array.mci_list)
                 .theme(Theme.LIGHT)
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        int paGoalMin = Integer.parseInt((String) text);
+                        int mciMin = Integer.parseInt((String) text);
                         // convert the selected goal in minutes to seconds...
-                        mPresenter.setSetPa(paGoalMin * 60);
+                        mPresenter.setMCI(mciMin * 60);
                     }
                 })
                 .show();
+    }
+
+
+    private void satisfyDependencies() {
+        ((ActiveMinutesApplication) getActivity()
+                .getApplication())
+                .getInitialSetupComponent().inject(this);
     }
 }

@@ -8,21 +8,21 @@ import io.realm.Realm;
  * Created by Georgi Koemdzhiev on 27/02/2017.
  */
 
-public class PaGoalModel implements IPaGoalModel {
+public class MaxContInacModel implements IMaxContInacModel {
     private IAuthDataManager mAuthDataManager;
     private Realm mRealm;
 
-    public PaGoalModel(IAuthDataManager authDataManager, Realm realm) {
+    public MaxContInacModel(IAuthDataManager authDataManager, Realm realm) {
         mAuthDataManager = authDataManager;
         mRealm = realm;
     }
 
     @Override
-    public void setPaGoal(int paGoal, SetResult result) {
+    public void setMCI(int mci, SetResult result) {
         try {
             User user = mAuthDataManager.getLoggedInUser();
             mRealm.beginTransaction();
-            user.setPaGoal(paGoal);
+            user.setMaxContInactTarget(mci);
             mRealm.copyToRealmOrUpdate(user);
             mRealm.commitTransaction();
 

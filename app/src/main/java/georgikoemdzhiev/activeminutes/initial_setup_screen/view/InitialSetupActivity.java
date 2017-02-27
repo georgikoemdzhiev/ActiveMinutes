@@ -19,11 +19,11 @@ public class InitialSetupActivity extends AppIntro {
 
         addSlide(SleepingHoursFragment.newInstance());
         addSlide(PaGoalFragment.newInstance());
+        addSlide(MaxContInacFragment.newInstance());
 
         // Show Skip/Done button.
         showSkipButton(true);
         setProgressButtonEnabled(true);
-
     }
 
 

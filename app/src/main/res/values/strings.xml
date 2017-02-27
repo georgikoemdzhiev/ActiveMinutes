@@ -12,7 +12,7 @@
     <string name="number_of_recorded_instances_textview_text">Number of recorded instances:</string>
     <string name="select_activity_dialog_title">Select Activity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_log_in_text">LOG IN</string>
     <string name="button_sign_up_text">SIGN UP</string>
@@ -21,9 +21,18 @@
     <string name="drawer_item_settings">Settings</string>
     <string name="drawer_item_log_out">Log Out</string>
     <string name="drawer_sticky_header_title">Exit the app</string>
-    <string name="sleeping_hours_fragment_message">Set the time you normally go to sleep as well as the time you normally wake up. This is needed so ActiveMinutes knows when to start and stop mintor you activity levels.</string>
+    <string name="sleeping_hours_fragment_message">Set the time you normally go to sleep as well as the time you normally wake up.
+        This is needed so ActiveMinutes knows when to start and stop mintor you activity levels.</string>
     <string name="button_set_sleeping_hours_text">Set sleeping hours</string>
-    <string name="pa_goal_fragment_message">Studies suggest minimum 30 minutes of physical activity (PA) such as walking, running or cycling per day. An ideal amount would be 1 hour. Please choose a physical activity amount from the list bellow</string>
+    <string name="pa_goal_fragment_message">Studies suggest minimum 30 minutes of
+        physical activity (PA) such as walking, running or cycling per day.
+        An ideal amount would be 1 hour. Please choose a physical activity amount in minutes from the list bellow</string>
     <string name="button_set_pa_goal_text">Set PA goal</string>
     <string name="set_pa_goal_dialog_title">Select PA goal</string>
+    <string name="button_set_mci_text">SET MCI</string>
+    <string name="mci_fragment_message">It is shown that breaking every hour spend in a
+        static activity (e.g. watching TV) by 5 minute walk is beneficial for the common health
+        state of a person. Please set the maximum inactivity interval in minutes bellow. If a prolonged
+        inactivity is detected (e.g. 1 hour of inactivity), a notification will be sent to let you know</string>
+    <string name="set_mci_dialog_title">Set Maximum continious inactivity</string>
 </resources>

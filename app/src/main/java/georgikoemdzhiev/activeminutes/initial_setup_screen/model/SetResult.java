@@ -3,8 +3,9 @@ package georgikoemdzhiev.activeminutes.initial_setup_screen.model;
 /**
  * Created by Georgi Koemdzhiev on 27/02/2017.
  */
+public interface SetResult {
 
-public interface IPaGoalModel {
+    void onSuccess();
 
-    void setPaGoal(int paGoal, SetResult result);
+    void onError(String message);
 }
