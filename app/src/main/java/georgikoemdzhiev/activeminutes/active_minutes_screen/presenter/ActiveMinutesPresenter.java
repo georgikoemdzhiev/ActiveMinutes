@@ -16,6 +16,15 @@ public class ActiveMinutesPresenter implements IActiveMinutesPresenter {
     }
 
     @Override
+    public void isFirstTimeLaunch() {
+        boolean isFirstTime = mModel.isFirstTimeLaunch();
+        if (isFirstTime) {
+            mView.showInitialSetup();
+            mModel.setInitialSetupCompleted();
+        }
+    }
+
+    @Override
     public void isUserLoggedIn() {
         if (!mModel.isUserLoggedIn()) {
             mView.userNotLoggedIn();

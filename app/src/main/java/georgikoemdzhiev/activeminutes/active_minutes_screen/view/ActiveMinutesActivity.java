@@ -30,6 +30,7 @@ import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.IActiveMin
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.authentication_screen.view.AuthenticationActivity;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
+import georgikoemdzhiev.activeminutes.initial_setup_screen.view.InitialSetupActivity;
 import georgikoemdzhiev.activeminutes.services.ActiveMinutesService;
 
 public class ActiveMinutesActivity extends AppCompatActivity implements IActiveMinutesView {
@@ -164,6 +165,8 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     public void setLoggedInUser(User user) {
         this.mUser = user;
         setUpNavigationDrawer();
+        // check if to show the initial set up screen
+        mPresenter.isFirstTimeLaunch();
         // start the ActiveMinutesService
         startService(new Intent(this, ActiveMinutesService.class));
     }
@@ -171,5 +174,11 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showInitialSetup() {
+        startActivity(new Intent(this, InitialSetupActivity.class));
+        finish();
     }
 }

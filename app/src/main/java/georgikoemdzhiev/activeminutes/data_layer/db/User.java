@@ -1,5 +1,7 @@
 package georgikoemdzhiev.activeminutes.data_layer.db;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -15,16 +17,18 @@ public class User extends RealmObject {
     private int paGoal;
     private int maxContInactTarget;
     private boolean isClassifierPersonalised;
+    private boolean isFirstTime;
     private byte[] profilePicture;
+    private Date startAMService;
+    private Date stopAMService;
 
     public User() {
-        // TODO change those to minutes
         // 30 minutes = 1800 seconds
         this.paGoal = 30 * 60;
         // 60 minutues = 3600 seconds
-        // TODO change those to minutes
         this.maxContInactTarget = 60 * 60;
         isClassifierPersonalised = false;
+        isFirstTime = true;
     }
 
     public int getUserId() {
@@ -81,5 +85,29 @@ public class User extends RealmObject {
 
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public Date getStartAMService() {
+        return startAMService;
+    }
+
+    public void setStartAMService(Date startAMService) {
+        this.startAMService = startAMService;
+    }
+
+    public Date getStopAMService() {
+        return stopAMService;
+    }
+
+    public void setStopAMService(Date stopAMService) {
+        this.stopAMService = stopAMService;
+    }
+
+    public boolean getFirstTime() {
+        return isFirstTime;
+    }
+
+    public void setIsFirstTime(boolean firstTime) {
+        isFirstTime = firstTime;
     }
 }

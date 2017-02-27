@@ -28,4 +28,14 @@ public class ActiveMinutesModel implements IActiveMinutesModel {
     public void logOutUser() {
         mAuthDataManager.logOutUser();
     }
+
+    @Override
+    public boolean isFirstTimeLaunch() {
+        return getLoggedInUser().getFirstTime();
+    }
+
+    @Override
+    public void setInitialSetupCompleted() {
+        mAuthDataManager.setInitialSetupCompleted();
+    }
 }

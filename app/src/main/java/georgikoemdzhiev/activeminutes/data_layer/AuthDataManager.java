@@ -79,6 +79,16 @@ public class AuthDataManager implements IAuthDataManager {
         userManager.setLoggedIn(false);
     }
 
+    @Override
+    public void setInitialSetupCompleted() {
+        User user = getLoggedInUser();
+        mRealm.beginTransaction();
+        user.setIsFirstTime(false);
+        mRealm.copyToRealmOrUpdate(user);
+        mRealm.commitTransaction();
+
+    }
+
 
     private int getNextInt() {
         int key;

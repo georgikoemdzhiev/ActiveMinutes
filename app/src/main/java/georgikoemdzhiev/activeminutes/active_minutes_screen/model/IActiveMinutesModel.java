@@ -13,4 +13,8 @@ public interface IActiveMinutesModel {
     User getLoggedInUser();
 
     void logOutUser();
+
+    boolean isFirstTimeLaunch();
+
+    void setInitialSetupCompleted();
 }

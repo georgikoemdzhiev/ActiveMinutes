@@ -8,6 +8,8 @@ import georgikoemdzhiev.activeminutes.active_minutes_screen.view.IActiveMinutesV
 
 public interface IActiveMinutesPresenter {
 
+    void isFirstTimeLaunch();
+
     void isUserLoggedIn();
 
     void logOutUser();

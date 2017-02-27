@@ -17,6 +17,8 @@ import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollecti
 import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import georgikoemdzhiev.activeminutes.har.IClassifierBuilder;
+import georgikoemdzhiev.activeminutes.initial_setup_screen.dagger.InitialSetupComponent;
+import georgikoemdzhiev.activeminutes.initial_setup_screen.dagger.InitialSetupModule;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -37,6 +39,7 @@ public class ActiveMinutesApplication extends Application {
     private DataCollectionComponent mDataCollectionComponent;
     private AuthComponent mAuthenticationComponent;
     private ActiveMinutesComponent mActiveMinutesComponent;
+    private InitialSetupComponent mInitialSetupComponent;
 
     @Override
     public void onCreate() {
@@ -115,6 +118,18 @@ public class ActiveMinutesApplication extends Application {
 
     public void releaseActiveMinutesComp() {
         this.mActiveMinutesComponent = null;
+    }
+
+    public void buildInitialSetupComp() {
+        mInitialSetupComponent = mComponent.plus(new InitialSetupModule());
+    }
+
+    public InitialSetupComponent getInitialSetupComponent() {
+        return mInitialSetupComponent;
+    }
+
+    public void releaseInitialSetupComponent() {
+        mInitialSetupComponent = null;
     }
 
     public AppComponent getComponent() {

@@ -13,4 +13,6 @@ public interface IActiveMinutesView {
     void setLoggedInUser(User user);
 
     void showMessage(String message);
+
+    void showInitialSetup();
 }
