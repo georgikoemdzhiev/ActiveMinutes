@@ -23,4 +23,7 @@
     <string name="drawer_sticky_header_title">Exit the app</string>
     <string name="sleeping_hours_fragment_message">Set the time you normally go to sleep as well as the time you normally wake up. This is needed so ActiveMinutes knows when to start and stop mintor you activity levels.</string>
     <string name="button_set_sleeping_hours_text">Set sleeping hours</string>
+    <string name="pa_goal_fragment_message">Studies suggest minimum 30 minutes of physical activity (PA) such as walking, running or cycling per day. An ideal amount would be 1 hour. Please choose a physical activity amount from the list bellow</string>
+    <string name="button_set_pa_goal_text">Set PA goal</string>
+    <string name="set_pa_goal_dialog_title">Select PA goal</string>
 </resources>

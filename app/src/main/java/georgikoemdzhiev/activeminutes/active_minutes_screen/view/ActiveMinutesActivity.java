@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import georgikoemdzhiev.activeminutes.initial_setup_screen.view.InitialSetupActi
 import georgikoemdzhiev.activeminutes.services.ActiveMinutesService;
 
 public class ActiveMinutesActivity extends AppCompatActivity implements IActiveMinutesView {
+    private static final String TAG = ActiveMinutesActivity.class.getSimpleName();
     @Inject
     IActiveMinutesPresenter mPresenter;
     @BindView(R.id.toolbar)
@@ -50,8 +52,6 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
         mPresenter.setView(this);
 
         mPresenter.isUserLoggedIn();
-        // Load today screen...
-        loadScreen(1);
     }
 
 
@@ -164,11 +164,10 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     @Override
     public void setLoggedInUser(User user) {
         this.mUser = user;
-        setUpNavigationDrawer();
         // check if to show the initial set up screen
         mPresenter.isFirstTimeLaunch();
-        // start the ActiveMinutesService
-        startService(new Intent(this, ActiveMinutesService.class));
+        Log.e(TAG, "Logged in user info: " + user.toString());
+
     }
 
     @Override
@@ -180,5 +179,18 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     public void showInitialSetup() {
         startActivity(new Intent(this, InitialSetupActivity.class));
         finish();
+    }
+
+    @Override
+    public void loadDrawerScreens() {
+        setUpNavigationDrawer();
+        // Load today screen...
+        loadScreen(1);
+    }
+
+    @Override
+    public void startService() {
+        // start the ActiveMinutesService
+        startService(new Intent(this, ActiveMinutesService.class));
     }
 }

@@ -16,8 +16,9 @@ public class InitialSetupActivity extends AppIntro {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         buildDependencies();
-        addSlide(SetSleepingHoursFragment.newInstance());
-//        addSlide(SignUpFragment.newInstance());
+
+        addSlide(SleepingHoursFragment.newInstance());
+        addSlide(PaGoalFragment.newInstance());
 
         // Show Skip/Done button.
         showSkipButton(true);

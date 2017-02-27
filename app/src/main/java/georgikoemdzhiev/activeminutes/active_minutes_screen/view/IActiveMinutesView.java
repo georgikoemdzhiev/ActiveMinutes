@@ -15,4 +15,8 @@ public interface IActiveMinutesView {
     void showMessage(String message);
 
     void showInitialSetup();
+
+    void loadDrawerScreens();
+
+    void startService();
 }

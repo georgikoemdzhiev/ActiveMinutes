@@ -21,6 +21,9 @@ public class ActiveMinutesPresenter implements IActiveMinutesPresenter {
         if (isFirstTime) {
             mView.showInitialSetup();
             mModel.setInitialSetupCompleted();
+        } else {
+            mView.loadDrawerScreens();
+            mView.startService();
         }
     }
 

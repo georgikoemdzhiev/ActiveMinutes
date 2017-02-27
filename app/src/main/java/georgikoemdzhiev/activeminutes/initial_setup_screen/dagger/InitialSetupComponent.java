@@ -2,7 +2,8 @@ package georgikoemdzhiev.activeminutes.initial_setup_screen.dagger;
 
 import dagger.Subcomponent;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ActivityScope;
-import georgikoemdzhiev.activeminutes.initial_setup_screen.view.SetSleepingHoursFragment;
+import georgikoemdzhiev.activeminutes.initial_setup_screen.view.PaGoalFragment;
+import georgikoemdzhiev.activeminutes.initial_setup_screen.view.SleepingHoursFragment;
 
 /**
  * Created by Georgi Koemdzhiev on 27/02/2017.
@@ -11,5 +12,7 @@ import georgikoemdzhiev.activeminutes.initial_setup_screen.view.SetSleepingHours
 @Subcomponent(modules = InitialSetupModule.class)
 public interface InitialSetupComponent {
 
-    void inject(SetSleepingHoursFragment fragment);
+    void inject(SleepingHoursFragment fragment);
+
+    void inject(PaGoalFragment fragment);
 }

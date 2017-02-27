@@ -26,20 +26,20 @@ import georgikoemdzhiev.activeminutes.initial_setup_screen.presenter.ISleepingHo
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SetSleepingHoursFragment extends Fragment
+public class SleepingHoursFragment extends Fragment
         implements TimePickerDialog.OnTimeSetListener, ISleepingHoursView {
     public static final String TIMERANGEPICKER_TAG = "timerangepicker";
 
     @Inject
     ISleepingHoursPresenter mPresenter;
 
-    public SetSleepingHoursFragment() {
+    public SleepingHoursFragment() {
         // Required empty public constructor
     }
 
 
-    public static SetSleepingHoursFragment newInstance() {
-        SetSleepingHoursFragment fragment = new SetSleepingHoursFragment();
+    public static SleepingHoursFragment newInstance() {
+        SleepingHoursFragment fragment = new SleepingHoursFragment();
         return fragment;
     }
 
@@ -47,7 +47,7 @@ public class SetSleepingHoursFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_set_sleeping_hours, container, false);
+        View view = inflater.inflate(R.layout.fragment_sleeping_hours, container, false);
         // Provide this layout for injecting views to this fragment
         ButterKnife.bind(this, view);
         return view;

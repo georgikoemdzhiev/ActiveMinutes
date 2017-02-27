@@ -1,5 +1,6 @@
 package georgikoemdzhiev.activeminutes.data_layer.db;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -109,5 +110,21 @@ public class User extends RealmObject {
 
     public void setIsFirstTime(boolean firstTime) {
         isFirstTime = firstTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", paGoal=" + paGoal +
+                ", maxContInactTarget=" + maxContInactTarget +
+                ", isClassifierPersonalised=" + isClassifierPersonalised +
+                ", isFirstTime=" + isFirstTime +
+                ", profilePicture=" + Arrays.toString(profilePicture) +
+                ", startAMService=" + startAMService +
+                ", stopAMService=" + stopAMService +
+                '}';
     }
 }
