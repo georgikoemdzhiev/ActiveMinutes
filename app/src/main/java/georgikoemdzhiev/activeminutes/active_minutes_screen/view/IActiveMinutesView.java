@@ -19,4 +19,6 @@ public interface IActiveMinutesView {
     void loadDrawerScreens();
 
     void startService();
+
+    void scheduleService();
 }

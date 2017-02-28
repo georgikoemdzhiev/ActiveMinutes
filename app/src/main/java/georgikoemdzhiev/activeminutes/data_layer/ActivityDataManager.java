@@ -49,15 +49,21 @@ public class ActivityDataManager implements IActivityDataManager {
     public int incCurrentInacInterval() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateTodayUserActivity();
+        int totalInacTime = activity.getTotalInactivityTime();
+        int timesInacDetected = activity.getTimesInactivityDetected();
+
         int currentInacInterval = activity.getCurrentInactivityInterval();
         int longestInactInterval = activity.getLongestInactivityInterval();
         int currentInacInterIncremented = currentInacInterval + INCREMENT_VALUE;
-        activity.setAverageInactInterval((currentInacInterval + longestInactInterval) / 2);
+
+        activity.setAverageInactInterval(totalInacTime / timesInacDetected);
         // Check if longest inactivity interval against current - if it needs updating...
         if (currentInacInterval > longestInactInterval) {
             activity.setLongestInactivityInterval(currentInacInterval);
         }
         activity.setCurrentInactivityInterval(currentInacInterIncremented);
+        timesInacDetected++;
+        activity.setTimesInactivityDetected(timesInacDetected);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
         debugActivityTable();
@@ -68,6 +74,13 @@ public class ActivityDataManager implements IActivityDataManager {
     public void clearCurrentInacInterval() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateTodayUserActivity();
+
+
+        int currentTotalInacTime = activity.getTotalInactivityTime();
+        int currentInactInterval = activity.getCurrentInactivityInterval();
+        // add the currentInactivityInterval to the total
+        activity.setTotalInactivityTime(currentTotalInacTime + currentInactInterval);
+        // reset current inac interval now
         activity.setCurrentInactivityInterval(0);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();

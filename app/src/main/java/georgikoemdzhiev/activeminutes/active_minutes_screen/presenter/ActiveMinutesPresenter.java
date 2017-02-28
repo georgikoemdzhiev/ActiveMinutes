@@ -24,6 +24,7 @@ public class ActiveMinutesPresenter implements IActiveMinutesPresenter {
         } else {
             mView.loadDrawerScreens();
             mView.startService();
+            mView.scheduleService();
         }
     }
 

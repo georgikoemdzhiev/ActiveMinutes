@@ -1,6 +1,7 @@
 package georgikoemdzhiev.activeminutes.active_minutes_screen.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.evernote.android.job.JobManager;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -38,9 +40,14 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     private static final String TAG = ActiveMinutesActivity.class.getSimpleName();
     @Inject
     IActiveMinutesPresenter mPresenter;
+    @Inject
+    SharedPreferences mSharedPreferences;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    private String START_SL_HRS = "start_slp_hors";
+    private String STOP_SL_HRS = "stop_slp_hors";
     private User mUser;
+    private JobManager mJobManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +56,12 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
         ButterKnife.bind(this);
         satisfyDependencies();
         setSupportActionBar(mToolbar);
+        mJobManager = JobManager.instance();
+
         mPresenter.setView(this);
 
         mPresenter.isUserLoggedIn();
+
     }
 
 
@@ -139,6 +149,10 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
             case 5:
                 mPresenter.logOutUser();
                 stopService(new Intent(this, ActiveMinutesService.class));
+
+                mJobManager.cancel(mSharedPreferences.getInt(START_SL_HRS, -1));
+                mJobManager.cancel(mSharedPreferences.getInt(STOP_SL_HRS, -1));
+
                 startActivity(new Intent(ActiveMinutesActivity.this, AuthenticationActivity.class));
                 finish();
                 break;
@@ -171,14 +185,9 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     }
 
     @Override
-    public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void showInitialSetup() {
         startActivity(new Intent(this, InitialSetupActivity.class));
-        finish();
+//        finish();
     }
 
     @Override
@@ -193,4 +202,27 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
         // start the ActiveMinutesService
         startService(new Intent(this, ActiveMinutesService.class));
     }
+
+    @Override
+    public void scheduleService() {
+
+//        Date startSleepingHours = mUser.getStartSleepingHours();
+//        Date stopSleepingHours = mUser.getStopSleepingHours();
+
+//        int startSleepingHoursJobId = StartSleepingHoursJob.schedule(startSleepingHours, true);
+//        int stopSleepingHoursJobId = StopSleepingHoursJob.schedule(stopSleepingHours, true);
+
+//        mSharedPreferences.edit().putInt(START_SL_HRS, startSleepingHoursJobId).apply();
+//        mSharedPreferences.edit().putInt(STOP_SL_HRS, stopSleepingHoursJobId).apply();
+
+//        Log.e(TAG,"User StartSH: " + startSleepingHours.toString());
+//        Log.e(TAG,"User StopSH: " + stopSleepingHours.toString());
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

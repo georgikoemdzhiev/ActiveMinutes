@@ -36,9 +36,9 @@ public class HarClassifyManager extends HarManager {
             setChanged();
             notifyObservers(activityClass);
 
-            System.out.println("FeatureSet.toString: " + featureSet.toString());
-            System.out.println("FeatureSet.toInstance: " + instance);
-            System.out.println("Activity Class: " + activityClass);
+//            System.out.println("FeatureSet.toString: " + featureSet.toString());
+//            System.out.println("FeatureSet.toInstance: " + instance);
+//            System.out.println("Activity Class: " + activityClass);
 
         } catch (Exception e) {
             e.printStackTrace();

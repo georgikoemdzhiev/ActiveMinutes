@@ -3,6 +3,7 @@ package georgikoemdzhiev.activeminutes.data_layer.db;
 import java.util.Arrays;
 import java.util.Date;
 
+import georgikoemdzhiev.activeminutes.utils.DateUtils;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -20,8 +21,8 @@ public class User extends RealmObject {
     private boolean isClassifierPersonalised;
     private boolean isFirstTime;
     private byte[] profilePicture;
-    private Date startAMService;
-    private Date stopAMService;
+    private Date startSleepingHours;
+    private Date stopSleepingHours;
 
     public User() {
         // 30 minutes = 1800 seconds
@@ -30,6 +31,8 @@ public class User extends RealmObject {
         this.maxContInactTarget = 60 * 60;
         isClassifierPersonalised = false;
         isFirstTime = true;
+        startSleepingHours = DateUtils.getDefaultStartSleepingHours();
+        stopSleepingHours = DateUtils.getDefaultStopSleepingHours();
     }
 
     public int getUserId() {
@@ -88,20 +91,20 @@ public class User extends RealmObject {
         this.profilePicture = profilePicture;
     }
 
-    public Date getStartAMService() {
-        return startAMService;
+    public Date getStartSleepingHours() {
+        return startSleepingHours;
     }
 
-    public void setStartAMService(Date startAMService) {
-        this.startAMService = startAMService;
+    public void setStartSleepingHours(Date startSleepingHours) {
+        this.startSleepingHours = startSleepingHours;
     }
 
-    public Date getStopAMService() {
-        return stopAMService;
+    public Date getStopSleepingHours() {
+        return stopSleepingHours;
     }
 
-    public void setStopAMService(Date stopAMService) {
-        this.stopAMService = stopAMService;
+    public void setStopSleepingHours(Date stopSleepingHours) {
+        this.stopSleepingHours = stopSleepingHours;
     }
 
     public boolean getFirstTime() {
@@ -123,8 +126,8 @@ public class User extends RealmObject {
                 ", isClassifierPersonalised=" + isClassifierPersonalised +
                 ", isFirstTime=" + isFirstTime +
                 ", profilePicture=" + Arrays.toString(profilePicture) +
-                ", startAMService=" + startAMService +
-                ", stopAMService=" + stopAMService +
+                ", startSleepingHours=" + startSleepingHours +
+                ", stopSleepingHours=" + stopSleepingHours +
                 '}';
     }
 }

@@ -22,17 +22,19 @@ public class SleepingHoursModel implements ISleepingHoursModel {
     @Override
     public void setSleepingHours(int hourOfDay, int minute, int hourOfDayEnd, int minuteEnd) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR, hourOfDay);
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
+
         User user = mAuthDataManager.getLoggedInUser();
 
         mRealm.beginTransaction();
-        user.setStartAMService(calendar.getTime());
+        user.setStartSleepingHours(calendar.getTime());
 
-        calendar.set(Calendar.HOUR, hourOfDayEnd);
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDayEnd);
         calendar.set(Calendar.MINUTE, minuteEnd);
 
-        user.setStopAMService(calendar.getTime());
+        user.setStopSleepingHours(calendar.getTime());
+
         mRealm.copyToRealmOrUpdate(user);
         mRealm.commitTransaction();
     }
