@@ -14,6 +14,7 @@ import static georgikoemdzhiev.activeminutes.utils.DateUtils.truncateDate;
  */
 
 public class ActivityDataManager implements IActivityDataManager {
+    private static final int THRESHOLD = 600;
     private final String ACTIVITY_ID = "activity_id";
     private final String DATE_KEY = "date";
     private final String USER_ID_KEY = "user_id";
@@ -84,8 +85,11 @@ public class ActivityDataManager implements IActivityDataManager {
         activity.setTotalInactivityTime(currentTotalInacTime + currentInactInterval);
         // reset current inac interval now
         activity.setCurrentInactivityInterval(0);
-        // increment times current inactivity resented
-        timesCurrentInacReseted++;
+
+        if (currentInactInterval > THRESHOLD) {
+            // increment times current inactivity resented
+            timesCurrentInacReseted++;
+        }
         // save times current inac interval is reset
         activity.setTimesCurrentInacReseted(timesCurrentInacReseted);
 
