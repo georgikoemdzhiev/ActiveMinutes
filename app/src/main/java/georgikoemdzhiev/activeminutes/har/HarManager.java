@@ -53,7 +53,7 @@ public abstract class HarManager extends Observable implements IHarManager {
                 window.addTimeSeries(accZSeries);
                 window.addTimeSeries(accMSeries);
 
-                System.out.println("Adding data time window");
+//                System.out.println("Adding data time window");
 
                 issueTimeWindow();
                 resetTimeSeries();

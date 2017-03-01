@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.evernote.android.job.JobManager;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -23,6 +22,8 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -47,7 +48,6 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     private String START_SL_HRS = "start_slp_hors";
     private String STOP_SL_HRS = "stop_slp_hors";
     private User mUser;
-    private JobManager mJobManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,6 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
         ButterKnife.bind(this);
         satisfyDependencies();
         setSupportActionBar(mToolbar);
-        mJobManager = JobManager.instance();
 
         mPresenter.setView(this);
 
@@ -150,8 +149,8 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
                 mPresenter.logOutUser();
                 stopService(new Intent(this, ActiveMinutesService.class));
 
-                mJobManager.cancel(mSharedPreferences.getInt(START_SL_HRS, -1));
-                mJobManager.cancel(mSharedPreferences.getInt(STOP_SL_HRS, -1));
+//                mJobManager.cancel(mSharedPreferences.getInt(START_SL_HRS, -1));
+//                mJobManager.cancel(mSharedPreferences.getInt(STOP_SL_HRS, -1));
 
                 startActivity(new Intent(ActiveMinutesActivity.this, AuthenticationActivity.class));
                 finish();
@@ -206,17 +205,44 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     @Override
     public void scheduleService() {
 
-//        Date startSleepingHours = mUser.getStartSleepingHours();
-//        Date stopSleepingHours = mUser.getStopSleepingHours();
+        Date startSleepingHours = mUser.getStartSleepingHours();
+        Date stopSleepingHours = mUser.getStopSleepingHours();
+        // check task is scheduled or not
+//        boolean alarmUp = (PendingIntent.getBroadcast(this, 0, new Intent(Intent), PendingIntent.FLAG_NO_CREATE) != null);
 
-//        int startSleepingHoursJobId = StartSleepingHoursJob.schedule(startSleepingHours, true);
-//        int stopSleepingHoursJobId = StopSleepingHoursJob.schedule(stopSleepingHours, true);
-
-//        mSharedPreferences.edit().putInt(START_SL_HRS, startSleepingHoursJobId).apply();
-//        mSharedPreferences.edit().putInt(STOP_SL_HRS, stopSleepingHoursJobId).apply();
-
-//        Log.e(TAG,"User StartSH: " + startSleepingHours.toString());
-//        Log.e(TAG,"User StopSH: " + stopSleepingHours.toString());
+//         if (  !alarmUp)
+//        Intent intent = new Intent(this, IntentBroadcastedReceiver.class);
+//
+//        intent.putExtra("command", "STOP_SERVICE");
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+//                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.HOUR_OF_DAY, startSleepingHours.getHours());
+//        calendar.set(Calendar.MINUTE, startSleepingHours.getMinutes());
+//        calendar.set(Calendar.SECOND, 0);
+//
+//        AlarmManager alarmManager =
+//                (AlarmManager)
+//                        this.getSystemService(this.ALARM_SERVICE);
+//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+//                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
+//                pendingIntent);
+//
+//        calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.HOUR_OF_DAY, stopSleepingHours.getHours());
+//        calendar.set(Calendar.MINUTE, stopSleepingHours.getMinutes());
+//
+//        alarmManager = (AlarmManager)
+//                this.getSystemService(this.ALARM_SERVICE);
+//        PendingIntent pendingIntent2 =
+//                PendingIntent.getBroadcast(this, 1,
+//                        intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+//                calendar.getTimeInMillis(),
+//                AlarmManager.INTERVAL_DAY, pendingIntent2);
 
     }
 

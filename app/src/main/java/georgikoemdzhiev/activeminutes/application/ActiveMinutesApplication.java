@@ -2,8 +2,6 @@ package georgikoemdzhiev.activeminutes.application;
 
 import android.app.Application;
 
-import com.evernote.android.job.JobManager;
-
 import javax.inject.Inject;
 
 import georgikoemdzhiev.activeminutes.active_minutes_screen.dagger.ActiveMinutesComponent;
@@ -21,7 +19,6 @@ import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import georgikoemdzhiev.activeminutes.har.IClassifierBuilder;
 import georgikoemdzhiev.activeminutes.initial_setup_screen.dagger.InitialSetupComponent;
 import georgikoemdzhiev.activeminutes.initial_setup_screen.dagger.InitialSetupModule;
-import georgikoemdzhiev.activeminutes.services.job_scheduling.ServiceJobCreator;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -47,7 +44,6 @@ public class ActiveMinutesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        JobManager.create(this).addJobCreator(new ServiceJobCreator(this));
         // Initial Database setup
         // The Realm file will be located in Context.getFilesDir() with name "default.realm"
         setUpRealmDatabase();

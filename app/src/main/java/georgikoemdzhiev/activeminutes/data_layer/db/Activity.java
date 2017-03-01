@@ -20,13 +20,13 @@ public class Activity extends RealmObject {
     private int currentInactivityInterval;
     private int averageInactInterval;
     private int totalInactivityTime;
-    private int timesInactivityDetected;
+    private int timesCurrentInacReseted;
     // goal and targets
     private int userPaGoal;
     private int userMaxContInacTarget;
 
     public Activity() {
-        this.timesInactivityDetected = 1;
+        this.timesCurrentInacReseted = 1;
     }
 
     public int getUser_id() {
@@ -110,12 +110,12 @@ public class Activity extends RealmObject {
         this.totalInactivityTime = totalInactivityTime;
     }
 
-    public int getTimesInactivityDetected() {
-        return timesInactivityDetected;
+    public int getTimesCurrentInacReseted() {
+        return timesCurrentInacReseted;
     }
 
-    public void setTimesInactivityDetected(int timesInactivityDetected) {
-        this.timesInactivityDetected = timesInactivityDetected;
+    public void setTimesCurrentInacReseted(int timesCurrentInacReseted) {
+        this.timesCurrentInacReseted = timesCurrentInacReseted;
     }
 
     @Override
@@ -131,7 +131,7 @@ public class Activity extends RealmObject {
                 ", userPaGoal=" + userPaGoal + "\n" +
                 ", userMaxContInacTarget=" + userMaxContInacTarget + "\n" +
                 ", totalInactivityTime=" + totalInactivityTime + "\n" +
-                ", timesInactivityDetected=" + timesInactivityDetected + "\n" +
+                ", timesCurrentInacReseted=" + timesCurrentInacReseted + "\n" +
                 '}' + "\n";
     }
 }

@@ -49,21 +49,21 @@ public class ActivityDataManager implements IActivityDataManager {
     public int incCurrentInacInterval() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateTodayUserActivity();
-        int totalInacTime = activity.getTotalInactivityTime();
-        int timesInacDetected = activity.getTimesInactivityDetected();
 
         int currentInacInterval = activity.getCurrentInactivityInterval();
         int longestInactInterval = activity.getLongestInactivityInterval();
         int currentInacInterIncremented = currentInacInterval + INCREMENT_VALUE;
+        // get times current inactivity is reset
+        int timesCurrentInacReseted = activity.getTimesCurrentInacReseted();
+        int totalInacTime = activity.getTotalInactivityTime();
+        // calculate the averate based on the above variable
+        activity.setAverageInactInterval(totalInacTime / timesCurrentInacReseted);
 
-        activity.setAverageInactInterval(totalInacTime / timesInacDetected);
         // Check if longest inactivity interval against current - if it needs updating...
         if (currentInacInterval > longestInactInterval) {
             activity.setLongestInactivityInterval(currentInacInterval);
         }
         activity.setCurrentInactivityInterval(currentInacInterIncremented);
-        timesInacDetected++;
-        activity.setTimesInactivityDetected(timesInacDetected);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
         debugActivityTable();
@@ -74,6 +74,8 @@ public class ActivityDataManager implements IActivityDataManager {
     public void clearCurrentInacInterval() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateTodayUserActivity();
+        // Get the times current inactivity interval is reset
+        int timesCurrentInacReseted = activity.getTimesCurrentInacReseted();
 
 
         int currentTotalInacTime = activity.getTotalInactivityTime();
@@ -82,9 +84,14 @@ public class ActivityDataManager implements IActivityDataManager {
         activity.setTotalInactivityTime(currentTotalInacTime + currentInactInterval);
         // reset current inac interval now
         activity.setCurrentInactivityInterval(0);
+        // increment times current inactivity resented
+        timesCurrentInacReseted++;
+        // save times current inac interval is reset
+        activity.setTimesCurrentInacReseted(timesCurrentInacReseted);
+
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
-        //debugActivityTable();
+        debugActivityTable();
     }
 
     @Override
