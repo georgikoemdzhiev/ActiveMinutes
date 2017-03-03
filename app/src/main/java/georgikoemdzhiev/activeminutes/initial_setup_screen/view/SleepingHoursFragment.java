@@ -74,18 +74,13 @@ public class SleepingHoursFragment extends Fragment
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int hourOfDayEnd, int minuteEnd) {
-        Toast.makeText(getActivity(), "Selected: " +
-                        hourOfDay + " " + minute +
-                        " " + hourOfDayEnd
-                        + " " + minuteEnd
-                , Toast.LENGTH_LONG).show();
 
         mPresenter.onSleepingHoursSet(hourOfDay, minute, hourOfDayEnd, minuteEnd);
 
     }
 
     @Override
-    public void showError(String errorMessage) {
+    public void showMessage(String errorMessage) {
         Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
     }
 

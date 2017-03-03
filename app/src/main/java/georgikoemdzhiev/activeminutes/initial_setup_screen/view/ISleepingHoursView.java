@@ -6,5 +6,5 @@ package georgikoemdzhiev.activeminutes.initial_setup_screen.view;
 
 public interface ISleepingHoursView {
 
-    void showError(String errorMessage);
+    void showMessage(String errorMessage);
 }
