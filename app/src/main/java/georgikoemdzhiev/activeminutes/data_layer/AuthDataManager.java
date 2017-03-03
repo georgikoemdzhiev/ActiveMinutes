@@ -63,9 +63,11 @@ public class AuthDataManager implements IAuthDataManager {
 
     @Override
     public User getLoggedInUser() {
+        mRealm.beginTransaction();
         User user = mRealm.where(User.class)
                 .equalTo(USER_ID, userManager.getLoggedInUserId())
                 .findFirst();
+        mRealm.commitTransaction();
         return user;
     }
 

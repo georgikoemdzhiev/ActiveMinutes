@@ -2,6 +2,8 @@ package georgikoemdzhiev.activeminutes.application;
 
 import android.app.Application;
 
+import com.evernote.android.job.JobManager;
+
 import javax.inject.Inject;
 
 import georgikoemdzhiev.activeminutes.active_minutes_screen.dagger.ActiveMinutesComponent;
@@ -19,6 +21,7 @@ import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import georgikoemdzhiev.activeminutes.har.IClassifierBuilder;
 import georgikoemdzhiev.activeminutes.initial_setup_screen.dagger.InitialSetupComponent;
 import georgikoemdzhiev.activeminutes.initial_setup_screen.dagger.InitialSetupModule;
+import georgikoemdzhiev.activeminutes.services.scheduler.SleepingHoursJobCreator;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
@@ -34,6 +37,8 @@ public class ActiveMinutesApplication extends Application {
     IFileManager mFileManager;
     @Inject
     IClassifierBuilder mClassifierBuilder;
+    @Inject
+    SleepingHoursJobCreator mSleepingHoursJobCreator;
 
     private AppComponent mComponent;
     private DataCollectionComponent mDataCollectionComponent;
@@ -55,6 +60,7 @@ public class ActiveMinutesApplication extends Application {
                 .build();
 
         mComponent.inject(this);
+        JobManager.create(this).addJobCreator(mSleepingHoursJobCreator);
 
         setUpGenericClassifier();
     }

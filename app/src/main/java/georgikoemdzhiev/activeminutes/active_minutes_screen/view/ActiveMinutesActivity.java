@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.evernote.android.job.JobManager;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -36,6 +37,7 @@ import georgikoemdzhiev.activeminutes.authentication_screen.view.AuthenticationA
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import georgikoemdzhiev.activeminutes.initial_setup_screen.view.InitialSetupActivity;
 import georgikoemdzhiev.activeminutes.services.ActiveMinutesService;
+import georgikoemdzhiev.activeminutes.services.scheduler.CheckUserSHJob;
 
 public class ActiveMinutesActivity extends AppCompatActivity implements IActiveMinutesView {
     private static final String TAG = ActiveMinutesActivity.class.getSimpleName();
@@ -45,8 +47,8 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     SharedPreferences mSharedPreferences;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    private String START_SL_HRS = "start_slp_hors";
-    private String STOP_SL_HRS = "stop_slp_hors";
+    private String CHECK_SH_JOB_ID_KEY = "check_sh_job_id_key";
+    private JobManager mJobManager;
     private User mUser;
 
     @Override
@@ -56,6 +58,7 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
         ButterKnife.bind(this);
         satisfyDependencies();
         setSupportActionBar(mToolbar);
+        mJobManager = JobManager.instance();
 
         mPresenter.setView(this);
 
@@ -149,8 +152,7 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
                 mPresenter.logOutUser();
                 stopService(new Intent(this, ActiveMinutesService.class));
 
-//                mJobManager.cancel(mSharedPreferences.getInt(START_SL_HRS, -1));
-//                mJobManager.cancel(mSharedPreferences.getInt(STOP_SL_HRS, -1));
+                mJobManager.cancel(mSharedPreferences.getInt(CHECK_SH_JOB_ID_KEY, -1));
 
                 startActivity(new Intent(ActiveMinutesActivity.this, AuthenticationActivity.class));
                 finish();
@@ -204,45 +206,14 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
 
     @Override
     public void scheduleService() {
-
         Date startSleepingHours = mUser.getStartSleepingHours();
         Date stopSleepingHours = mUser.getStopSleepingHours();
-        // check task is scheduled or not
-//        boolean alarmUp = (PendingIntent.getBroadcast(this, 0, new Intent(Intent), PendingIntent.FLAG_NO_CREATE) != null);
+//            Log.e(TAG, "Scheduling task");
+//        mJobManager.cancel(mSharedPreferences.getInt(CHECK_SH_JOB_ID_KEY, -1));
+        CheckUserSHJob checkUserSHJob = new CheckUserSHJob(this);
 
-//         if (  !alarmUp)
-//        Intent intent = new Intent(this, IntentBroadcastedReceiver.class);
-//
-//        intent.putExtra("command", "STOP_SERVICE");
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
-//                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, startSleepingHours.getHours());
-//        calendar.set(Calendar.MINUTE, startSleepingHours.getMinutes());
-//        calendar.set(Calendar.SECOND, 0);
-//
-//        AlarmManager alarmManager =
-//                (AlarmManager)
-//                        this.getSystemService(this.ALARM_SERVICE);
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-//                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
-//                pendingIntent);
-//
-//        calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, stopSleepingHours.getHours());
-//        calendar.set(Calendar.MINUTE, stopSleepingHours.getMinutes());
-//
-//        alarmManager = (AlarmManager)
-//                this.getSystemService(this.ALARM_SERVICE);
-//        PendingIntent pendingIntent2 =
-//                PendingIntent.getBroadcast(this, 1,
-//                        intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-//                calendar.getTimeInMillis(),
-//                AlarmManager.INTERVAL_DAY, pendingIntent2);
+        int jobId = checkUserSHJob.scheduleSleepingHoursCheckJob(startSleepingHours, stopSleepingHours);
+        mSharedPreferences.edit().putInt(CHECK_SH_JOB_ID_KEY, jobId).apply();
 
     }
 

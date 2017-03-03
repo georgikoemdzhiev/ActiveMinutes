@@ -8,6 +8,7 @@ import georgikoemdzhiev.activeminutes.application.dagger.modules.AppModule;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.DataModule;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.HarModule;
 import georgikoemdzhiev.activeminutes.application.dagger.modules.SelfManagementModule;
+import georgikoemdzhiev.activeminutes.application.dagger.modules.ServiceSchedulerModule;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ApplicationScope;
 import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthComponent;
 import georgikoemdzhiev.activeminutes.authentication_screen.dagger.AuthModule;
@@ -26,7 +27,8 @@ import georgikoemdzhiev.activeminutes.services.DataCollectionService;
         AppModule.class,
         DataModule.class,
         HarModule.class,
-        SelfManagementModule.class
+        SelfManagementModule.class,
+        ServiceSchedulerModule.class
 })
 @ApplicationScope
 public interface AppComponent {

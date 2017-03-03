@@ -67,7 +67,7 @@ public class ActivityDataManager implements IActivityDataManager {
         activity.setCurrentInactivityInterval(currentInacInterIncremented);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
-        debugActivityTable();
+//        debugActivityTable();
         return activity.getCurrentInactivityInterval();
     }
 

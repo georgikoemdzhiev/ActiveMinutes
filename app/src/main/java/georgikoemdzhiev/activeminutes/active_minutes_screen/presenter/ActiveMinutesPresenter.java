@@ -1,7 +1,11 @@
 package georgikoemdzhiev.activeminutes.active_minutes_screen.presenter;
 
+import java.util.Date;
+
 import georgikoemdzhiev.activeminutes.active_minutes_screen.model.IActiveMinutesModel;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.view.IActiveMinutesView;
+import georgikoemdzhiev.activeminutes.data_layer.db.User;
+import georgikoemdzhiev.activeminutes.utils.DateUtils;
 
 /**
  * Created by Georgi Koemdzhiev on 20/02/2017.
@@ -23,7 +27,17 @@ public class ActiveMinutesPresenter implements IActiveMinutesPresenter {
             mModel.setInitialSetupCompleted();
         } else {
             mView.loadDrawerScreens();
-            mView.startService();
+
+            User mUser = mModel.getLoggedInUser();
+            Date now = new Date();
+            Date stopSleepingHours = mUser.getStopSleepingHours();
+            Date startSleepingHours = mUser.getStartSleepingHours();
+            // check if it is not sleeping hours before starting the service
+            if (!DateUtils.isSleepingHours(startSleepingHours, now, stopSleepingHours)) {
+                // start the ActiveMinutesService
+                mView.startService();
+            }
+
             mView.scheduleService();
         }
     }
