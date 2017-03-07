@@ -1,9 +1,7 @@
 package georgikoemdzhiev.activeminutes.utils;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by Georgi Koemdzhiev on 26/02/2017.
@@ -24,20 +22,24 @@ public class DateUtils {
     }
 
     public static boolean isSleepingHours(Date startSH, Date now, Date stopSH) {
-        try {
-            SimpleDateFormat parser = new SimpleDateFormat("HH:mm", Locale.UK);
-            Date startTime = parser.parse(startSH.getHours() + ":" + startSH.getMinutes());
-            Date endTime = parser.parse(stopSH.getHours() + ":" + stopSH.getMinutes());
-            Date nowTime = parser.parse(now.getHours() + ":" + now.getMinutes());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        Date midNight = calendar.getTime();
 
-            if (startTime.after(endTime)) {
-                return endTime.after(nowTime);
-            } else {
-                return startTime.before(nowTime) && endTime.after(nowTime);
-            }
-        } catch (java.text.ParseException e) {
-            return false;
+        int midNightHourInt = midNight.getHours();
+
+        int startSHHourInt = startSH.getHours();
+
+        int stopSHHourInt = stopSH.getHours();
+
+        int nowHourInt = now.getHours();
+
+        if (nowHourInt >= startSHHourInt && nowHourInt <= midNightHourInt) {
+            return true;
         }
+
+        return nowHourInt < stopSHHourInt;
 
     }
 

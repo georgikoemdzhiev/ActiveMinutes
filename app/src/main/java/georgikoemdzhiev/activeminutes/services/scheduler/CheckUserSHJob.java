@@ -40,14 +40,14 @@ public class CheckUserSHJob extends Job {
 
 
         if (DateUtils.isSleepingHours(startSleepingHours, now, stopSleepingHours)) {
-            System.out.println("SLEEPING HOURS");
+            System.out.println("SLEEPING HOURS now:" + now.toString() + " startSH:" + startSleepingHours + " stopSH:" + stopSleepingHours.toString());
 
             if (isMyServiceRunning(ActiveMinutesService.class)) {
                 mContext.stopService(new Intent(mContext, ActiveMinutesService.class));
             }
 
         } else {
-            System.out.println("NOT SLEEPING HOURS");
+            System.out.println("NOT SLEEPING HOURS" + now.toString() + " startSH:" + startSleepingHours + " stopSH:" + stopSleepingHours.toString());
             if (!isMyServiceRunning(ActiveMinutesService.class)) {
                 mContext.startService(new Intent(mContext, ActiveMinutesService.class));
             }
