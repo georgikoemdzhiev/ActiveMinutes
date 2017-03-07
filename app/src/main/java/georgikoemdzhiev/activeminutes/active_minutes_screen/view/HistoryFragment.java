@@ -3,12 +3,21 @@ package georgikoemdzhiev.activeminutes.active_minutes_screen.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import georgikoemdzhiev.activeminutes.R;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.model.HistoryAdapter;
+import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
+import georgikoemdzhiev.activeminutes.data_layer.IActivityDataManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,10 +25,18 @@ import georgikoemdzhiev.activeminutes.R;
  * create an instance of this fragment.
  */
 public class HistoryFragment extends Fragment {
-    private static final String ARG_PARAM_USER_ID = "user_id";
+    @BindView(R.id.activity_list)
+    RecyclerView mActivityList;
+    @BindView(R.id.daily_button)
+    Button mDailyBtn;
+    @BindView(R.id.weekly_button)
+    Button mWeeklyBtn;
 
-    private int user_id;
+    @Inject
+    IActivityDataManager mActivityDataManager;
 
+    private LinearLayoutManager mLayoutManager;
+    private HistoryAdapter mAdapter;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -31,21 +48,15 @@ public class HistoryFragment extends Fragment {
      *
      * @return A new instance of fragment HistoryFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static HistoryFragment newInstance() {
         HistoryFragment fragment = new HistoryFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_PARAM_USER_ID, userId);
-//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            user_id = getArguments().getInt(ARG_PARAM_USER_ID);
-        }
+        satisfyDependencies();
     }
 
     @Override
@@ -54,7 +65,26 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history, container, false);
         ButterKnife.bind(this, view);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mActivityList.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mActivityList.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+
+        mAdapter = new HistoryAdapter(getContext(), mActivityDataManager.getAllActivitiesSortedByDate());
+        mActivityList.setAdapter(mAdapter);
+
         return view;
+    }
+
+    private void satisfyDependencies() {
+        ((ActiveMinutesApplication) getActivity()
+                .getApplication()).buildActiveMinutesComp().inject(this);
     }
 
 }

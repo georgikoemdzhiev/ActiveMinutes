@@ -1,5 +1,8 @@
 package georgikoemdzhiev.activeminutes.data_layer;
 
+import java.util.List;
+
+import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 
 /**
@@ -30,5 +33,7 @@ public interface IActivityDataManager {
     int getMaxContInacTarget();
 
     int getTimesTargetExceeded();
+
+    List<Activity> getAllActivitiesSortedByDate();
 
 }

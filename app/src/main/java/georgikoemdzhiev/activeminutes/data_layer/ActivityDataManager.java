@@ -6,6 +6,7 @@ import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 import static georgikoemdzhiev.activeminutes.utils.DateUtils.truncateDate;
 
@@ -18,6 +19,7 @@ public class ActivityDataManager implements IActivityDataManager {
     private final String ACTIVITY_ID = "activity_id";
     private final String DATE_KEY = "date";
     private final String USER_ID_KEY = "user_id";
+    private final String DATE_FIELD = "date";
     // since every 3 seconds new activity is recognised...
     private final int INCREMENT_VALUE = 3;
 
@@ -134,6 +136,14 @@ public class ActivityDataManager implements IActivityDataManager {
         int maxContInacTarget = activity.getUserMaxContInacTarget();
         int longestInactInterval = activity.getLongestInactivityInterval();
         return Math.round(longestInactInterval / maxContInacTarget);
+    }
+
+    @Override
+    public RealmResults<Activity> getAllActivitiesSortedByDate() {
+        RealmResults<Activity> activities = mRealm.where(Activity.class)
+                .equalTo(USER_ID_KEY, mUser.getUserId())
+                .findAllSorted(DATE_FIELD, Sort.DESCENDING);
+        return activities;
     }
 
     // helper methods

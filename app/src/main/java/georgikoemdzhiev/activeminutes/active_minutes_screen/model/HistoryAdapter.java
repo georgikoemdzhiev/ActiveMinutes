@@ -1,0 +1,89 @@
+package georgikoemdzhiev.activeminutes.active_minutes_screen.model;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import georgikoemdzhiev.activeminutes.R;
+import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
+
+/**
+ * Created by Georgi Koemdzhiev on 07/03/2017.
+ */
+
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
+    private Context mContext;
+    private List<Activity> mData;
+
+    public HistoryAdapter(Context context, List<Activity> data) {
+        mContext = context;
+        mData = data;
+    }
+
+    @Override
+    public HistoryViewHolder onCreateViewHolder(ViewGroup parent,
+                                                int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.history_list_item_layout, parent, false);
+
+        HistoryViewHolder vh = new HistoryViewHolder(view);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(HistoryViewHolder holder, int position) {
+        Activity activity = mData.get(position);
+        holder.mDate.setText(activity.getDate().toString());
+
+        holder.mActivePB.setMax(toMinutes(activity.getUserPaGoal()));
+        holder.mActivePB.setProgress(toMinutes(activity.getActiveTime()));
+
+        holder.mStaticPB.setMax(toMinutes(activity.getUserMaxContInacTarget()));
+        holder.mStaticPB.setProgress(toMinutes(activity.getLongestInactivityInterval()));
+
+        holder.mPaGoal.setText(String.valueOf(toMinutes(activity.getUserPaGoal())));
+        holder.mPaProgress.setText(String.valueOf(toMinutes(activity.getActiveTime())));
+
+        holder.mStaticGoal.setText(String.valueOf(toMinutes(activity.getUserMaxContInacTarget())));
+        holder.mStaticProgress.setText(String.valueOf(toMinutes(activity.getLongestInactivityInterval())));
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
+    }
+
+    private int toMinutes(int value) {
+        return value / 60;
+    }
+
+    class HistoryViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.date)
+        protected TextView mDate;
+        @BindView(R.id.pa_goal)
+        protected TextView mPaGoal;
+        @BindView(R.id.pa_progress)
+        protected TextView mPaProgress;
+        @BindView(R.id.static_goal)
+        protected TextView mStaticGoal;
+        @BindView(R.id.static_progress)
+        protected TextView mStaticProgress;
+        @BindView(R.id.activeProgress)
+        protected ProgressBar mActivePB;
+        @BindView(R.id.staticProgress)
+        protected ProgressBar mStaticPB;
+
+        public HistoryViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+}
