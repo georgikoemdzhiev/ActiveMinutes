@@ -25,20 +25,10 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    // Butter Knife for injecting views
-    // Dagger 2
-    // Weka library for ML
     compile files('libs/wekaSTRIPPED.jar')
-    // JTransform library for calculating FFT coefficients
-    // Material Dialogs library
-    // EventBus for communicating between Services and Activities
-    // Add AppIntro library to implement the Authentication and Intro screens
-    compile('com.mikepenz:materialdrawer:5.8.1@aar') { // Material Drawer
+    compile('com.mikepenz:materialdrawer:5.8.2@aar') { // Material Drawer
         transitive = true
     }
-    //    compile 'com.mikepenz:google-material-typeface:x.y.z@aar' //Google Material Icons
-    //    compile 'com.mikepenz:fontawesome-typeface:x.y.z@aar'     //FontAwesome
-    //Range date picker
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.jakewharton:butterknife:8.5.1'
     compile 'com.google.dagger:dagger:2.9'

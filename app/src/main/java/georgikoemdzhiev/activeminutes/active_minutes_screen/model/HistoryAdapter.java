@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,7 +57,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.mPaProgress.setText(String.valueOf(toMinutes(activity.getActiveTime())));
 
         holder.mStaticGoal.setText(String.valueOf(toMinutes(activity.getUserMaxContInacTarget())));
-        holder.mStaticProgress.setText(String.valueOf(toMinutes(activity.getLongestInactivityInterval())));
+        holder.mStaticProgress.
+                setText(String.valueOf(toMinutes(activity.getLongestInactivityInterval())));
     }
 
     @Override
@@ -68,10 +70,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         return value / 60;
     }
 
-    String formatDate(Date date) {
+    private String formatDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd", Locale.UK);
         return sdf.format(date);
     }
+
 
     class HistoryViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.date)
@@ -92,6 +95,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         public HistoryViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Activity activity = mData.get(getAdapterPosition());
+                    int maxContInacTarget = activity.getUserMaxContInacTarget();
+                    int longestInactInterval = activity.getLongestInactivityInterval();
+                    int result = Math.round(longestInactInterval / maxContInacTarget);
+                    Toast.makeText(mContext, "You have exceeded the inactivity target: x"
+                            + result, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
