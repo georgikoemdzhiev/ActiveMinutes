@@ -1,7 +1,5 @@
 package georgikoemdzhiev.activeminutes.active_minutes_screen.model;
 
-import android.util.Log;
-
 import georgikoemdzhiev.activeminutes.data_layer.IActivityDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.IAuthDataManager;
 
@@ -15,7 +13,7 @@ public class TodayModel implements ITodayModel {
     public TodayModel(IActivityDataManager activityDataManager, IAuthDataManager authDataManager) {
         mActivityDataManager = activityDataManager;
         mActivityDataManager.setUser(authDataManager.getLoggedInUser());
-        Log.e("TodayModel", "TodayModel constructor created!");
+//        Log.e("TodayModel", "TodayModel constructor created!");
     }
 
     @Override
