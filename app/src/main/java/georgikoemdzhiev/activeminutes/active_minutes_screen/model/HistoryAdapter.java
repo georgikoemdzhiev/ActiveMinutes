@@ -1,6 +1,7 @@
 package georgikoemdzhiev.activeminutes.active_minutes_screen.model;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +50,24 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
         holder.mActivePB.setMax(toMinutes(activity.getUserPaGoal()));
         holder.mActivePB.setProgress(toMinutes(activity.getActiveTime()));
+        if (isPaGoalReached(activity)) {
+            holder.mActivePB.setProgressDrawable(ContextCompat.getDrawable(mContext,
+                    R.drawable.rounded_corners_progress_bar));
+        } else {
+            holder.mActivePB.setProgressDrawable(ContextCompat.getDrawable(mContext,
+                    R.drawable.rounded_corners_progress_bar_goal_not_achieved));
+        }
+
 
         holder.mStaticPB.setMax(toMinutes(activity.getUserMaxContInacTarget()));
         holder.mStaticPB.setProgress(toMinutes(activity.getLongestInactivityInterval()));
+        if (isStaticTargetReached(activity)) {
+            holder.mStaticPB.setProgressDrawable(ContextCompat.getDrawable(mContext,
+                    R.drawable.rounded_corners_progress_bar_goal_not_achieved));
+        } else {
+            holder.mStaticPB.setProgressDrawable(ContextCompat.getDrawable(mContext,
+                    R.drawable.rounded_corners_progress_bar));
+        }
 
         holder.mPaGoal.setText(String.valueOf(toMinutes(activity.getUserPaGoal())));
         holder.mPaProgress.setText(String.valueOf(toMinutes(activity.getActiveTime())));
@@ -73,6 +89,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     private String formatDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd", Locale.UK);
         return sdf.format(date);
+    }
+
+    private boolean isPaGoalReached(Activity activity) {
+        return activity.getActiveTime() >= activity.getUserPaGoal();
+    }
+
+    private boolean isStaticTargetReached(Activity activity) {
+        return activity.getLongestInactivityInterval() >= activity.getUserMaxContInacTarget();
     }
 
 
