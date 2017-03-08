@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +44,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
         Activity activity = mData.get(position);
-        holder.mDate.setText(activity.getDate().toString());
+        holder.mDate.setText(formatDate(activity.getDate()));
 
         holder.mActivePB.setMax(toMinutes(activity.getUserPaGoal()));
         holder.mActivePB.setProgress(toMinutes(activity.getActiveTime()));
@@ -63,6 +66,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     private int toMinutes(int value) {
         return value / 60;
+    }
+
+    String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd", Locale.UK);
+        return sdf.format(date);
     }
 
     class HistoryViewHolder extends RecyclerView.ViewHolder {
