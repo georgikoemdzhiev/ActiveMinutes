@@ -104,10 +104,12 @@ public class HistoryAdapterWeekly extends
         Calendar calendar = Calendar.getInstance(Locale.UK);
         Date date = activities.get(activities.size() - 1).getDate();
         calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+
         String output = "" + calendar.get(Calendar.DAY_OF_MONTH) + " "
                 + calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK);
 
-        calendar.setTime(activities.get(0).getDate());
+        calendar.add(Calendar.DAY_OF_YEAR, 6);
 
         output += " - " + calendar.get(Calendar.DAY_OF_MONTH) + " "
                 + calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK);
