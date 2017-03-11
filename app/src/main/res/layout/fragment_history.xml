@@ -2,8 +2,6 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_horizontal_margin"
                 tools:context="georgikoemdzhiev.activeminutes.active_minutes_screen.view.HistoryFragment">
 
@@ -13,6 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:weightSum="3">
 
         <LinearLayout
@@ -44,6 +44,7 @@
             android:weightSum="2">
 
             <TextView
+                android:id="@+id/pa_goal_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,6 +66,8 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/switch_buttons_container"
         android:layout_below="@+id/legend_container"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:scrollbars="vertical"/>
 
     <LinearLayout
@@ -80,14 +83,18 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/daily_button_text"/>
+            android:background="@color/dirtyWhite"
+            android:text="@string/daily_button_text"
+            android:textColor="@color/lightGreen"/>
 
         <Button
             android:id="@+id/weekly_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/weekly_button_text"/>
+            android:background="@color/lightGreen"
+            android:text="@string/weekly_button_text"
+            android:textColor="@color/dirtyWhite"/>
 
     </LinearLayout>
 

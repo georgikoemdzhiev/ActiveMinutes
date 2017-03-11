@@ -16,9 +16,18 @@ public class HistoryModel implements IHistoryModel {
     }
 
     @Override
-    public void getDailyData(HistoryDataResult result) {
+    public void getDailyData(HistoryDataDailyResult result) {
         try {
             result.onSuccess(mDataManager.getAllActivitiesSortedByDate());
+        } catch (Exception e) {
+            result.onError(e.getMessage());
+        }
+    }
+
+    @Override
+    public void getWeeklyDate(HistoryDataWeeklyResult result) {
+        try {
+            result.onSuccess(mDataManager.getAllActivityGroupedByWeek());
         } catch (Exception e) {
             result.onError(e.getMessage());
         }

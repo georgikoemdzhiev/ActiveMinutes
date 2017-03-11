@@ -36,4 +36,6 @@ public interface IActivityDataManager {
 
     List<Activity> getAllActivitiesSortedByDate();
 
+    List<List<Activity>> getAllActivityGroupedByWeek();
+
 }

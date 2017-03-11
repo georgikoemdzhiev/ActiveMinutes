@@ -38,6 +38,6 @@
     <string name="goal_achieved_text">Goal Achieved</string>
     <string name="daily_button_text">Daily</string>
     <string name="weekly_button_text">Weekly</string>
-    <string name="pa_goal_reached_goal_min">PA goal:reached/goal (min)</string>
+    <string name="pa_goal_reached_goal_min">PA goal:reached/goal (%1$s)</string>
     <string name="mci_goal_reached_goal_min">MCI goal:reached/goal (min)</string>
 </resources>

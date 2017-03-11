@@ -3,12 +3,14 @@ package georgikoemdzhiev.activeminutes.active_minutes_screen.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -17,11 +19,15 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import georgikoemdzhiev.activeminutes.R;
-import georgikoemdzhiev.activeminutes.active_minutes_screen.model.HistoryAdapter;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.model.HistoryAdapterDaily;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.model.HistoryAdapterWeekly;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.IHistoryPresenter;
 import georgikoemdzhiev.activeminutes.application.ActiveMinutesApplication;
 import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
+
+import static georgikoemdzhiev.activeminutes.R.string.pa_goal_reached_goal_min;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +37,10 @@ import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
 public class HistoryFragment extends Fragment implements IHistoryView {
     @BindView(R.id.activity_list)
     RecyclerView mActivityList;
+
+    @BindView(R.id.pa_goal_label)
+    TextView mPaGoalLabel;
+
     @BindView(R.id.daily_button)
     Button mDailyBtn;
     @BindView(R.id.weekly_button)
@@ -40,7 +50,8 @@ public class HistoryFragment extends Fragment implements IHistoryView {
     IHistoryPresenter mPresenter;
 
     private LinearLayoutManager mLayoutManager;
-    private HistoryAdapter mAdapter;
+    private HistoryAdapterDaily mAdapterDaily;
+    private HistoryAdapterWeekly mAdapterWeekly;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -94,20 +105,51 @@ public class HistoryFragment extends Fragment implements IHistoryView {
         mPresenter.releaseView();
     }
 
-    private void satisfyDependencies() {
-        ((ActiveMinutesApplication) getActivity()
-                .getApplication()).buildActiveMinutesComp().inject(this);
+    @OnClick(R.id.daily_button)
+    public void onDailyButtonClick(Button button) {
+        mPresenter.getDailyActivityData();
+    }
+
+    @OnClick(R.id.weekly_button)
+    public void onWeeklyButtonClick(Button button) {
+        mPresenter.getWeeklyActivityData();
     }
 
     @Override
     public void setDailyActivityData(List<Activity> activityData) {
         // set up the list adapter with the requested activity data
-        mAdapter = new HistoryAdapter(getContext(), activityData);
-        mActivityList.setAdapter(mAdapter);
+        mAdapterDaily = new HistoryAdapterDaily(getContext(), activityData);
+        mActivityList.setAdapter(mAdapterDaily);
+
+        // set the PA to be measured in minutes
+        mPaGoalLabel.setText(String.format(getString(pa_goal_reached_goal_min), "min"));
+        // Set up buttons colour
+        mDailyBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGreen));
+        mDailyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.dirtyWhite));
+        mWeeklyBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.dirtyWhite));
+        mWeeklyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGreen));
+    }
+
+    @Override
+    public void setWeeklyActivityData(List<List<Activity>> activities) {
+        mAdapterWeekly = new HistoryAdapterWeekly(getContext(), activities);
+        mActivityList.setAdapter(mAdapterWeekly);
+        // set the PA to be measured in hours
+        mPaGoalLabel.setText(String.format(getString(pa_goal_reached_goal_min), "hour"));
+        // Set up buttons colour
+        mWeeklyBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGreen));
+        mWeeklyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.dirtyWhite));
+        mDailyBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.dirtyWhite));
+        mDailyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGreen));
     }
 
     @Override
     public void showMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    }
+
+    private void satisfyDependencies() {
+        ((ActiveMinutesApplication) getActivity()
+                .getApplication()).buildActiveMinutesComp().inject(this);
     }
 }

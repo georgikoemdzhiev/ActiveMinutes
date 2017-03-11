@@ -6,5 +6,7 @@ package georgikoemdzhiev.activeminutes.active_minutes_screen.model;
 
 public interface IHistoryModel {
 
-    void getDailyData(HistoryDataResult result);
+    void getDailyData(HistoryDataDailyResult result);
+
+    void getWeeklyDate(HistoryDataWeeklyResult result);
 }

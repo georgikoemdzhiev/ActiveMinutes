@@ -10,6 +10,8 @@ public interface IHistoryPresenter {
 
     void getDailyActivityData();
 
+    void getWeeklyActivityData();
+
     void setView(IHistoryView view);
 
     void releaseView();

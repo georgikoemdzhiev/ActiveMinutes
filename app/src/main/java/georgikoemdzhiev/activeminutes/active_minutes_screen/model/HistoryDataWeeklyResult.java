@@ -8,9 +8,9 @@ import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
  * Created by Georgi Koemdzhiev on 08/03/2017.
  */
 
-public interface HistoryDataResult {
+public interface HistoryDataWeeklyResult {
 
-    void onSuccess(List<Activity> activities);
+    void onSuccess(List<List<Activity>> activities);
 
     void onError(String message);
 }

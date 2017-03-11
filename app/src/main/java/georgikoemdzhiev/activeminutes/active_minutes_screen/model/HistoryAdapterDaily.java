@@ -24,11 +24,11 @@ import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
  * Created by Georgi Koemdzhiev on 07/03/2017.
  */
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
+public class HistoryAdapterDaily extends RecyclerView.Adapter<HistoryAdapterDaily.HistoryViewHolder> {
     private Context mContext;
     private List<Activity> mData;
 
-    public HistoryAdapter(Context context, List<Activity> data) {
+    public HistoryAdapterDaily(Context context, List<Activity> data) {
         mContext = context;
         mData = data;
     }

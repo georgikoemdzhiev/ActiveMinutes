@@ -1,6 +1,10 @@
 package georgikoemdzhiev.activeminutes.data_layer;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.TreeMap;
 
 import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
@@ -144,6 +148,32 @@ public class ActivityDataManager implements IActivityDataManager {
                 .equalTo(USER_ID_KEY, mUser.getUserId())
                 .findAllSorted(DATE_FIELD, Sort.DESCENDING);
         return activities;
+    }
+
+    @Override
+    public List<List<Activity>> getAllActivityGroupedByWeek() {
+        RealmResults<Activity> activities = getAllActivitiesSortedByDate();
+        TreeMap<Integer, List<Activity>> activitiesGroupedByWeek = new TreeMap<>();
+
+        for (int i = 0; i < activities.size(); i++) {
+            List<Activity> datesList = new ArrayList<>();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(activities.get(i).getDate());
+
+            int weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH);
+
+            for (Activity activity : activities) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(activity.getDate());
+                if (weekOfMonth == c.get(Calendar.WEEK_OF_MONTH)) {
+                    datesList.add(activity);
+                }
+            }
+
+            activitiesGroupedByWeek.put(weekOfMonth, datesList);
+        }
+
+        return new ArrayList<>(activitiesGroupedByWeek.values());
     }
 
     // helper methods

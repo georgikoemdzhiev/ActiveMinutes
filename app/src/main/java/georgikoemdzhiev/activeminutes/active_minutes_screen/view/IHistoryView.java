@@ -12,5 +12,7 @@ public interface IHistoryView {
 
     void setDailyActivityData(List<Activity> activityData);
 
+    void setWeeklyActivityData(List<List<Activity>> activities);
+
     void showMessage(String message);
 }
