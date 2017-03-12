@@ -2,6 +2,8 @@ package georgikoemdzhiev.activeminutes.data_layer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
@@ -150,30 +152,52 @@ public class ActivityDataManager implements IActivityDataManager {
         return activities;
     }
 
+    /***
+     * This method returns all activities grouped by week in a list
+     * @return List of lists of activities grouped by the week they were recorded
+     */
+
     @Override
     public List<List<Activity>> getAllActivityGroupedByWeek() {
         RealmResults<Activity> activities = getAllActivitiesSortedByDate();
         TreeMap<Integer, List<Activity>> activitiesGroupedByWeek = new TreeMap<>();
-
+        // iterate through all activities in the db
         for (int i = 0; i < activities.size(); i++) {
             List<Activity> datesList = new ArrayList<>();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(activities.get(i).getDate());
-
+            // the number of the week in the month
             int weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH);
 
             for (Activity activity : activities) {
                 Calendar c = Calendar.getInstance();
                 c.setTime(activity.getDate());
+                // if this activity's week number equals the above week number
                 if (weekOfMonth == c.get(Calendar.WEEK_OF_MONTH)) {
+                    // add it to "this" week's activities
                     datesList.add(activity);
                 }
             }
 
             activitiesGroupedByWeek.put(weekOfMonth, datesList);
         }
-
-        return new ArrayList<>(activitiesGroupedByWeek.values());
+        /***
+         * Sort the list so that the recent week (e.g. list of activities grouped by week)
+         * is at the top
+         */
+        List<List<Activity>> tempList = new ArrayList<>(activitiesGroupedByWeek.values());
+        Collections.sort(tempList, new Comparator<List<Activity>>() {
+            @Override
+            public int compare(List<Activity> a1, List<Activity> a2) {
+                if (a1.get(0).getDate().before(a2.get(0).getDate())) {
+                    return 1;
+                } else if (a1.get(0).getDate().after(a2.get(0).getDate())) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
+        return tempList;
     }
 
     // helper methods
