@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.data_layer.db.Activity;
+import georgikoemdzhiev.activeminutes.utils.DateUtils;
 
 /**
  * Created by Georgi Koemdzhiev on 07/03/2017.
@@ -69,8 +70,12 @@ public class HistoryAdapterWeekly extends
                     R.drawable.rounded_corners_progress_bar));
         }
 
-        holder.mPaGoal.setText(String.valueOf(toHours(getUserPaGoalSum(activitiesForWeek))));
-        holder.mPaProgress.setText(String.valueOf(toHours(getUserPaGoalProgress(activitiesForWeek))));
+        holder.mPaGoal.setText(String.valueOf(DateUtils.round(
+                toHours(getUserPaGoalSum(activitiesForWeek)))
+        ));
+        holder.mPaProgress.setText(String.valueOf(DateUtils.round(
+                toHours(getUserPaGoalProgress(activitiesForWeek)))
+        ));
 
         holder.mStaticGoal.setText(String.valueOf(toMinutes(getMaxStaticGoalForWeek(activitiesForWeek))));
         holder.mStaticProgress.setText(String.valueOf(toMinutes(getMaxContInacForWeek(activitiesForWeek))));
@@ -97,7 +102,7 @@ public class HistoryAdapterWeekly extends
     }
 
     private double toHours(double value) {
-        return Math.round(((value / 60) / 60) * 100.0) / 100.0;
+        return (value / 60) / 60;
     }
 
     private String formatDate(List<Activity> activities) {

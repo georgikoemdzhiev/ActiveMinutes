@@ -1,5 +1,6 @@
 package georgikoemdzhiev.activeminutes.utils;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -63,6 +64,16 @@ public class DateUtils {
                 / (1000 * 60 * 60));
 
         return Math.abs(diffInDays);
+    }
+
+    /***
+     * Method that rounds a double variable to 1 decimal point
+     * @param value input value
+     * @return value formatted with 1 decimal point
+     */
+    public static double round(double value) {
+        DecimalFormat df = new DecimalFormat("#.#");
+        return Double.parseDouble(df.format(value));
     }
 
 
