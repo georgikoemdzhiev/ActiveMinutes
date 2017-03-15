@@ -1,10 +1,10 @@
 package georgikoemdzhiev.activeminutes.active_minutes_screen.view;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -41,13 +41,13 @@ import georgikoemdzhiev.activeminutes.services.scheduler.CheckUserSHJob;
 
 public class ActiveMinutesActivity extends AppCompatActivity implements IActiveMinutesView {
     private static final String TAG = ActiveMinutesActivity.class.getSimpleName();
+    public static String CHECK_SH_JOB_ID_KEY = "check_sh_job_id_key";
     @Inject
     IActiveMinutesPresenter mPresenter;
     @Inject
     SharedPreferences mSharedPreferences;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    private String CHECK_SH_JOB_ID_KEY = "check_sh_job_id_key";
     private JobManager mJobManager;
     private User mUser;
 
@@ -146,7 +146,7 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
                 fragment = HistoryFragment.newInstance();
                 break;
             case 4:
-
+                fragment = SettingsFragment.newInstance();
                 break;
             case 5:
                 mPresenter.logOutUser();
@@ -159,7 +159,7 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
                 break;
         }
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         if (fragment != null)
             ft.replace(R.id.content_frame, fragment);
         ft.commit();
@@ -188,7 +188,6 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     @Override
     public void showInitialSetup() {
         startActivity(new Intent(this, InitialSetupActivity.class));
-//        finish();
     }
 
     @Override
@@ -208,8 +207,7 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
     public void scheduleService() {
         Date startSleepingHours = mUser.getStartSleepingHours();
         Date stopSleepingHours = mUser.getStopSleepingHours();
-//            Log.e(TAG, "Scheduling task");
-//        mJobManager.cancel(mSharedPreferences.getInt(CHECK_SH_JOB_ID_KEY, -1));
+
         CheckUserSHJob checkUserSHJob = new CheckUserSHJob(this);
 
         int jobId = checkUserSHJob.scheduleSleepingHoursCheckJob(startSleepingHours, stopSleepingHours);

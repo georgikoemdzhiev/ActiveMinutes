@@ -38,6 +38,7 @@ dependencies {
     // Scheduling library
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:support-v13:25.2.0'
+    compile 'com.android.support:preference-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.jakewharton:butterknife:8.5.1'
     compile 'com.google.dagger:dagger:2.9'

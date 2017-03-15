@@ -42,6 +42,41 @@ public class ActivityDataManager implements IActivityDataManager {
     }
 
     @Override
+    public void setUserSleepingHours(int hourOfDay, int minute, int hourOfDayEnd, int minuteEnd) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+
+        mRealm.beginTransaction();
+        mUser.setStartSleepingHours(calendar.getTime());
+
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDayEnd);
+        calendar.set(Calendar.MINUTE, minuteEnd);
+
+        mUser.setStopSleepingHours(calendar.getTime());
+
+        mRealm.copyToRealmOrUpdate(mUser);
+        mRealm.commitTransaction();
+    }
+
+    @Override
+    public String getUserSleepingHours() {
+        return mUser.getStartSleepingHours().getHours() + " - " +
+                mUser.getStopSleepingHours().getHours();
+    }
+
+    @Override
+    public void setUserAndActivityStGoal(int stGoal) {
+        mRealm.beginTransaction();
+        Activity activity = getOrCreateTodayUserActivity();
+        activity.setUserMaxContInacTarget(stGoal);
+        mUser.setMaxContInactTarget(stGoal);
+        mRealm.copyToRealmOrUpdate(activity);
+        mRealm.copyToRealmOrUpdate(mUser);
+        mRealm.commitTransaction();
+    }
+
+    @Override
     public int incActiveTime() {
         mRealm.beginTransaction();
         Activity activity = getOrCreateTodayUserActivity();
@@ -131,6 +166,18 @@ public class ActivityDataManager implements IActivityDataManager {
     }
 
     @Override
+    public void setUserAndActivityPaGoal(int paGoal) {
+        mRealm.beginTransaction();
+
+        Activity activity = getOrCreateTodayUserActivity();
+        activity.setUserPaGoal(paGoal);
+        mUser.setPaGoal(paGoal);
+        mRealm.copyToRealmOrUpdate(activity);
+        mRealm.copyToRealmOrUpdate(mUser);
+        mRealm.commitTransaction();
+    }
+
+    @Override
     public int getMaxContInacTarget() {
         Activity activity = getOrCreateTodayUserActivity();
         return activity.getUserMaxContInacTarget();
@@ -198,6 +245,11 @@ public class ActivityDataManager implements IActivityDataManager {
             }
         });
         return tempList;
+    }
+
+    @Override
+    public int getUserStGoal() {
+        return mUser.getMaxContInactTarget();
     }
 
     // helper methods

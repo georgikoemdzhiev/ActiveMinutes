@@ -40,4 +40,8 @@
     <string name="weekly_button_text">Weekly</string>
     <string name="pa_goal_reached_goal_min">PA goal:reached/goal (%1$s)</string>
     <string name="mci_goal_reached_goal_min">MCI goal:reached/goal (min)</string>
+    <string name="settings_st_goal_summary"> %1$s of maximum continuous inactivity</string>
+    <string name="settings_pa_goal_summary"> %1$s minutes per day</string>
+    <string name="settings_sleeping_hours_summary">%1$d - %2$d</string>
+    <string name="notify_me_when_inactive_key">pref_key_notify_when_inactive</string>
 </resources>

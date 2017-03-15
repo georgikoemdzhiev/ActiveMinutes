@@ -2,6 +2,7 @@ package georgikoemdzhiev.activeminutes.application.dagger.modules;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import dagger.Module;
 import dagger.Provides;
@@ -69,7 +70,7 @@ public class DataModule {
     @Provides
     @ApplicationScope
     SharedPreferences provideSharedPreferences(Context context) {
-        return context.getSharedPreferences("ActiveMinutesPreferences", Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Provides

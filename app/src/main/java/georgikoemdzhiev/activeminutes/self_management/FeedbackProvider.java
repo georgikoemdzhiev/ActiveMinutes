@@ -63,7 +63,8 @@ public class FeedbackProvider implements IFeedbackProvider {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("You have been inactive for too long!")
                 .setContentText(getProlongedInactivityDetectedMessage(currentSt));
-        mNotifyMgr.notify(SEDENTARY_NOTIFICATION_ID, mNotificationBuilder.build());
+        if (mSharedPreferences.getBoolean(mContext.getString(R.string.notify_me_when_inactive_key), true))
+            mNotifyMgr.notify(SEDENTARY_NOTIFICATION_ID, mNotificationBuilder.build());
     }
 
     private String getGoalAchievedMessage(int paGoal) {
