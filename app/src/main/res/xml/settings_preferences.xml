@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="pref_key_notifications_settings"
+        android:title="Notifications">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/notify_me_when_inactive_key"
+            android:summary="A notification will be sent when prolonged inactivity is detected"
+            android:title="Notify me when I am inactive"/>
+
+        <Preference
+            android:key="pref_key_sleeping_hours"
+            android:summary="@string/settings_sleeping_hours_summary"
+            android:title="Sleeping Hours"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_goals_settings"
+        android:title="Goals">
+        <Preference
+            android:key="pref_key_pa_goal"
+            android:summary="@string/settings_pa_goal_summary"
+            android:title="Physical Activity goal"/>
+
+        <Preference
+            android:key="pref_key_st_goal"
+            android:summary="@string/settings_st_goal_summary"
+            android:title="Sedentary goal"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

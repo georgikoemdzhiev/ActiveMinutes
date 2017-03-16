@@ -6,13 +6,17 @@ import georgikoemdzhiev.activeminutes.active_minutes_screen.model.ActiveMinutesM
 import georgikoemdzhiev.activeminutes.active_minutes_screen.model.HistoryModel;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.model.IActiveMinutesModel;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.model.IHistoryModel;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.model.ISettingsModel;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.model.ITodayModel;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.model.SettingsModel;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.model.TodayModel;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.ActiveMinutesPresenter;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.HistoryPresenter;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.IActiveMinutesPresenter;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.IHistoryPresenter;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.ISettingsPresenter;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.ITodayPresenter;
+import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.SettingsPresenter;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.presenter.TodayPresenter;
 import georgikoemdzhiev.activeminutes.application.dagger.scopes.ActivityScope;
 import georgikoemdzhiev.activeminutes.data_layer.IActivityDataManager;
@@ -67,5 +71,19 @@ public class ActiveMinutesModule {
     @ActivityScope
     IHistoryPresenter provideHistoryPresenter(IHistoryModel model) {
         return new HistoryPresenter(model);
+    }
+
+    // Settings fragment
+
+    @Provides
+    @ActivityScope
+    ISettingsModel provideSettingsModel(IActivityDataManager activityDataManager, IAuthDataManager authDataManager) {
+        return new SettingsModel(activityDataManager, authDataManager);
+    }
+
+    @Provides
+    @ActivityScope
+    ISettingsPresenter providesSettingsPresenter(ISettingsModel model) {
+        return new SettingsPresenter(model);
     }
 }

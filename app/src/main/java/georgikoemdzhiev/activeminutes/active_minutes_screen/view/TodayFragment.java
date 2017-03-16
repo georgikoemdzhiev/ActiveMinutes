@@ -1,8 +1,9 @@
 package georgikoemdzhiev.activeminutes.active_minutes_screen.view;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class TodayFragment extends Fragment implements ITodayView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         satisfyDependencies();
+        Log.e("TodayFragment", "OnCreate called");
         mPresenter.setView(this);
     }
 
@@ -107,6 +109,8 @@ public class TodayFragment extends Fragment implements ITodayView {
         mAverageInacInterval.setText(averageIacInter);
         mMaxContInactTarget.setText(maxContInacTarget);
         mTimesTargetExceeded.setText(timesTargetExceeded);
+
+        System.out.println("TodayFragment setData method. User Pa goal: " + paGoal);
     }
 
     @Override

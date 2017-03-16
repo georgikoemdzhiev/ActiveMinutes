@@ -11,7 +11,14 @@ import georgikoemdzhiev.activeminutes.data_layer.db.User;
 
 public interface IActivityDataManager {
 
+    // Setters & other data modifying methods
     void setUser(User user);
+
+    void setUserSleepingHours(int hourOfDay, int minute, int hourOfDayEnd, int minuteEnd);
+
+    String getUserSleepingHours();
+
+    void setUserAndActivityStGoal(int stGoal);
 
     int incActiveTime();
 
@@ -30,6 +37,8 @@ public interface IActivityDataManager {
 
     int getUserPaGoal();
 
+    void setUserAndActivityPaGoal(int paGoal);
+
     int getMaxContInacTarget();
 
     int getTimesTargetExceeded();
@@ -38,4 +47,6 @@ public interface IActivityDataManager {
 
     List<List<Activity>> getAllActivityGroupedByWeek();
 
+
+    int getUserStGoal();
 }

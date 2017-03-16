@@ -1,11 +1,13 @@
 package georgikoemdzhiev.activeminutes.application;
 
 import android.app.Application;
+import android.preference.PreferenceManager;
 
 import com.evernote.android.job.JobManager;
 
 import javax.inject.Inject;
 
+import georgikoemdzhiev.activeminutes.R;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.dagger.ActiveMinutesComponent;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.dagger.ActiveMinutesModule;
 import georgikoemdzhiev.activeminutes.application.dagger.components.AppComponent;
@@ -49,6 +51,8 @@ public class ActiveMinutesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // Set the default values of the Settings screen preferences
+        PreferenceManager.setDefaultValues(this, R.xml.settings_preferences, false);
         // Initial Database setup
         // The Realm file will be located in Context.getFilesDir() with name "default.realm"
         setUpRealmDatabase();
@@ -60,6 +64,7 @@ public class ActiveMinutesApplication extends Application {
                 .build();
 
         mComponent.inject(this);
+        // Create JobManager to manage scheduling periodic tasks
         JobManager.create(this).addJobCreator(mSleepingHoursJobCreator);
 
         setUpGenericClassifier();
