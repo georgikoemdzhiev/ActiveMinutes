@@ -8,5 +8,7 @@ import georgikoemdzhiev.activeminutes.data_layer.db.User;
 
 public interface IActivityMonitor {
 
+    void monitorActivity(Object activityClass);
+
     void setUser(User user);
 }

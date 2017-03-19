@@ -44,4 +44,8 @@
     <string name="settings_pa_goal_summary"> %1$s minutes per day</string>
     <string name="settings_sleeping_hours_summary">%1$d - %2$d</string>
     <string name="notify_me_when_inactive_key">pref_key_notify_when_inactive</string>
+    <string name="average_inactivity_interval_label">Average inactivity interval</string>
+    <string name="longest_inactivity_interval_label">Longest inactivity interval</string>
+    <string name="min_target_exceeded_label">%1$s min target exceeded:</string>
+    <string name="history_weekly_dialog_content_title"> <u>Details about the selected week activity levels in minutes </u></string>
 </resources>

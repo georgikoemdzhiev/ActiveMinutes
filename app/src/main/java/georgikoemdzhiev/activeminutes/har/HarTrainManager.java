@@ -125,7 +125,7 @@ public class HarTrainManager extends HarManager {
     private void buildClassifier(Instances dataSet, TrainClassifierResult result) {
         if (dataSet.size() != 0) {
             try {
-                IBk iBkClassifier = new IBk(3);
+                IBk iBkClassifier = new IBk();
                 iBkClassifier.buildClassifier(dataSet);
                 mDataManager.serialiseClassifierToFile(iBkClassifier);
                 result.onSuccess("Classifier is built successfully!");

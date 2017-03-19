@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -61,7 +62,7 @@ public class HistoryAdapterWeekly extends
         }
 
         holder.mStaticPB.setMax(toMinutes(getMaxStaticGoalForWeek(activitiesForWeek)));
-        holder.mStaticPB.setProgress(toMinutes(getLongestInacIntervalInWeek(activitiesForWeek)));
+        holder.mStaticPB.setProgress(toMinutes(getAverageCITargetForWeek(activitiesForWeek)));
         if (isStaticTargetReached(activitiesForWeek)) {
             holder.mStaticPB.setProgressDrawable(ContextCompat.getDrawable(mContext,
                     R.drawable.rounded_corners_progress_bar_goal_not_achieved));
@@ -71,30 +72,78 @@ public class HistoryAdapterWeekly extends
         }
 
         holder.mPaGoal.setText(String.valueOf(DateUtils.round(
-                toHours(getUserPaGoalSum(activitiesForWeek)))
+                toHours(getPaGoalSum(activitiesForWeek)))
         ));
         holder.mPaProgress.setText(String.valueOf(DateUtils.round(
                 toHours(getUserPaGoalProgress(activitiesForWeek)))
         ));
 
         holder.mStaticGoal.setText(String.valueOf(toMinutes(getMaxStaticGoalForWeek(activitiesForWeek))));
-        holder.mStaticProgress.setText(String.valueOf(toMinutes(getMaxContInacForWeek(activitiesForWeek))));
-    }
-
-
-    private int getLongestInacIntervalInWeek(List<Activity> activitiesForWeek) {
-        int longestInacInterval = 0;
-        for (Activity a : activitiesForWeek) {
-            if (a.getLongestInactivityInterval() > longestInacInterval) {
-                longestInacInterval = a.getLongestInactivityInterval();
-            }
-        }
-        return longestInacInterval;
+        holder.mStaticProgress.setText(String.valueOf(toMinutes(getAverageCITargetForWeek(activitiesForWeek))));
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    class HistoryViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.date)
+        protected TextView mDate;
+        @BindView(R.id.pa_goal)
+        protected TextView mPaGoal;
+        @BindView(R.id.pa_progress)
+        protected TextView mPaProgress;
+        @BindView(R.id.static_goal)
+        protected TextView mStaticGoal;
+        @BindView(R.id.static_progress)
+        protected TextView mStaticProgress;
+        @BindView(R.id.activeProgress)
+        protected ProgressBar mActivePB;
+        @BindView(R.id.staticProgress)
+        protected ProgressBar mStaticPB;
+
+        public HistoryViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    List<Activity> activitiesForThisWeek = mData.get(getAdapterPosition());
+
+                    int maxContInacTarget = getMaxMCITargetForWeek(activitiesForThisWeek);
+
+                    int longestInactInterval = getMaxContInacForWeek(activitiesForThisWeek);
+                    int times_inac_exceeded = Math.round(longestInactInterval / maxContInacTarget);
+//                    Toast.makeText(mContext, "In this week you have exceeded the inactivity target: x"
+//                            + times_inac_exceeded, Toast.LENGTH_SHORT).show();
+
+                    boolean wrapInScrollView = true;
+                    MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                            .title("Week details")
+                            .customView(R.layout.history_weekly_dialog_details, wrapInScrollView)
+                            .positiveText("OK")
+                            .show();
+                    View detailsContainer = dialog.getCustomView();
+                    TextView timesInacTargetExceeded, longestInacInter, averageInacInter, mciTarget;
+                    timesInacTargetExceeded = (TextView) detailsContainer.findViewById(R.id.times_target_exceeded);
+                    timesInacTargetExceeded.setText(String.valueOf(times_inac_exceeded));
+                    mciTarget = (TextView) detailsContainer.findViewById(R.id.mci_target);
+                    mciTarget.setText(
+                            String.format(mContext.getString(R.string.min_target_exceeded_label),
+                                    String.valueOf(toMinutes(maxContInacTarget))));
+                    longestInacInter = (TextView) detailsContainer.findViewById(R.id.longest_cont_inac);
+                    longestInacInter.setText(
+                            String.valueOf(toMinutes(
+                                    getMaxContInacForWeek(activitiesForThisWeek))));
+                    averageInacInter = (TextView) detailsContainer.findViewById(R.id.average_cont_inac);
+                    averageInacInter.setText(
+                            String.valueOf(toMinutes(
+                                    getAverageCITargetForWeek(activitiesForThisWeek))));
+
+                }
+            });
+        }
     }
 
     private int toMinutes(int value) {
@@ -138,7 +187,7 @@ public class HistoryAdapterWeekly extends
     }
 
     // This method returns the max MCI of all activities/days in a week
-    private int getUserMCITargetForWeek(List<Activity> activities) {
+    private int getMaxMCITargetForWeek(List<Activity> activities) {
         int mci = 0;
         for (Activity a : activities) {
             if (a.getUserMaxContInacTarget() > mci) {
@@ -148,7 +197,20 @@ public class HistoryAdapterWeekly extends
         return mci;
     }
 
-    private int getUserPaGoalSum(List<Activity> activities) {
+    // This method returns the average of average MCI for the given week
+    private int getAverageCITargetForWeek(List<Activity> activities) {
+        int averageMCI = 0;
+        for (Activity a : activities) {
+            averageMCI += a.getAverageInactInterval();
+        }
+        return averageMCI / activities.size();
+    }
+
+    private boolean isStaticTargetReached(List<Activity> activities) {
+        return getAverageCITargetForWeek(activities) >= getMaxMCITargetForWeek(activities);
+    }
+
+    private int getPaGoalSum(List<Activity> activities) {
         int userPaGoalSummed = 0;
         for (Activity a : activities) {
             userPaGoalSummed += a.getUserPaGoal();
@@ -190,49 +252,13 @@ public class HistoryAdapterWeekly extends
         return getActiveTimeSum(activities) >= getMaxPaSum(activities);
     }
 
-    private boolean isStaticTargetReached(List<Activity> activities) {
-        boolean output = false;
-        for (Activity activity : activities) {
-            if (activity.getLongestInactivityInterval() >= activity.getUserMaxContInacTarget()) {
-                output = true;
+    private int getLongestInacIntervalInWeek(List<Activity> activitiesForWeek) {
+        int longestInacInterval = 0;
+        for (Activity a : activitiesForWeek) {
+            if (a.getLongestInactivityInterval() > longestInacInterval) {
+                longestInacInterval = a.getLongestInactivityInterval();
             }
         }
-
-        return output;
-    }
-
-    class HistoryViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.date)
-        protected TextView mDate;
-        @BindView(R.id.pa_goal)
-        protected TextView mPaGoal;
-        @BindView(R.id.pa_progress)
-        protected TextView mPaProgress;
-        @BindView(R.id.static_goal)
-        protected TextView mStaticGoal;
-        @BindView(R.id.static_progress)
-        protected TextView mStaticProgress;
-        @BindView(R.id.activeProgress)
-        protected ProgressBar mActivePB;
-        @BindView(R.id.staticProgress)
-        protected ProgressBar mStaticPB;
-
-        public HistoryViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    List<Activity> activitiesForThisWeek = mData.get(getAdapterPosition());
-
-                    int maxContInacTarget = getUserMCITargetForWeek(activitiesForThisWeek);
-
-                    int longestInactInterval = getMaxContInacForWeek(activitiesForThisWeek);
-                    int result = Math.round(longestInactInterval / maxContInacTarget);
-                    Toast.makeText(mContext, "In this week you have exceeded the inactivity target: x"
-                            + result, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+        return longestInacInterval;
     }
 }

@@ -107,7 +107,8 @@ public class TodayFragment extends Fragment implements ITodayView {
         mActiveTimeProgressBar.setProgress(activeTime);
         mLongestInacInterval.setText(longestInacInter);
         mAverageInacInterval.setText(averageIacInter);
-        mMaxContInactTarget.setText(maxContInacTarget);
+        mMaxContInactTarget.setText(String.format(getString(R.string.min_target_exceeded_label),
+                maxContInacTarget));
         mTimesTargetExceeded.setText(timesTargetExceeded);
 
         System.out.println("TodayFragment setData method. User Pa goal: " + paGoal);

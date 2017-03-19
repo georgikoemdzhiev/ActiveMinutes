@@ -31,7 +31,8 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
         monitorActivity(activity);
     }
 
-    private void monitorActivity(Object activityClass) {
+    @Override
+    public void monitorActivity(Object activityClass) {
         int activityInt = (int) activityClass;
         int currentPa = 0;
         int currentSt = 0;

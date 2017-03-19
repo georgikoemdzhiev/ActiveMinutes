@@ -98,15 +98,8 @@
                 android:id="@+id/maxContInactTarget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="30"
-                android:textColor="@android:color/black"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="min target exceeded:"
+                android:text="@string/min_target_exceeded_label"
                 android:textSize="15sp"/>
 
             <TextView
@@ -136,7 +129,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Longest inactivity interval"
+                android:text="@string/longest_inactivity_interval_label"
                 android:textSize="15sp"/>
 
             <TextView
@@ -165,7 +158,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Average inactivity interval"
+                android:text="@string/average_inactivity_interval_label"
                 android:textSize="15sp"/>
 
             <TextView

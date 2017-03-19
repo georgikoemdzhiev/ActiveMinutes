@@ -9,10 +9,10 @@ import weka.core.Instances;
  */
 
 public class ClassifierBuilder implements IClassifierBuilder {
-    private Classifier iBkClassifier;
+    private IBk iBkClassifier;
 
     public ClassifierBuilder() {
-        this.iBkClassifier = new IBk(3);
+        iBkClassifier = new IBk();
     }
 
     @Override
