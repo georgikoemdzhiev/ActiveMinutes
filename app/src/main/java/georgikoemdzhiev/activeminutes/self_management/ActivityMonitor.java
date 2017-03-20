@@ -6,7 +6,7 @@ import java.util.Observer;
 
 import georgikoemdzhiev.activeminutes.data_layer.IActivityDataManager;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
-import georgikoemdzhiev.activeminutes.utils.LimitedSizeQueue;
+import georgikoemdzhiev.activeminutes.utils.LimitedSizeList;
 
 /**
  * Created by Georgi Koemdzhiev on 21/02/2017.
@@ -16,13 +16,14 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
     // increment time is 3 seconds
     private final int INCREMENT_AMOUNT = 3;
     private final double ENCOURAGEMENT_PERCENTAGE = 0.8;
+    private final double WARNING_PERCENTAGE = 0.8;
     private IActivityDataManager mDataManager;
     private ArrayList<Integer> correctionList;
     private IFeedbackProvider mFeedbackProvider;
 
     public ActivityMonitor(IActivityDataManager dataManager, IFeedbackProvider feedbackProvider) {
         mDataManager = dataManager;
-        correctionList = new LimitedSizeQueue<>(3);
+        correctionList = new LimitedSizeList<>(3);
         this.mFeedbackProvider = feedbackProvider;
     }
 
@@ -51,7 +52,7 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
         } else {
             currentSt = mDataManager.incCurrentInacInterval();
         }
-        // Check if the user's goal is achieved and make sure make
+        // Check if the user's goal is achieved and make sure that
         // the notification is send only once
         if (currentPa > paGoal && currentPa <= paGoal + INCREMENT_AMOUNT) {
             // is achieved, so notify for goal achieved..
@@ -65,8 +66,18 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
             mFeedbackProvider.provideEncouragingFeedback(leftMinutesTillGoal);
         }
         // Check if the maximum continuous inactivity is reached
-        if (currentSt > stTarget && currentSt <= stTarget + INCREMENT_AMOUNT) {
+//        if (currentSt > stTarget && currentSt <= stTarget + INCREMENT_AMOUNT) {
+//            mFeedbackProvider.provideProlongedInactivityFeedback(currentSt);
+//        }
+
+        if (currentSt % stTarget == 0 && currentSt != 0) {
             mFeedbackProvider.provideProlongedInactivityFeedback(currentSt);
+            System.out.println("currentSt % stTarget == 0 currentSt: " + currentSt);
+        }
+        // Check to see if the ST target is 80% reached
+        if (currentSt > stTarget * WARNING_PERCENTAGE &&
+                currentSt <= stTarget * WARNING_PERCENTAGE + INCREMENT_AMOUNT) {
+            mFeedbackProvider.provideWarningProlongedInactivityFeedback(currentSt);
         }
     }
 

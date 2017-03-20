@@ -2,11 +2,11 @@ package georgikoemdzhiev.activeminutes.utils;
 
 import java.util.ArrayList;
 
-public class LimitedSizeQueue<K> extends ArrayList<K> {
+public class LimitedSizeList<K> extends ArrayList<K> {
 
     private int maxSize;
 
-    public LimitedSizeQueue(int size) {
+    public LimitedSizeList(int size) {
         this.maxSize = size;
     }
 

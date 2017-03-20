@@ -11,4 +11,6 @@ public interface IFeedbackProvider {
     void provideGoalAchievedFeedback(int paGoal);
 
     void provideProlongedInactivityFeedback(int currentSt);
+
+    void provideWarningProlongedInactivityFeedback(int currentSt);
 }

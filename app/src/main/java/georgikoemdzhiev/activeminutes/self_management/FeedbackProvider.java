@@ -37,10 +37,12 @@ public class FeedbackProvider implements IFeedbackProvider {
 
     @Override
     public void provideEncouragingFeedback(int leftMinutesTillGoal) {
+        String message = getEncourageMessage(leftMinutesTillGoal);
         mNotificationBuilder
                 .setSound(uri)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Almost there!")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setContentText(getEncourageMessage(leftMinutesTillGoal));
         mNotifyMgr.notify(ENCOURAGE_NOTIFICATION_ID, mNotificationBuilder.build());
     }
@@ -48,21 +50,38 @@ public class FeedbackProvider implements IFeedbackProvider {
 
     @Override
     public void provideGoalAchievedFeedback(int goal) {
+        String message = getGoalAchievedMessage(goal);
         mNotificationBuilder
                 .setSound(uri)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Goal Achieved!")
-                .setContentText(getGoalAchievedMessage(goal));
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setContentText(message);
         mNotifyMgr.notify(ACHIEVED_NOTIFICATION_ID, mNotificationBuilder.build());
     }
 
     @Override
     public void provideProlongedInactivityFeedback(int currentSt) {
+        String message = getProlongedInactivityDetectedMessage(currentSt);
         mNotificationBuilder
                 .setSound(uri)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("You have been inactive for too long!")
-                .setContentText(getProlongedInactivityDetectedMessage(currentSt));
+                .setContentTitle("You've been inactive for too long!")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setContentText(message);
+        if (mSharedPreferences.getBoolean(mContext.getString(R.string.notify_me_when_inactive_key), true))
+            mNotifyMgr.notify(SEDENTARY_NOTIFICATION_ID, mNotificationBuilder.build());
+    }
+
+    @Override
+    public void provideWarningProlongedInactivityFeedback(int currentSt) {
+        String message = getProlongedInactivityDetectedMessage(currentSt);
+        mNotificationBuilder
+                .setSound(uri)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("You are approaching your maximum continuous inactivity!")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setContentText(message);
         if (mSharedPreferences.getBoolean(mContext.getString(R.string.notify_me_when_inactive_key), true))
             mNotifyMgr.notify(SEDENTARY_NOTIFICATION_ID, mNotificationBuilder.build());
     }
