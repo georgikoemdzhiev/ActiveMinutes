@@ -120,9 +120,9 @@ public class HistoryAdapterWeekly extends
 
                     boolean wrapInScrollView = true;
                     MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-                            .title("Week details")
+                            .title(R.string.dialog_weekly_title)
                             .customView(R.layout.history_weekly_dialog_details, wrapInScrollView)
-                            .positiveText("OK")
+                            .positiveText(R.string.dialog_positive_message)
                             .show();
                     View detailsContainer = dialog.getCustomView();
                     TextView timesInacTargetExceeded, longestInacInter, averageInacInter, mciTarget;

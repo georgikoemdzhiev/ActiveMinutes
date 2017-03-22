@@ -48,4 +48,8 @@
     <string name="longest_inactivity_interval_label">Longest inactivity interval</string>
     <string name="min_target_exceeded_label">%1$s min target exceeded:</string>
     <string name="history_weekly_dialog_content_title"> <u>Details about the selected week activity levels in minutes </u></string>
+    <string name="dialog_positive_message">OK</string>
+    <string name="dialog_daily_title">Day details</string>
+    <string name="dialog_weekly_title">Week details</string>
+    <string name="history_daily_dialog_content_title"><u>Details about the selected day activity levels in minutes </u></string>
 </resources>

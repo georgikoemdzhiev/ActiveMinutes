@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -125,9 +126,29 @@ public class HistoryAdapterDaily extends RecyclerView.Adapter<HistoryAdapterDail
                     Activity activity = mData.get(getAdapterPosition());
                     int maxContInacTarget = activity.getUserMaxContInacTarget();
                     int longestInactInterval = activity.getLongestInactivityInterval();
-                    int result = Math.round(longestInactInterval / maxContInacTarget);
-                    Toast.makeText(mContext, "You have exceeded the inactivity target: x"
-                            + result, Toast.LENGTH_SHORT).show();
+                    int times_inac_exceeded = Math.round(longestInactInterval / maxContInacTarget);
+
+                    boolean wrapInScrollView = true;
+                    MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                            .title(R.string.dialog_daily_title)
+                            .customView(R.layout.history_daily_dialog_details, wrapInScrollView)
+                            .positiveText(R.string.dialog_positive_message)
+                            .show();
+
+                    View detailsContainer = dialog.getCustomView();
+                    TextView timesInacTargetExceeded, longestInacInter, averageInacInter, mciTarget;
+                    timesInacTargetExceeded = (TextView) detailsContainer.findViewById(R.id.times_target_exceeded);
+                    timesInacTargetExceeded.setText(String.valueOf(times_inac_exceeded));
+                    mciTarget = (TextView) detailsContainer.findViewById(R.id.mci_target);
+                    mciTarget.setText(
+                            String.format(mContext.getString(R.string.min_target_exceeded_label),
+                                    String.valueOf(toMinutes(maxContInacTarget))));
+                    longestInacInter = (TextView) detailsContainer.findViewById(R.id.longest_cont_inac);
+                    longestInacInter.setText(
+                            String.valueOf(toMinutes(activity.getLongestInactivityInterval())));
+                    averageInacInter = (TextView) detailsContainer.findViewById(R.id.average_cont_inac);
+                    averageInacInter.setText(
+                            String.valueOf(toMinutes(activity.getAverageInactInterval())));
                 }
             });
         }
