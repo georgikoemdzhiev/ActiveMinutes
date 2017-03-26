@@ -141,12 +141,18 @@ public class ActiveMinutesActivity extends AppCompatActivity implements IActiveM
         switch (item) {
             case 1:
                 fragment = TodayFragment.newInstance();
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setTitle(getString(R.string.drawer_item_today));
                 break;
             case 3:
                 fragment = HistoryFragment.newInstance();
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setTitle(getString(R.string.drawer_item_history));
                 break;
             case 4:
                 fragment = SettingsFragment.newInstance();
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setTitle(getString(R.string.drawer_item_settings));
                 break;
             case 5:
                 mPresenter.logOutUser();
