@@ -252,6 +252,15 @@ public class ActivityDataManager implements IActivityDataManager {
         return mUser.getMaxContInactTarget();
     }
 
+    @Override
+    public void deleteAllMonitoringData() {
+        mRealm.beginTransaction();
+        RealmResults<Activity> activities = mRealm.where(Activity.class)
+                .equalTo(USER_ID_KEY, mUser.getUserId()).findAll();
+        activities.deleteAllFromRealm();
+        mRealm.commitTransaction();
+    }
+
     // helper methods
     private Activity getOrCreateTodayUserActivity() {
         Date today = truncateDate(new Date());

@@ -15,4 +15,6 @@ public interface ISettingsModel {
     void setPaGoal(int paGoal, SetResult setResult);
 
     void setStGoal(int stGoal, SetResult setResult);
+
+    void deleteMonitoringData(DeleteResult result);
 }

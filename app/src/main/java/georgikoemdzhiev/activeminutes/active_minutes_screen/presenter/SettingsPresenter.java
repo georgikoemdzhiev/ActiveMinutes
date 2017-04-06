@@ -3,6 +3,7 @@ package georgikoemdzhiev.activeminutes.active_minutes_screen.presenter;
 import java.util.Calendar;
 import java.util.Date;
 
+import georgikoemdzhiev.activeminutes.active_minutes_screen.model.DeleteResult;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.model.ISettingsModel;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.model.SettingsInfoResult;
 import georgikoemdzhiev.activeminutes.active_minutes_screen.view.ISettingsView;
@@ -106,6 +107,21 @@ public class SettingsPresenter implements ISettingsPresenter {
             @Override
             public void onError(String message) {
                 mView.showMessage("Error! " + message);
+            }
+        });
+    }
+
+    @Override
+    public void deleteMonitoringData() {
+        mModel.deleteMonitoringData(new DeleteResult() {
+            @Override
+            public void onSuccess(String message) {
+                mView.showMessage(message);
+            }
+
+            @Override
+            public void onError(String message) {
+                mView.showMessage(message);
             }
         });
     }

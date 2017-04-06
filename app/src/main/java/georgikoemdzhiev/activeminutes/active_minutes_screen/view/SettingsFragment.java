@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.borax12.materialdaterangepicker.time.RadialPickerLayout;
@@ -34,15 +36,14 @@ public class SettingsFragment extends PreferenceFragment
     private final String SLEEPING_HOURS_KEY = "pref_key_sleeping_hours";
     private final String PA_GOAL_KEY = "pref_key_pa_goal";
     private final String ST_GOAL_KEY = "pref_key_st_goal";
+    private final String RESET_DATABASE_KEY = "pref_key_reset_database";
     private final String NOTIFICATION_CB_KEY = "pref_key_notify_when_inactive";
     @Inject
     ISettingsPresenter mPresenter;
     @Inject
     IAuthDataManager mIAuthDataManager;
     private CheckBoxPreference mCheckBoxPreference;
-    private Preference mSleepingHours;
-    private Preference mPaGoal;
-    private Preference mStGoal;
+    private Preference mSleepingHours, mPaGoal, mStGoal, mResetDB;
 
 
     public SettingsFragment() {
@@ -68,6 +69,8 @@ public class SettingsFragment extends PreferenceFragment
         mPaGoal.setOnPreferenceClickListener(this);
         mStGoal = findPreference(ST_GOAL_KEY);
         mStGoal.setOnPreferenceClickListener(this);
+        mResetDB = findPreference(RESET_DATABASE_KEY);
+        mResetDB.setOnPreferenceClickListener(this);
 
         mCheckBoxPreference = (CheckBoxPreference) findPreference(NOTIFICATION_CB_KEY);
         mCheckBoxPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -135,6 +138,21 @@ public class SettingsFragment extends PreferenceFragment
                                 // convert the selected goal in minutes to seconds...
                                 mPresenter.setStGoal(mciMin * 60);
                                 mStGoal.setSummary(String.valueOf(mciMin));
+                            }
+                        }).show();
+                return true;
+            case RESET_DATABASE_KEY:
+                new MaterialDialog.Builder(getActivity())
+                        .title(R.string.delete_database_dialog_title)
+                        .theme(Theme.LIGHT)
+                        .positiveText(R.string.dialog_positive_message)
+                        .negativeText(R.string.dialog_negative_message)
+                        .content(R.string.reset_database_dialog_content)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog,
+                                                @NonNull DialogAction which) {
+                                mPresenter.deleteMonitoringData();
                             }
                         }).show();
                 return true;

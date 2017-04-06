@@ -49,7 +49,10 @@
     <string name="min_target_exceeded_label">%1$s min target exceeded:</string>
     <string name="history_weekly_dialog_content_title"> <u>Details about the selected week activity levels in minutes </u></string>
     <string name="dialog_positive_message">OK</string>
+    <string name="dialog_negative_message">Cancel</string>
     <string name="dialog_daily_title">Day details</string>
     <string name="dialog_weekly_title">Week details</string>
     <string name="history_daily_dialog_content_title"><u>Details about the selected day activity levels in minutes </u></string>
+    <string name="reset_database_dialog_content">All the monitoring data stored in the database will be deleted. Proceed?</string>
+    <string name="delete_database_dialog_title">Delete data</string>
 </resources>

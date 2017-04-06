@@ -57,4 +57,15 @@ public class SettingsModel implements ISettingsModel {
         }
 
     }
+
+    @Override
+    public void deleteMonitoringData(DeleteResult result) {
+        try {
+            mActivityDataManager.deleteAllMonitoringData();
+            result.onSuccess("Data deleted successfully!");
+        } catch (Exception e) {
+            result.onError(e.getMessage());
+        }
+
+    }
 }

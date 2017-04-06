@@ -19,4 +19,6 @@ public interface ISettingsPresenter {
     void setPaGoal(int paGoal);
 
     void setStGoal(int stGoal);
+
+    void deleteMonitoringData();
 }

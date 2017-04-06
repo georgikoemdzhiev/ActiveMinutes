@@ -49,4 +49,6 @@ public interface IActivityDataManager {
 
 
     int getUserStGoal();
+
+    void deleteAllMonitoringData();
 }
