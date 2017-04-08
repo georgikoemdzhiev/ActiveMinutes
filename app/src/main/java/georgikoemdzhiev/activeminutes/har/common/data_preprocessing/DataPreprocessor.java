@@ -1,5 +1,11 @@
 package georgikoemdzhiev.activeminutes.har.common.data_preprocessing;
 
+import weka.attributeSelection.BestFirst;
+import weka.attributeSelection.CfsSubsetEval;
+import weka.core.Instances;
+import weka.filters.Filter;
+import weka.filters.supervised.attribute.AttributeSelection;
+
 /**
  * Created by Georgi Koemdzhiev on 12/02/2017.
  */
@@ -29,5 +35,28 @@ public class DataPreprocessor implements IDataPreprocessor {
     @Override
     public double calculateMagnitude(double x, double y, double z) {
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+    }
+
+    public static Instances selectAttributes(Instances data) {
+        final AttributeSelection filter = new AttributeSelection();
+        Instances filteredIns = null;
+        // Evaluator
+        final CfsSubsetEval evaluator = new CfsSubsetEval();
+        evaluator.setMissingSeparate(true);
+        // Assign evaluator to filter
+        filter.setEvaluator(evaluator);
+        // Search strategy: best first (default values)
+        final BestFirst search = new BestFirst();
+        filter.setSearch(search);
+        // Apply filter
+        try {
+            filter.setInputFormat(data);
+            filteredIns = Filter.useFilter(data, filter);
+            System.out.println("Successfully applied feature selection algorithm!");
+        } catch (Exception e) {
+            System.out.println("Error when resampling input data with selected attributes!");
+            e.printStackTrace();
+        }
+        return filteredIns;
     }
 }

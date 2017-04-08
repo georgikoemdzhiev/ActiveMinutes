@@ -21,6 +21,7 @@ import georgikoemdzhiev.activeminutes.data_collection_screen.dagger.DataCollecti
 import georgikoemdzhiev.activeminutes.data_layer.IFileManager;
 import georgikoemdzhiev.activeminutes.data_layer.db.User;
 import georgikoemdzhiev.activeminutes.har.IClassifierBuilder;
+import georgikoemdzhiev.activeminutes.har.common.data_preprocessing.DataPreprocessor;
 import georgikoemdzhiev.activeminutes.initial_setup_screen.dagger.InitialSetupComponent;
 import georgikoemdzhiev.activeminutes.initial_setup_screen.dagger.InitialSetupModule;
 import georgikoemdzhiev.activeminutes.services.scheduler.SleepingHoursJobCreator;
@@ -94,12 +95,15 @@ public class ActiveMinutesApplication extends Application {
 
     /***
      * Method that reads the default ARFF dataset file from the assets folder,
+     * applies CFS algorithm to reduce the number of features
      * trains a generic classifier and saves it to the HAR directory for
      * later use in ActiveMinutesService
      */
     public void setUpGenericClassifier() {
         Instances genericDataset = mFileManager.readArffFileFromAssets();
-        IBk ibkClassifier = (IBk) mClassifierBuilder.buildClassifier(genericDataset);
+        Instances selectedFeatures = DataPreprocessor.selectAttributes(genericDataset);
+        System.out.println("Selected features CFS size: " + selectedFeatures.size());
+        IBk ibkClassifier = (IBk) mClassifierBuilder.buildClassifier(selectedFeatures);
         mFileManager.serialiseClassifierAndStoreToSDCard(ibkClassifier);
         System.out.println("Generic classifier trained and stored to SD Card!");
     }

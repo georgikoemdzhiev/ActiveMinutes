@@ -47,10 +47,12 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
         if (correctResult == correctionList.size()) {
             // It does, so incrementActive time.
             currentPa = mDataManager.incActiveTime();
+            System.out.println("ACTIVE!");
             // clear current inactive interval since activity is detected...
             mDataManager.clearCurrentInacInterval();
         } else {
             currentSt = mDataManager.incCurrentInacInterval();
+            System.out.println("STATIC!");
         }
         // Check if the user's goal is achieved and make sure that
         // the notification is send only once
@@ -65,10 +67,6 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
             int leftMinutesTillGoal = (int) (paGoal - (paGoal * ENCOURAGEMENT_PERCENTAGE));
             mFeedbackProvider.provideEncouragingFeedback(leftMinutesTillGoal);
         }
-        // Check if the maximum continuous inactivity is reached
-//        if (currentSt > stTarget && currentSt <= stTarget + INCREMENT_AMOUNT) {
-//            mFeedbackProvider.provideProlongedInactivityFeedback(currentSt);
-//        }
 
         if (currentSt % stTarget == 0 && currentSt != 0) {
             mFeedbackProvider.provideProlongedInactivityFeedback(currentSt);
