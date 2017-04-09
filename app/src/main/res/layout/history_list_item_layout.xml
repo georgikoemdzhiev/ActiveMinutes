@@ -11,16 +11,16 @@
         android:text="6 February"
         android:textColor="@color/colorPrimaryDark"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/date"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:layout_below="@+id/date">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/progress_bar_cont"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/stat_cont"
             android:layout_weight="1"
             android:orientation="vertical"
             android:weightSum="2">
@@ -28,35 +28,37 @@
             <ProgressBar
                 android:id="@+id/activeProgress"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="325dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:progress="10"
                 android:progressDrawable="@drawable/rounded_corners_progress_bar"/>
 
             <ProgressBar
                 android:id="@+id/staticProgress"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="325dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-
-                android:layout_weight="1"
                 android:progress="10"
                 android:progressDrawable="@drawable/rounded_corners_progress_bar"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/stat_cont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignBottom="@+id/progress_bar_cont"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
             android:orientation="vertical"
             android:weightSum="2">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="right"
+                android:layout_marginBottom="-2dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -64,7 +66,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="69"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -77,14 +80,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="60"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:layout_marginTop="5dp"
+                android:layout_marginBottom="-3dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -92,7 +97,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="69"
-                    android:textColor="@color/currentGrey"/>
+                    android:textColor="@color/currentGrey"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -105,10 +111,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="60"
-                    android:textColor="@color/currentGrey"/>
+                    android:textColor="@color/currentGrey"
+                    android:textSize="15sp"/>
             </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
