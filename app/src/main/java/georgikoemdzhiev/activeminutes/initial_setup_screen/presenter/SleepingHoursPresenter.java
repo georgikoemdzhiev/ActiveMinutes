@@ -38,10 +38,8 @@ public class SleepingHoursPresenter implements ISleepingHoursPresenter {
         if (DateUtils.getDifferenceInHours(startSHdate, stopSHDate) >= 8) {
             // the difference between the dates is > = 8 hours. It is OK
             mModel.setSleepingHours(hourOfDay, minute, hourOfDayEnd, minuteEnd);
-            mView.showMessage("Selected: " +
-                    hourOfDay + " " + minute +
-                    " " + hourOfDayEnd
-                    + " " + minuteEnd);
+            mView.showMessage("Sleeping Hours set to " + hourOfDay + ":" + minute +
+                    " - " + hourOfDayEnd + ":" + minuteEnd);
         } else {
             mView.showMessage("The minimal interval for Sleeping hours is 8 hours!");
         }

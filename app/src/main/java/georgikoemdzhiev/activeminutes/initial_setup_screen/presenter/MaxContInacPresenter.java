@@ -11,17 +11,18 @@ import georgikoemdzhiev.activeminutes.initial_setup_screen.view.IMaxContInacView
 public class MaxContInacPresenter implements IMaxContInacPresenter {
     private IMaxContInacModel mModel;
     private IMaxContInacView mView;
+    private final int MINUTES_IN_HOUR = 60;
 
     public MaxContInacPresenter(IMaxContInacModel model) {
         mModel = model;
     }
 
     @Override
-    public void setMCI(int mci) {
+    public void setMCI(final int mci) {
         mModel.setMCI(mci, new SetResult() {
             @Override
             public void onSuccess() {
-                mView.showMessage("Target saved!");
+                mView.showMessage("MCI set to " + mci / MINUTES_IN_HOUR);
             }
 
             @Override

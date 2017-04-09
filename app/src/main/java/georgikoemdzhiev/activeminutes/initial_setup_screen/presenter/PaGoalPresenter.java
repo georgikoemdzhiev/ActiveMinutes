@@ -11,17 +11,18 @@ import georgikoemdzhiev.activeminutes.initial_setup_screen.view.IPaGoalView;
 public class PaGoalPresenter implements IPaGoalPresenter {
     private IPaGoalModel mModel;
     private IPaGoalView mView;
+    private final int MINUTES_IN_HOUR = 60;
 
     public PaGoalPresenter(IPaGoalModel model) {
         mModel = model;
     }
 
     @Override
-    public void setSetPa(int paGoal) {
+    public void setSetPa(final int paGoal) {
         mModel.setPaGoal(paGoal, new SetResult() {
             @Override
             public void onSuccess() {
-                mView.showMessage("Goal set");
+                mView.showMessage("PA goal set to " + paGoal / MINUTES_IN_HOUR);
             }
 
             @Override
