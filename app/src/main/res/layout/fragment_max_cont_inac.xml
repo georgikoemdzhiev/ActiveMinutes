@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -14,7 +15,8 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="15dp"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:id="@+id/linearLayout3">
 
         <TextView
             android:layout_width="match_parent"
@@ -40,5 +42,17 @@
         android:text="@string/button_set_mci_text"
         android:textColor="@android:color/white"
         android:textSize="16sp"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="38dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_sit"
+        android:layout_above="@+id/linearLayout3"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
