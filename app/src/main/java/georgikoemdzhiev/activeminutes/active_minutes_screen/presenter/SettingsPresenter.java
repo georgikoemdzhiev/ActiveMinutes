@@ -15,6 +15,8 @@ import georgikoemdzhiev.activeminutes.utils.DateUtils;
  */
 
 public class SettingsPresenter implements ISettingsPresenter {
+    private static final int ELEVEN_PM = 23;
+    private static final int SEVEN_PM = 19;
     private ISettingsView mView;
     private ISettingsModel mModel;
 
@@ -40,14 +42,19 @@ public class SettingsPresenter implements ISettingsPresenter {
         // Check of the difference between the dates is at least 8 hours
         if (DateUtils.getDifferenceInHours(startSHdate, stopSHDate) >= 8) {
             // the difference between the dates is > = 8 hours. It is OK
-            try {
-                mModel.setSleepingHours(hourOfDay, minute, hourOfDayEnd, minuteEnd);
-                mView.showMessage("Selected: " +
-                        hourOfDay + " " + minute +
-                        " " + hourOfDayEnd
-                        + " " + minuteEnd);
-            } catch (Exception e) {
-                mView.showMessage("Error! " + e.getMessage());
+            // Check if the start hour is before midnight
+            if (hourOfDay <= ELEVEN_PM && hourOfDay >= SEVEN_PM) {
+                try {
+                    mModel.setSleepingHours(hourOfDay, minute, hourOfDayEnd, minuteEnd);
+                    mView.showMessage("Selected: " +
+                            hourOfDay + " " + minute +
+                            " " + hourOfDayEnd
+                            + " " + minuteEnd);
+                } catch (Exception e) {
+                    mView.showMessage("Error! " + e.getMessage());
+                }
+            } else {
+                mView.showMessage("The start hour has to be between 7pm and 11pm");
             }
 
         } else {
@@ -82,11 +89,11 @@ public class SettingsPresenter implements ISettingsPresenter {
     }
 
     @Override
-    public void setPaGoal(int paGoal) {
+    public void setPaGoal(final int paGoal) {
         mModel.setPaGoal(paGoal, new SetResult() {
             @Override
             public void onSuccess() {
-                mView.showMessage("PA goal set");
+                mView.showMessage("PA goal set to " + paGoal / 60);
             }
 
             @Override
@@ -101,7 +108,7 @@ public class SettingsPresenter implements ISettingsPresenter {
         mModel.setStGoal(stGoal, new SetResult() {
             @Override
             public void onSuccess() {
-                mView.showMessage(stGoal + " ST goal set");
+                mView.showMessage("ST goal set to " + stGoal / 60);
             }
 
             @Override

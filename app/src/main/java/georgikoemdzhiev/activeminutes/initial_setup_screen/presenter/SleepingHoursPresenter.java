@@ -12,6 +12,8 @@ import georgikoemdzhiev.activeminutes.utils.DateUtils;
  */
 
 public class SleepingHoursPresenter implements ISleepingHoursPresenter {
+    private static final int ELEVEN_PM = 23;
+    private static final int SEVEN_PM = 19;
     private ISleepingHoursModel mModel;
     private ISleepingHoursView mView;
 
@@ -37,9 +39,20 @@ public class SleepingHoursPresenter implements ISleepingHoursPresenter {
         // Check of the difference between the dates is at least 8 hours
         if (DateUtils.getDifferenceInHours(startSHdate, stopSHDate) >= 8) {
             // the difference between the dates is > = 8 hours. It is OK
-            mModel.setSleepingHours(hourOfDay, minute, hourOfDayEnd, minuteEnd);
-            mView.showMessage("Sleeping Hours set to " + hourOfDay + ":" + minute +
-                    " - " + hourOfDayEnd + ":" + minuteEnd);
+            // Check if the start hour is before midnight
+            if (hourOfDay <= ELEVEN_PM && hourOfDay >= SEVEN_PM) {
+                try {
+                    mModel.setSleepingHours(hourOfDay, minute, hourOfDayEnd, minuteEnd);
+                    mView.showMessage("Selected: " +
+                            hourOfDay + " " + minute +
+                            " " + hourOfDayEnd
+                            + " " + minuteEnd);
+                } catch (Exception e) {
+                    mView.showMessage("Error! " + e.getMessage());
+                }
+            } else {
+                mView.showMessage("The start hour has to be between 7pm and 11pm");
+            }
         } else {
             mView.showMessage("The minimal interval for Sleeping hours is 8 hours!");
         }
