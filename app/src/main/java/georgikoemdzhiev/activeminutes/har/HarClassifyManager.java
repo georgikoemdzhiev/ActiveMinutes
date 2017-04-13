@@ -22,7 +22,7 @@ public class HarClassifyManager extends HarManager {
 
     @Override
     public void issueTimeWindow() {
-//        System.out.println("issueTimeWindow called(). accXSeriex size: " + accXSeries.size() + "accYSize: " + accYSeries.size());
+        System.out.println("issueTimeWindow called(). accXSeriex size: " + accXSeries.size() + "accYSize: " + accYSeries.size());
         FeatureSet featureSet = null;
         Instance instance = null;
         try {

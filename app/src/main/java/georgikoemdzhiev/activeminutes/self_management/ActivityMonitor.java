@@ -23,7 +23,7 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
 
     public ActivityMonitor(IActivityDataManager dataManager, IFeedbackProvider feedbackProvider) {
         mDataManager = dataManager;
-        correctionList = new LimitedSizeList<>(7);
+        correctionList = new LimitedSizeList<>(3);
         this.mFeedbackProvider = feedbackProvider;
     }
 
