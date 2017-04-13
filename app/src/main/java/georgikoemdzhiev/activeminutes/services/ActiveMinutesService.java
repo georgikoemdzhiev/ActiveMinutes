@@ -92,7 +92,7 @@ public class ActiveMinutesService extends Service implements SensorEventListener
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
         Notification notification = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.monitoring_icon)
                 .setContentTitle("Activity Monitoring activated.")
                 .setContentText("Monitoring your inactivity levels...")
                 .setContentIntent(pendingIntent).build();
