@@ -87,7 +87,7 @@ public class HistoryFragment extends Fragment implements IHistoryView {
         mActivityList.setHasFixedSize(true);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mActivityList.setLayoutManager(mLayoutManager);
 
         return view;
@@ -118,29 +118,29 @@ public class HistoryFragment extends Fragment implements IHistoryView {
     @Override
     public void setDailyActivityData(List<Activity> activityData) {
         // set up the list adapter with the requested activity data
-        mAdapterDaily = new HistoryAdapterDaily(getContext(), activityData);
+        mAdapterDaily = new HistoryAdapterDaily(getActivity(), activityData);
         mActivityList.setAdapter(mAdapterDaily);
 
         // set the PA to be measured in minutes
         mPaGoalLabel.setText(String.format(getString(pa_goal_reached_goal_min), "min"));
         // Set up buttons colour
-        mDailyBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGreen));
-        mDailyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.dirtyWhite));
-        mWeeklyBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.dirtyWhite));
-        mWeeklyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGreen));
+        mDailyBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.lightGreen));
+        mDailyBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.dirtyWhite));
+        mWeeklyBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.dirtyWhite));
+        mWeeklyBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.lightGreen));
     }
 
     @Override
     public void setWeeklyActivityData(List<List<Activity>> activities) {
-        mAdapterWeekly = new HistoryAdapterWeekly(getContext(), activities);
+        mAdapterWeekly = new HistoryAdapterWeekly(getActivity(), activities);
         mActivityList.setAdapter(mAdapterWeekly);
         // set the PA to be measured in hours
         mPaGoalLabel.setText(String.format(getString(pa_goal_reached_goal_min), "hour"));
         // Set up buttons colour
-        mWeeklyBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.lightGreen));
-        mWeeklyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.dirtyWhite));
-        mDailyBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.dirtyWhite));
-        mDailyBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.lightGreen));
+        mWeeklyBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.lightGreen));
+        mWeeklyBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.dirtyWhite));
+        mDailyBtn.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.dirtyWhite));
+        mDailyBtn.setTextColor(ContextCompat.getColor(getActivity(), R.color.lightGreen));
     }
 
     @Override
