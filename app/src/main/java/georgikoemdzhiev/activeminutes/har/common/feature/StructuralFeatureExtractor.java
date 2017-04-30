@@ -21,8 +21,14 @@ public class StructuralFeatureExtractor extends FeatureExtractor {
         double[] first5 = new double[5];
 
         for (int i = 0; i < first5.length; i++) {
-            // round to second decimal place... Avoid the first value
-            first5[i] = Math.round(tempArray[i + 1] * 100.0) / 100.0;
+            try {
+                // round to second decimal place... Avoid the first value
+                first5[i] = Math.round(tempArray[i + 1] * 100.0) / 100.0;
+            } catch (Exception e) {
+                first5[i] = 0.0;
+                System.out.println("StructuralFeatureExtractor exception: " + e.getMessage());
+            }
+
         }
         first5FFTCoefficients = first5;
     }

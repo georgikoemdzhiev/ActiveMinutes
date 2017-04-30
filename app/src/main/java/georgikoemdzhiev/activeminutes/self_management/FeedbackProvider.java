@@ -40,7 +40,7 @@ public class FeedbackProvider implements IFeedbackProvider {
         String message = getEncourageMessage(leftMinutesTillGoal);
         mNotificationBuilder
                 .setSound(uri)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.monitoring_icon)
                 .setContentTitle("Almost there!")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setContentText(getEncourageMessage(leftMinutesTillGoal));
@@ -53,7 +53,7 @@ public class FeedbackProvider implements IFeedbackProvider {
         String message = getGoalAchievedMessage(goal);
         mNotificationBuilder
                 .setSound(uri)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.goal_achieved_icon)
                 .setContentTitle("Goal Achieved!")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setContentText(message);
@@ -65,7 +65,7 @@ public class FeedbackProvider implements IFeedbackProvider {
         String message = getProlongedInactivityDetectedMessage(currentSt);
         mNotificationBuilder
                 .setSound(uri)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.worning_icon)
                 .setContentTitle("You've been inactive for too long!")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setContentText(message);
@@ -78,7 +78,7 @@ public class FeedbackProvider implements IFeedbackProvider {
         String message = getProlongedInactivityDetectedMessage(currentSt);
         mNotificationBuilder
                 .setSound(uri)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.worning_icon)
                 .setContentTitle("You are approaching your maximum continuous inactivity!")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setContentText(message);

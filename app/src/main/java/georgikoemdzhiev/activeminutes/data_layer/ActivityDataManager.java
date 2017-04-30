@@ -84,7 +84,7 @@ public class ActivityDataManager implements IActivityDataManager {
         activity.setActiveTime(currentActiveTime + INCREMENT_VALUE);
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
-        debugActivityTable();
+//        debugActivityTable();
         return activity.getActiveTime();
     }
 
@@ -138,7 +138,7 @@ public class ActivityDataManager implements IActivityDataManager {
 
         mRealm.copyToRealmOrUpdate(activity);
         mRealm.commitTransaction();
-        debugActivityTable();
+//        debugActivityTable();
     }
 
     @Override

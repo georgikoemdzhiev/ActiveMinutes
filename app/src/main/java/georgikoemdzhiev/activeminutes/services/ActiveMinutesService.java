@@ -66,7 +66,7 @@ public class ActiveMinutesService extends Service implements SensorEventListener
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         runAsForeground();
-        sensorManager.registerListener(this, accSensor, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, accSensor, SensorManager.SENSOR_DELAY_GAME);
         return START_STICKY;
     }
 

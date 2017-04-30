@@ -47,7 +47,7 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
         if (correctResult == correctionList.size()) {
             // It does, so incrementActive time.
             currentPa = mDataManager.incActiveTime();
-            System.out.println("ACTIVE!");
+            System.out.println("ACTIVE! (" + getStringClassFromInt(activityInt) + ")");
             // clear current inactive interval since activity is detected...
             mDataManager.clearCurrentInacInterval();
         } else {
@@ -67,7 +67,7 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
             int leftMinutesTillGoal = (int) (paGoal - (paGoal * ENCOURAGEMENT_PERCENTAGE));
             mFeedbackProvider.provideEncouragingFeedback(leftMinutesTillGoal);
         }
-
+        // Check if the MCI target has been reached
         if (currentSt % stTarget == 0 && currentSt != 0) {
             mFeedbackProvider.provideProlongedInactivityFeedback(currentSt);
             System.out.println("currentSt % stTarget == 0 currentSt: " + currentSt);
@@ -96,5 +96,21 @@ public class ActivityMonitor implements Observer, IActivityMonitor {
         }
 
         return count;
+    }
+
+    private String getStringClassFromInt(int classInt) {
+        switch (classInt) {
+            case 0:
+                return "walking";
+            case 1:
+                return "running";
+            case 2:
+                return "static";
+            case 3:
+                return "cycling";
+            default:
+                return "unknown";
+        }
+
     }
 }
